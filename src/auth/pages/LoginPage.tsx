@@ -4,7 +4,7 @@ import {Google} from "@mui/icons-material";
 
 import {AuthLayout} from "../layout/AuthLayout";
 import {useForm} from "../../hooks/useForm";
-import {useState} from "react";
+import React, {useState} from "react";
 
 export const LoginPage = () => {
 
@@ -12,9 +12,14 @@ export const LoginPage = () => {
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
+    const onSubmit = (event: React.FormEvent) => {
+        event.preventDefault();
+        setFormSubmitted(true);
+    }
+
     return (
         <AuthLayout title='Login'>
-            <form className="animate__animated animate__fadeIn animate__faster">
+            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster">
                 <Grid container>
 
                     <Grid item xs={12} sx={{mt: 2}}>
@@ -80,7 +85,6 @@ export const LoginPage = () => {
                             Signup
                         </Link>
                     </Grid>
-
                 </Grid>
             </form>
         </AuthLayout>
