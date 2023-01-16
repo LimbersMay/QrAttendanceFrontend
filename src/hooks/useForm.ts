@@ -9,7 +9,7 @@ interface FormValidations {
 }
 
 interface FormState {
-    [key: string]: string;
+    [key: string]: any;
 }
 
 export const useForm = ( initialForm: FormState, formValidations: FormValidations = {} ) => {
@@ -37,7 +37,6 @@ export const useForm = ( initialForm: FormState, formValidations: FormValidation
             [name]: value
         });
     }
-
 
     const onResetForm = () => {
         setFormState(initialForm);
