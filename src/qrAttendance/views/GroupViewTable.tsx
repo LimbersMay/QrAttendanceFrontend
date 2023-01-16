@@ -1,57 +1,139 @@
 import * as React from 'react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
+import {
+    Box,
+    Collapse,
+    IconButton,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Typography,
+    Paper,
+    MenuItem,
+    Select,
+    SelectChangeEvent
+} from '@mui/material';
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-import {DeleteOutline, EditOutlined} from '@mui/icons-material';
+import {
+    DeleteOutline,
+    Delete,
+    EditOutlined,
+    Save,
+    Edit,
+    DownloadOutlined,
+    Download,
+    VisibilityOutlined,
+    Visibility
+} from '@mui/icons-material';
+import {useState} from "react";
+import {TextField} from "@mui/material";
+import {useForm} from "../../hooks/useForm";
+import {Registry} from "../components/Registry";
 
+interface registry {
+    date: string,
+    name: string,
+    sourname: string,
+    lastname: string
+}
+
+interface QrCode {
+    name: string,
+    registries: number,
+    date: string,
+    enabled: boolean,
+    history: registry[]
+}
 
 const createData = (
     name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-    price: number,
+    registries: number,
+    date: string,
+    enabled: boolean,
+    id: string,
 ) => {
     return {
         name,
-        calories,
-        fat,
-        carbs,
-        protein,
-        price,
+        registries,
+        date,
+        enabled,
+        id,
         history: [
             {
+                id: 'jasjajs',
                 date: '2020-01-05',
-                customerId: '11091700',
-                amount: 3,
+                name: 'Limbert Otoniel',
+                sourname: 'May',
+                lastname: 'Ek'
             },
             {
+                id: '19394',
                 date: '2020-01-02',
-                customerId: 'Anonymous',
-                amount: 1,
+                name: 'Josue',
+                sourname: 'Manuel',
+                lastname: 'Hau'
             },
         ],
     };
 }
 
 const Row = (props: { row: ReturnType<typeof createData> }) => {
+
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
 
-    const handleDelete = (row: ReturnType<typeof createData>) => {
+    const [ isEditing, setIsEditing ] = useState(false);
+    const [ registryEditId, setRegistryEditId ] = useState('');
 
+    const initialForm = {
+        name: row.name,
+        registries: row.registries,
+        date: row.date,
+        enabled: false,
+        id: ''
+    }
+
+    const { formState: qrCodeFormState, onInputChange } = useForm(initialForm);
+    const { name, registries, date } = qrCodeFormState;
+
+    const [isEnable, setIsEnable] = useState<boolean>(row.enabled);
+
+    const onSelectChange = (event: SelectChangeEvent) => {
+
+        const { value } = event.target;
+
+        if (value === 'YES') return setIsEnable(true);
+
+        setIsEnable(false);
+    }
+
+    const handleQrSave = () => {
+        setIsEditing(false);
+    }
+
+    const handleQrDelete = (row: ReturnType<typeof createData>) => {
+
+    }
+
+    const handleQrEdit = (row: ReturnType<typeof createData>) => {
+        setIsEditing(true);
+    }
+
+    const handleRegistrySave = (id: string) => {
+        setRegistryEditId('');
+    }
+
+    const handleRegistryEdit = (registryId: string) => {
+        setRegistryEditId(registryId);
+    }
+
+    const isEnabled = (enabled: boolean): string => {
+        return enabled ? 'YES' : 'NO';
     }
 
     return (
@@ -67,18 +149,50 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                     </IconButton>
                 </TableCell>
                 <TableCell component="th" scope="row">
-                    {row.name}
+                    {
+                        isEditing
+                            ? <TextField name="name" onChange={onInputChange} value={name}></TextField>
+                            : name
+                    }
                 </TableCell>
-                <TableCell align="right">{row.calories}</TableCell>
-                <TableCell align="right">{row.fat}</TableCell>
-                <TableCell align="right">{row.carbs}</TableCell>
-                <TableCell align="right">{row.protein}</TableCell>
-                <TableCell align="right">
-                    <IconButton onClick={() => handleDelete(row)}>
-                        <DeleteOutline />
+                <TableCell align="center">
+                    {
+                        isEditing
+                            ? <TextField sx={{width: '100px'}} name="registries" onChange={onInputChange} value={registries}></TextField>
+                            : registries
+                    }
+                </TableCell>
+                <TableCell align="center">
+                    {
+                        isEditing
+                            ? <TextField sx={{width: '140px'}} onChange={onInputChange} name="date" value={date}></TextField>
+                            : date
+                    }
+                </TableCell>
+                <TableCell align="center">
+                    {
+                        isEditing
+                            ? <Select value={isEnabled(isEnable)} onChange={onSelectChange}>
+                                <MenuItem value="YES">Yes</MenuItem>
+                                <MenuItem value="NO">No</MenuItem>
+                              </Select>
+                            : isEnabled(isEnable)
+                    }
+                </TableCell>
+                <TableCell align="center">
+                    <IconButton onClick={() => handleQrDelete(row)}>
+                        <Visibility />
                     </IconButton>
-                    <IconButton onClick={() => handleDelete(row)}>
-                        <EditOutlined />
+                    <IconButton onClick={() => handleQrDelete(row)}>
+                        <Download />
+                    </IconButton>
+                    {
+                        isEditing
+                            ? <IconButton onClick={handleQrSave}><Save /></IconButton>
+                            : <IconButton onClick={() => handleQrEdit(row)}><Edit /></IconButton>
+                    }
+                    <IconButton onClick={() => handleQrDelete(row)}>
+                        <Delete />
                     </IconButton>
                 </TableCell>
             </TableRow>
@@ -88,29 +202,21 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box sx={{ margin: 1 }}>
                             <Typography variant="h6" gutterBottom component="div">
-                                History
+                                Registries
                             </Typography>
                             <Table size="small" aria-label="purchases">
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Date</TableCell>
-                                        <TableCell>Customer</TableCell>
-                                        <TableCell align="right">Amount</TableCell>
-                                        <TableCell align="right">Total price ($)</TableCell>
+                                        <TableCell>First name</TableCell>
+                                        <TableCell align="center">Sourname</TableCell>
+                                        <TableCell align="center">Lastname</TableCell>
+                                        <TableCell align="center">Actions</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
                                     {row.history.map((historyRow) => (
-                                        <TableRow key={historyRow.date}>
-                                            <TableCell component="th" scope="row">
-                                                {historyRow.date}
-                                            </TableCell>
-                                            <TableCell>{historyRow.customerId}</TableCell>
-                                            <TableCell align="right">{historyRow.amount}</TableCell>
-                                            <TableCell align="right">
-                                                {Math.round(historyRow.amount * row.price * 100) / 100}
-                                            </TableCell>
-                                        </TableRow>
+                                        <Registry key={historyRow.id} registryRow={historyRow} />
                                     ))}
                                 </TableBody>
                             </Table>
@@ -123,11 +229,8 @@ const Row = (props: { row: ReturnType<typeof createData> }) => {
 }
 
 const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-    createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-    createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-    createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
+    createData('Virtual session', 10, '2023-05-12',true, 'nfjsd3454'),
+    createData('face-to-face session', 5, '2022-01-12',false, '2n4n3k3'),
 ];
 
 export const GroupViewTable = () => {
@@ -137,11 +240,10 @@ export const GroupViewTable = () => {
                 <TableHead>
                     <TableRow>
                         <TableCell />
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                        <TableCell>QrCode name</TableCell>
+                        <TableCell align="center">Registries</TableCell>
+                        <TableCell align="center">Date</TableCell>
+                        <TableCell align="center">Enabled</TableCell>
                         <TableCell align="center">Actions</TableCell>
                     </TableRow>
                 </TableHead>
