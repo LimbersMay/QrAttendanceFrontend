@@ -14,9 +14,10 @@ import {
 
 import {useState} from "react";
 import {RegistryRow} from "../components/RegistryRow";
-import {QrCodeRow} from "../components/QrCodeRow";
 
+import {QrCodeRow} from "../components/QrCodeRow";
 import {QrCode} from "../interfaces";
+import {TitleRow} from "../components/TitleRow";
 
 const createData = (
     name: string,
@@ -62,7 +63,6 @@ const Row = (props: { row: QrCode }) => {
     return (
         <>
             <QrCodeRow qrCodeRow={row} handleOpenSubTable={handleOpenSubTable} open={open}/>
-
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
@@ -104,6 +104,7 @@ export const GroupViewTable = () => {
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
+                    <TitleRow />
                     <TableRow>
                         <TableCell />
                         <TableCell>QrCode name</TableCell>
