@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import {authSlice} from "./auth";
+import {qrAttendanceSlice} from "./qrAttendance";
 export const store = configureStore({
     reducer: {
-        auth: authSlice.reducer
+        auth: authSlice.reducer,
+        qrAttendance: qrAttendanceSlice.reducer
     }
 });
 
