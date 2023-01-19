@@ -43,7 +43,7 @@ export const SideBar = ({ drawerWidth = 240}) => {
                     </Grid>
                     {
                         groups.map(group => (
-                            <SideBarItem group={group} />
+                            <SideBarItem key={group.id} group={group} />
                         ))
                     }
                 </List>
