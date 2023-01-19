@@ -1,10 +1,12 @@
 import {AnyAction, configureStore, ThunkAction} from '@reduxjs/toolkit';
 import {authSlice} from "./auth";
-import {qrAttendanceSlice} from "./qrAttendance";
+import {groupSlice, qrCodeSlice, registrySlice} from "./qrAttendance";
 export const store = configureStore({
     reducer: {
         auth: authSlice.reducer,
-        qrAttendance: qrAttendanceSlice.reducer
+        group: groupSlice.reducer,
+        qrCode: qrCodeSlice.reducer,
+        registry: registrySlice.reducer,
     }
 });
 
