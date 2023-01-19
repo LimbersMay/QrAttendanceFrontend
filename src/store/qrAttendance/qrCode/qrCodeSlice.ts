@@ -27,11 +27,20 @@ export const qrCodeSlice = createSlice({
     reducers: {
         addEmptyQrCode: (state, action: PayloadAction<QrCode>) => {
             state.qrCodes.push(action.payload)
+        },
+        deleteQrCode: (state, action: PayloadAction<string>) => {
+            state.qrCodes = state.qrCodes.filter(qrCode => qrCode.id !== action.payload);
+        },
+        updateQrCode: (state, { payload }: PayloadAction<QrCode>) => {
+            state.qrCodes = state.qrCodes.map(qrCode => {
+                if (qrCode.id === payload.id) return payload;
+                return qrCode;
+            });
         }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { addEmptyQrCode } = qrCodeSlice.actions;
+export const { addEmptyQrCode, deleteQrCode, updateQrCode } = qrCodeSlice.actions;
 export const selectQrCode = (state: RootState) => state.qrCode;
