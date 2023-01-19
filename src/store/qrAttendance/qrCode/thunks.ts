@@ -20,3 +20,13 @@ export const startDeleteQrCode = (qrCodeId: string): AppThunk => {
         dispatch(deleteQrCode(qrCodeId));
     }
 }
+
+export const startUpdateQrCode = (qrCode: QrCode): AppThunk => {
+    return async(dispatch) => {
+
+        // async code here
+
+        // sync code here
+        dispatch(updateQrCode(qrCode));
+    }
+}
