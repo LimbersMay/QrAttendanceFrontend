@@ -1,4 +1,4 @@
-import {useMemo, useState} from "react";
+import React, {useMemo, useState} from "react";
 
 import {IconButton, TableCell, tableCellClasses, TableRow, TextField} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, SaveOutlined, DeleteOutlined} from "@mui/icons-material";
@@ -6,10 +6,10 @@ import {useForm} from "../../hooks/useForm";
 
 import {ConditionalTextField} from "./ConditionalTextField";
 import {Group, QrCode} from "../interfaces";
-import {startAddEmptyQrCode, startSaveGroup} from "../../store/qrAttendance/thunks";
 import {useAppDispatch} from "../../store";
+import {startNewQrCode, startUpdateGroup} from "../../store/qrAttendance";
 
-export const TitleRow = ({ group }: {group: Group}) => {
+export const TitleRow = React.memo(({ group }: {group: Group}) => {
 
     const initialStateForm = useMemo(() => ({
         groupTitle: group.name,
@@ -27,8 +27,8 @@ export const TitleRow = ({ group }: {group: Group}) => {
     }
 
     const handleSaveRow = () => {
-        dispatch(startSaveGroup({ ...group, name: groupTitle }));
         setIsRowEditing(false);
+        dispatch(startUpdateGroup({ ...group, name: groupTitle}));
     }
 
     const handleDeleteRow = () => {
@@ -39,14 +39,14 @@ export const TitleRow = ({ group }: {group: Group}) => {
 
         const newQrCode: QrCode = {
             id: new Date().toUTCString() + '1',
+            groupId: group.id,
             name: 'Default',
             date: '2023-01-18',
-            history: [],
             registries: 0,
             enabled: false
         }
 
-        dispatch(startAddEmptyQrCode(newQrCode));
+        dispatch(startNewQrCode(newQrCode));
     }
 
     return (
@@ -104,4 +104,4 @@ export const TitleRow = ({ group }: {group: Group}) => {
 
         </TableRow>
     )
-}
+});
