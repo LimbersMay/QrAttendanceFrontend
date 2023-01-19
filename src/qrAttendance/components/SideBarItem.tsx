@@ -2,17 +2,26 @@ import {Grid, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/m
 import {TurnedInNot} from "@mui/icons-material";
 
 import {Group} from "../interfaces";
+import {useAppDispatch} from "../../store";
+import {setActiveGroup} from "../../store/qrAttendance";
 
 export const SideBarItem = ({ group }: {group: Group}) => {
+
+    const dispatch = useAppDispatch();
+
+    const onClickGroup = () => {
+        dispatch(setActiveGroup(group));
+    }
+
     return (
-        <ListItem key={group.id} disablePadding>
+        <ListItem disablePadding onClick={onClickGroup}>
             <ListItemButton>
                 <ListItemIcon>
                     <TurnedInNot />
                 </ListItemIcon>
                 <Grid container>
                     <ListItemText primary={group.name}/>
-                    <ListItemText secondary={'22/04/2021'}/>
+                    <ListItemText secondary={group.date}/>
                 </Grid>
             </ListItemButton>
         </ListItem>
