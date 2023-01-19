@@ -4,11 +4,13 @@ import {useForm} from "../../hooks/useForm";
 import {useState} from "react";
 import {ConditionalTextField} from "./ConditionalTextField";
 
-const initialStateForm = {
-    groupTitle: '5A'
-}
+import {Group} from "../interfaces";
 
-export const TitleRow = () => {
+export const TitleRow = ({ group }: {group: Group}) => {
+
+    const initialStateForm = {
+        groupTitle: group.name
+    }
 
     const { formState, onInputChange } = useForm(initialStateForm);
     const [isRowEditing, setIsRowEditing] = useState<boolean>(false);
