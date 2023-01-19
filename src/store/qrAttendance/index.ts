@@ -1,1 +1,3 @@
-export * from "./qrAttendanceSlice";
+export * from "./group";
+export * from "./qrCode";
+export * from "./registry";
