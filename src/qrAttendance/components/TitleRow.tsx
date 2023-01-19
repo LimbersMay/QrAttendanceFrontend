@@ -1,16 +1,21 @@
+import {useMemo, useState} from "react";
+
 import {IconButton, TableCell, tableCellClasses, TableRow, TextField} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, SaveOutlined, DeleteOutlined} from "@mui/icons-material";
 import {useForm} from "../../hooks/useForm";
-import {useState} from "react";
-import {ConditionalTextField} from "./ConditionalTextField";
 
-import {Group} from "../interfaces";
+import {ConditionalTextField} from "./ConditionalTextField";
+import {Group, QrCode} from "../interfaces";
+import {startAddEmptyQrCode, startSaveGroup} from "../../store/qrAttendance/thunks";
+import {useAppDispatch} from "../../store";
 
 export const TitleRow = ({ group }: {group: Group}) => {
 
-    const initialStateForm = {
-        groupTitle: group.name
-    }
+    const initialStateForm = useMemo(() => ({
+        groupTitle: group.name,
+    }), [group]);
+
+    const dispatch = useAppDispatch();
 
     const { formState, onInputChange } = useForm(initialStateForm);
     const [isRowEditing, setIsRowEditing] = useState<boolean>(false);
@@ -22,6 +27,7 @@ export const TitleRow = ({ group }: {group: Group}) => {
     }
 
     const handleSaveRow = () => {
+        dispatch(startSaveGroup({ ...group, name: groupTitle }));
         setIsRowEditing(false);
     }
 
@@ -30,7 +36,17 @@ export const TitleRow = ({ group }: {group: Group}) => {
     }
 
     const handleAddEmptyRow = () => {
-        console.log('add row');
+
+        const newQrCode: QrCode = {
+            id: new Date().toUTCString() + '1',
+            name: 'Default',
+            date: '2023-01-18',
+            history: [],
+            registries: 0,
+            enabled: false
+        }
+
+        dispatch(startAddEmptyQrCode(newQrCode));
     }
 
     return (
