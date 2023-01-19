@@ -2,11 +2,11 @@ import {useSelector} from "react-redux";
 import {QrAttendanceLayout} from "../layout/QrAttendanceLayout";
 
 import {GroupViewTable, NothingSelectedView} from "../views";
-import {selectQrAttendance} from "../../store/qrAttendance";
+import {selectGroup} from "../../store/qrAttendance";
 
 export const QrAttendancePage = () => {
 
-    const { active } =  useSelector(selectQrAttendance);
+    const { active } =  useSelector(selectGroup);
 
     return (
         <QrAttendanceLayout>
