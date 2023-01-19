@@ -9,11 +9,11 @@ import {
     Typography
 } from "@mui/material";
 import {SideBarItem} from "./SideBarItem";
-import {selectQrAttendance} from "../../store/qrAttendance";
+import {selectGroup} from "../../store/qrAttendance";
 
 export const SideBar = ({ drawerWidth = 240}) => {
 
-    const { groups } = useSelector(selectQrAttendance);
+    const { groups } = useSelector(selectGroup);
 
     return (
         <Box
