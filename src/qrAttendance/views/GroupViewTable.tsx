@@ -18,6 +18,8 @@ import {RegistryRow} from "../components/RegistryRow";
 import {QrCodeRow} from "../components/QrCodeRow";
 import {QrCode} from "../interfaces";
 import {TitleRow} from "../components/TitleRow";
+import {useSelector} from "react-redux";
+import {selectQrAttendance} from "../../store/qrAttendance";
 
 const createData = (
     name: string,
@@ -74,7 +76,7 @@ const Row = (props: { row: QrCode }) => {
                                 <TableHead>
                                     <TableRow>
                                         <TableCell>Date</TableCell>
-                                        <TableCell>First name</TableCell>
+                                        <TableCell>Name(s)</TableCell>
                                         <TableCell align="center">Sourname</TableCell>
                                         <TableCell align="center">Lastname</TableCell>
                                         <TableCell align="center">Actions</TableCell>
@@ -100,11 +102,18 @@ const rows = [
 ];
 
 export const GroupViewTable = () => {
+
+    const { active: group } = useSelector(selectQrAttendance);
+
+    if (!group) return null;
+
+    const { qrCodes } = group;
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
-                    <TitleRow />
+                    <TitleRow group={group} />
                     <TableRow>
                         <TableCell />
                         <TableCell>QrCode name</TableCell>
@@ -115,8 +124,8 @@ export const GroupViewTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
-                        <Row key={row.name} row={row} />
+                    {qrCodes.map((qrCode) => (
+                        <Row key={qrCode.id} row={qrCode} />
                     ))}
                 </TableBody>
             </Table>
