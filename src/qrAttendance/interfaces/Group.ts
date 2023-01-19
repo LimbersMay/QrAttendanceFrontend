@@ -1,8 +1,5 @@
-import {QrCode} from "./QrCode";
-
 export interface Group {
-    id: number;
+    id: string;
     date: string;
     name: string;
-    qrCodes: QrCode[];
 }
