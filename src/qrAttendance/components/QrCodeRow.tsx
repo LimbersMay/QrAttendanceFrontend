@@ -1,11 +1,15 @@
 import {useState} from "react";
+
 import {IconButton, MenuItem, Select, SelectChangeEvent, TableCell, TableRow} from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {Delete, Download, Edit, Save, Visibility} from "@mui/icons-material";
+
 import {useForm} from "../../hooks/useForm";
 import {ConditionalTextField} from "./ConditionalTextField";
 import {QrCode} from "../interfaces";
+import {useAppDispatch} from "../../store";
+import {startRemovingQrCodeById} from "../../store/qrAttendance/thunks";
 
 export const QrCodeRow = ({
            qrCodeRow,
@@ -13,7 +17,9 @@ export const QrCodeRow = ({
            open
 }:{ qrCodeRow: QrCode, handleOpenSubTable: Function, open: boolean }) => {
 
-    const [isEditing, setIsEditing] = useState(false);
+    const dispatch = useAppDispatch();
+
+    const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isEnable, setIsEnable] = useState<boolean>(qrCodeRow.enabled);
 
     const {formState, onInputChange} = useForm(qrCodeRow);
@@ -33,7 +39,7 @@ export const QrCodeRow = ({
     }
 
     const handleDelete = () => {
-        console.log('delete');
+        dispatch(startRemovingQrCodeById(qrCodeRow.id));
     }
 
     return (
