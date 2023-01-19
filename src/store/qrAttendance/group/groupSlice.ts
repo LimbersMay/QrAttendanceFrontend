@@ -42,11 +42,14 @@ export const groupSlice = createSlice({
         deleteGroup: (state, { payload }: PayloadAction<string>) => {
             state.groups = state.groups.filter(group => group.id !== payload);
             state.active = null;
+        },
+        addEmptyGroup: (state, action: PayloadAction<Group>) => {
+            state.groups.push(action.payload);
         }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { setActiveGroup, updateGroup, deleteGroup } = groupSlice.actions;
+export const { setActiveGroup, updateGroup, deleteGroup, addEmptyGroup } = groupSlice.actions;
 export const selectGroup = (state: RootState) => state.group;
