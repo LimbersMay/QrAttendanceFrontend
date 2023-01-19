@@ -9,11 +9,18 @@ import {
     Typography
 } from "@mui/material";
 import {SideBarItem} from "./SideBarItem";
-import {selectGroup} from "../../store/qrAttendance";
+import {selectGroup, startNewGroup} from "../../store/qrAttendance";
+import {useAppDispatch} from "../../store";
 
 export const SideBar = ({ drawerWidth = 240}) => {
 
     const { groups } = useSelector(selectGroup);
+
+    const dispatch = useAppDispatch();
+
+    const handleNewGroup = () => {
+        dispatch(startNewGroup());
+    }
 
     return (
         <Box
@@ -39,7 +46,7 @@ export const SideBar = ({ drawerWidth = 240}) => {
 
                 <List>
                     <Grid container direction='column' display='flex' alignItems='center' alignContent='center'>
-                        <Button fullWidth>New Group</Button>
+                        <Button onClick={handleNewGroup} fullWidth>New Group</Button>
                     </Grid>
                     {
                         groups.map(group => (
