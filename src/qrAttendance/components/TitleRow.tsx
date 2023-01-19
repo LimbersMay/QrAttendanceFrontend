@@ -7,7 +7,7 @@ import {useForm} from "../../hooks/useForm";
 import {ConditionalTextField} from "./ConditionalTextField";
 import {Group, QrCode} from "../interfaces";
 import {useAppDispatch} from "../../store";
-import {startNewQrCode, startUpdateGroup} from "../../store/qrAttendance";
+import {startDeleteGroup, startNewQrCode, startUpdateGroup} from "../../store/qrAttendance";
 
 export const TitleRow = React.memo(({ group }: {group: Group}) => {
 
@@ -32,21 +32,11 @@ export const TitleRow = React.memo(({ group }: {group: Group}) => {
     }
 
     const handleDeleteRow = () => {
-        console.log('delete group');
+        dispatch(startDeleteGroup(group.id));
     }
 
     const handleAddEmptyRow = () => {
-
-        const newQrCode: QrCode = {
-            id: new Date().toUTCString() + '1',
-            groupId: group.id,
-            name: 'Default',
-            date: '2023-01-18',
-            registries: 0,
-            enabled: false
-        }
-
-        dispatch(startNewQrCode(newQrCode));
+        dispatch(startNewQrCode(group.id));
     }
 
     return (
