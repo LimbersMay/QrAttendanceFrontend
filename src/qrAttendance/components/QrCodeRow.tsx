@@ -9,7 +9,7 @@ import {useForm} from "../../hooks/useForm";
 import {ConditionalTextField} from "./ConditionalTextField";
 import {QrCode} from "../interfaces";
 import {useAppDispatch} from "../../store";
-import {startRemovingQrCodeById} from "../../store/qrAttendance/thunks";
+import {startRemoveQrCode, startAddQrCodeToGroup} from "../../store/qrAttendance/thunks";
 
 export const QrCodeRow = ({
            qrCodeRow,
@@ -35,11 +35,12 @@ export const QrCodeRow = ({
     }
 
     const handleSave = () => {
+        dispatch(startAddQrCodeToGroup({...qrCodeRow, ...formState}));
         setIsEditing(false);
     }
 
     const handleDelete = () => {
-        dispatch(startRemovingQrCodeById(qrCodeRow.id));
+        dispatch(startRemoveQrCode(qrCodeRow.id));
     }
 
     return (
