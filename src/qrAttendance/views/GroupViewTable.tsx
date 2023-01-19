@@ -12,51 +12,26 @@ import {
     Paper
 } from '@mui/material';
 
-import {useState} from "react";
+import {useMemo, useState} from "react";
 import {RegistryRow} from "../components/RegistryRow";
 
 import {QrCodeRow} from "../components/QrCodeRow";
 import {QrCode} from "../interfaces";
 import {TitleRow} from "../components/TitleRow";
 import {useSelector} from "react-redux";
-import {selectQrAttendance} from "../../store/qrAttendance";
-
-const createData = (
-    name: string,
-    registries: number,
-    date: string,
-    enabled: boolean,
-    id: string,
-) => {
-    return {
-        name,
-        registries,
-        date,
-        enabled,
-        id,
-        history: [
-            {
-                id: 'jasjajs',
-                date: '2020-01-05',
-                name: 'Limbert Otoniel',
-                sourname: 'May',
-                lastname: 'Ek'
-            },
-            {
-                id: '19394',
-                date: '2020-01-02',
-                name: 'Josue',
-                sourname: 'Manuel',
-                lastname: 'Hau'
-            },
-        ],
-    };
-}
+import {selectGroup, selectQrCode, selectRegistry} from "../../store/qrAttendance";
 
 const Row = (props: { row: QrCode }) => {
 
     const { row } = props;
     const [open, setOpen] = useState(false);
+
+    const { registries } = useSelector(selectRegistry);
+
+    // Get the registries of the current qr code
+    const qrCodeRegistries = useMemo(() => {
+        return registries.filter(registry => registry.qrCodeId === row.id);
+    }, [registries, row.id]);
 
     const handleOpenSubTable = () => {
         setOpen(!open);
@@ -83,7 +58,7 @@ const Row = (props: { row: QrCode }) => {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {row.history.map((historyRow) => (
+                                    {qrCodeRegistries.map((historyRow) => (
                                         <RegistryRow key={historyRow.id} registryRow={historyRow} />
                                     ))}
                                 </TableBody>
@@ -96,18 +71,17 @@ const Row = (props: { row: QrCode }) => {
     );
 }
 
-const rows = [
-    createData('Virtual session', 10, '2023-05-12',true, 'nfjsd3454'),
-    createData('face-to-face session', 5, '2022-01-12',false, '2n4n3k3')
-];
-
 export const GroupViewTable = () => {
 
-    const { active: group } = useSelector(selectQrAttendance);
+    const { active: group } = useSelector(selectGroup);
+    const { qrCodes } = useSelector(selectQrCode);
 
     if (!group) return null;
 
-    const { qrCodes } = group;
+    // Get all QrCodes from the group
+    const groupQrCodes = useMemo(() => {
+        return qrCodes.filter(qrCode => qrCode.groupId === group.id);
+    }, [qrCodes, group.id]);
 
     return (
         <TableContainer component={Paper}>
@@ -124,7 +98,7 @@ export const GroupViewTable = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {qrCodes.map((qrCode) => (
+                    {groupQrCodes.map((qrCode) => (
                         <Row key={qrCode.id} row={qrCode} />
                     ))}
                 </TableBody>
