@@ -28,8 +28,8 @@ export const qrCodeSlice = createSlice({
         addEmptyQrCode: (state, action: PayloadAction<QrCode>) => {
             state.qrCodes.push(action.payload)
         },
-        deleteQrCode: (state, action: PayloadAction<string>) => {
-            state.qrCodes = state.qrCodes.filter(qrCode => qrCode.id !== action.payload);
+        deleteQrCode: (state, { payload }: PayloadAction<string>) => {
+            state.qrCodes = state.qrCodes.filter(qrCode => qrCode.id !== payload);
         },
         updateQrCode: (state, { payload }: PayloadAction<QrCode>) => {
             state.qrCodes = state.qrCodes.map(qrCode => {
