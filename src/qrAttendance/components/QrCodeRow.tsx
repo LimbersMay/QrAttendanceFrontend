@@ -48,7 +48,13 @@ export const QrCodeRow = ({
                 </IconButton>
             </TableCell>
             <TableCell component="th" scope="row">
-                <ConditionalTextField name="name" value={name} onChange={onInputChange} condition={isEditing}/>
+                <ConditionalTextField
+                    name="name"
+                    value={name}
+                    onChange={onInputChange}
+                    condition={isEditing}
+                    styles={{width: '120px'}}
+                />
             </TableCell>
             <TableCell align="center">
                 <ConditionalTextField
@@ -56,7 +62,7 @@ export const QrCodeRow = ({
                     value={registries}
                     onChange={onInputChange}
                     condition={isEditing}
-                    styles={{width: '100px'}}
+                    styles={{width: '50px'}}
                 />
             </TableCell>
             <TableCell align="center">
