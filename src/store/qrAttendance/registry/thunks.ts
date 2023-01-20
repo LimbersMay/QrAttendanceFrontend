@@ -1,6 +1,6 @@
 import {AppThunk} from "../../store";
 import {Registry} from "../../../qrAttendance/interfaces";
-import {updateRegistry} from "./registrySlice";
+import {deleteRegistry, updateRegistry} from "./registrySlice";
 
 export const startAddNewRegistry = (): AppThunk => {
     return async(dispatch) => {
@@ -8,9 +8,13 @@ export const startAddNewRegistry = (): AppThunk => {
     }
 }
 
-export const startDeleteRegistry = (): AppThunk => {
+export const startDeleteRegistry = (registryId: string): AppThunk => {
     return async(dispatch) => {
 
+        //  async code here
+
+        // sync code here
+        dispatch(deleteRegistry(registryId));
     }
 }
 
