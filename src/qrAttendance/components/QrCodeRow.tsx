@@ -9,7 +9,7 @@ import {useForm} from "../../hooks/useForm";
 import {ConditionalTextField} from "./ConditionalTextField";
 import {QrCode} from "../interfaces";
 import {useAppDispatch} from "../../store";
-import {startDeleteQrCode, startUpdateQrCode} from "../../store/qrAttendance";
+import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../store/qrAttendance";
 
 export const QrCodeRow = ({
            qrCodeRow,
@@ -44,7 +44,7 @@ export const QrCodeRow = ({
     }
 
     const handleDelete = () => {
-        dispatch(startDeleteQrCode(qrCodeRow.id));
+        dispatch(startDeleteQrCodeWithDependencies(qrCodeRow.id));
     }
 
     return (
