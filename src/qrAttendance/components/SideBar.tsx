@@ -1,18 +1,26 @@
+import {useSelector} from "react-redux";
 import {
     Box, Button,
     Divider,
     Drawer,
     Grid,
     List,
-    ListItem,
-    ListItemButton,
-    ListItemIcon, ListItemText, TextField,
     Toolbar,
     Typography
 } from "@mui/material";
-import {TurnedInNot} from "@mui/icons-material";
+import {SideBarItem} from "./SideBarItem";
+import {selectGroup, startNewGroup} from "../../store/qrAttendance";
+import {useAppDispatch} from "../../store";
 
 export const SideBar = ({ drawerWidth = 240}) => {
+
+    const { groups } = useSelector(selectGroup);
+
+    const dispatch = useAppDispatch();
+
+    const handleNewGroup = () => {
+        dispatch(startNewGroup());
+    }
 
     return (
         <Box
@@ -38,21 +46,11 @@ export const SideBar = ({ drawerWidth = 240}) => {
 
                 <List>
                     <Grid container direction='column' display='flex' alignItems='center' alignContent='center'>
-                        <Button fullWidth>New Group</Button>
+                        <Button onClick={handleNewGroup} fullWidth>New Group</Button>
                     </Grid>
                     {
-                        ['5A', '1B', '5B'].map(text => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <TurnedInNot />
-                                    </ListItemIcon>
-                                    <Grid container>
-                                        <ListItemText primary={text}/>
-                                        <ListItemText secondary={'22/04/2021'}/>
-                                    </Grid>
-                                </ListItemButton>
-                            </ListItem>
+                        groups.map(group => (
+                            <SideBarItem key={group.id} group={group} />
                         ))
                     }
                 </List>

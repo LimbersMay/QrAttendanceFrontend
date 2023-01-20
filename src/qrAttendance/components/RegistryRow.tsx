@@ -10,8 +10,12 @@ import {Delete, Edit, Save} from "@mui/icons-material";
 import {useForm} from "../../hooks/useForm";
 import {ConditionalTextField} from "./ConditionalTextField";
 import {Registry} from "../interfaces";
+import {useAppDispatch} from "../../store";
+import {startDeleteRegistry, startUpdateRegistry} from "../../store/qrAttendance";
 
 export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
+
+    const dispatch = useAppDispatch();
 
     const [isRowEditing, setIsRowEditing] = useState(false);
     const {formState, onInputChange} = useForm(registryRow);
@@ -23,11 +27,15 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
     }
 
     const handleSave = () => {
+        dispatch(startUpdateRegistry({
+            ...registryRow,
+            ...formState
+        }));
         setIsRowEditing(false);
     }
 
     const handleDelete = () => {
-        console.log('delete');
+        dispatch(startDeleteRegistry(registryRow.id));
     }
 
     return (
