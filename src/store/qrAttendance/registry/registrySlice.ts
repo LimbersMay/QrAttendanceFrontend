@@ -36,10 +36,13 @@ export const registrySlice = createSlice({
                 if (registry.id === action.payload.id) return action.payload;
                 return registry;
             })
+        },
+        deleteRegistriesByQrCodeId: (state, action: PayloadAction<string>) => {
+            state.registries = state.registries.filter(registry => registry.qrCodeId !== action.payload);
         }
     }
 });
 
 // Action creators are generated for each case reducer function
-export const { addNewRegistry, deleteRegistry, updateRegistry } = registrySlice.actions;
+export const { addNewRegistry, deleteRegistry, deleteRegistriesByQrCodeId, updateRegistry } = registrySlice.actions;
 export const selectRegistry = (state: RootState) => state.registry;
