@@ -36,11 +36,13 @@ export const qrCodeSlice = createSlice({
                 if (qrCode.id === payload.id) return payload;
                 return qrCode;
             });
+        },
+        deleteQrCodesByGroupId: (state, { payload }: PayloadAction<string>) => {
+            state.qrCodes = state.qrCodes.filter(qrCode => qrCode.groupId !== payload);
         }
     }
 });
 
-
 // Action creators are generated for each case reducer function
-export const { addEmptyQrCode, deleteQrCode, updateQrCode } = qrCodeSlice.actions;
+export const { addEmptyQrCode, deleteQrCode, updateQrCode, deleteQrCodesByGroupId } = qrCodeSlice.actions;
 export const selectQrCode = (state: RootState) => state.qrCode;
