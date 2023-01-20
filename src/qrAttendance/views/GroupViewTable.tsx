@@ -87,7 +87,7 @@ export const GroupViewTable = () => {
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <TableHead>
-                    <TitleRow group={group} />
+                    <TitleRow group={group} qrCodes={groupQrCodes} />
                     <TableRow>
                         <TableCell />
                         <TableCell>QrCode name</TableCell>
