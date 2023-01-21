@@ -1,21 +1,15 @@
 import React, {useEffect, useMemo, useState} from "react";
 
-interface FormValidation {
-    [key: string]: string | null;
-}
+type FormValidation<T> = Record<string, string | null>
 
-interface FormValidations {
-    [key: string]: [Function, string];
-}
+type FormValidations = Record<string, [Function, any]>
 
-interface FormState {
-    [key: string]: any;
-}
+type FormState<T> = T & Record<string, any>
 
-export const useForm = ( initialForm: FormState, formValidations: FormValidations = {} ) => {
+export const useForm = <T>( initialForm: FormState<T>, formValidations: FormValidations = {} ) => {
 
-    const [formState, setFormState] = useState<FormState>( initialForm );
-    const [ formValidation, setFormValidation ] = useState<FormValidation>({});
+    const [formState, setFormState] = useState<FormState<T>>( initialForm );
+    const [ formValidation, setFormValidation ] = useState<FormValidation<T>>({});
 
     useEffect(() => {
         createValidators();
@@ -34,11 +28,18 @@ export const useForm = ( initialForm: FormState, formValidations: FormValidation
         return true;
     }, [formValidation]);
 
+    const convertValue = (value: any) => {
+        return value.toString();
+    }
+
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
+
+        const newValue = convertValue(value);
+
         setFormState({
             ...formState,
-            [name]: value
+            [name]: newValue
         });
     }
 
@@ -48,7 +49,7 @@ export const useForm = ( initialForm: FormState, formValidations: FormValidation
 
     const createValidators = () => {
 
-        const formCheckedValues: FormValidation = {};
+        const formCheckedValues: FormValidation<T> = {};
 
         for (const formField of Object.keys(formValidations)) {
             const [ fn, errorMessage ] = formValidations[formField];
