@@ -25,3 +25,20 @@ export const startCreatingUser = ({name, email, sourname, lastname, password}: {
         }));
     }
 }
+
+export const startLogin = (email: string, password: string): AppThunk => {
+    return async(dispatch) => {
+        dispatch(checkingCredentials());
+
+        const response = await qrAttendanceApi.post('/api/auth/login-local', {
+            email,
+            password
+        });
+
+        dispatch(login({
+            uid: response.data.user.id,
+            displayName: response.data.user.name,
+            email: response.data.user.email,
+        }))
+    }
+}
