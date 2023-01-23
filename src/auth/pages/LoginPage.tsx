@@ -6,9 +6,13 @@ import {AuthLayout} from "../layout/AuthLayout";
 import {useForm} from "../../hooks/useForm";
 import React, {useState} from "react";
 
+const initialForm = {
+
+}
+
 export const LoginPage = () => {
 
-    const { onInputChange } = useForm({});
+    const { onInputChange } = useForm(initialForm);
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
