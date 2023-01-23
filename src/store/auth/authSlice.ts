@@ -30,12 +30,12 @@ export const authSlice = createSlice({
             state.displayName = payload.displayName;
             state.errorMessage = null;
         },
-        logout: (state, { payload }: PayloadAction<AuthState>) => {
+        logout: (state, { payload }: PayloadAction<string | null>) => {
             state.status = authStatusTypes.notAuthenticated;
             state.uid = null;
             state.email = null;
             state.displayName = null;
-            state.errorMessage = payload?.errorMessage;
+            state.errorMessage = payload;
         },
         checkingCredentials: (state) => {
             state.status = authStatusTypes.checking;
