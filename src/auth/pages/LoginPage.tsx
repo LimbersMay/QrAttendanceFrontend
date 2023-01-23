@@ -5,20 +5,27 @@ import {Google} from "@mui/icons-material";
 import {AuthLayout} from "../layout/AuthLayout";
 import {useForm} from "../../hooks/useForm";
 import React, {useState} from "react";
+import {useAppDispatch} from "../../store";
+import {startLogin} from "../../store/auth/thunks";
 
 const initialForm = {
-
+    email: '',
+    password: ''
 }
 
 export const LoginPage = () => {
 
-    const { onInputChange } = useForm(initialForm);
+    const dispatch = useAppDispatch();
+
+    const { onInputChange, email, password } = useForm(initialForm);
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
         setFormSubmitted(true);
+
+        dispatch(startLogin(email, password));
     }
 
     return (
@@ -33,7 +40,7 @@ export const LoginPage = () => {
                             placeholder="email@google.com"
                             fullWidth
                             name="email"
-                            // value={email}
+                            value={email}
                             onChange={onInputChange}
                         />
                     </Grid>
@@ -45,7 +52,7 @@ export const LoginPage = () => {
                             placeholder="password"
                             fullWidth
                             name="password"
-                            // value={password}
+                            value={password}
                             onChange={onInputChange}
                         />
                     </Grid>
