@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 
 type FormValidation<T> = Record<string, string | null>
 
-type FormValidations = Record<string, [Function, any]>
+export type FormValidations = Record<string, [Function, string, string?]>
 
 type FormState<T> = T & Record<string, any>
 
@@ -52,9 +52,11 @@ export const useForm = <T>( initialForm: FormState<T>, formValidations: FormVali
         const formCheckedValues: FormValidation<T> = {};
 
         for (const formField of Object.keys(formValidations)) {
-            const [ fn, errorMessage ] = formValidations[formField];
+            const [ fn, errorMessage, dependency ] = formValidations[formField];
 
-            formCheckedValues[`${formField}Valid`] = fn(formState[formField]) ? null : errorMessage;
+            //formCheckedValues[`${formField}Valid`] = fn(formState[formField]) ? null : errorMessage;
+            // make validations that accept n params
+            formCheckedValues[`${formField}Valid`] = fn(formState[formField], formState[dependency ?? '']) ? null : errorMessage;
         }
 
         setFormValidation( formCheckedValues );
@@ -65,8 +67,8 @@ export const useForm = <T>( initialForm: FormState<T>, formValidations: FormVali
         formState,
         onInputChange,
         onResetForm,
-
         ...formValidation,
+        formValidation,
         isFormValid
     }
 }
