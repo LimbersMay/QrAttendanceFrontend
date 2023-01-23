@@ -2,17 +2,44 @@ import {AuthLayout} from "../layout/AuthLayout";
 import {Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {Link as RouterLink} from "react-router-dom";
 import React, {useState} from "react";
-import {useForm} from "../../hooks/useForm";
+
+import {FormValidations, useForm} from "../../hooks/useForm";
+import {useAppDispatch} from "../../store";
+import {startCreatingUser} from "../../store/auth/thunks";
+
+const initialForm = {
+    name: '',
+    sourname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    password2: ''
+}
+
+const formValidations: FormValidations = {
+   name: [(name: string) => name.length > 1, 'Name is required'],
+    sourname: [(sourname: string) => sourname.length > 1, 'Sourname is required'],
+    lastname: [(lastname: string) => lastname.length > 1, 'Lastname is required'],
+    email: [(email: string) => email.length > 1, 'Email is required'],
+    password: [(password: string, password2: string) => password === password2, 'Passwords must be equal', 'password2'],
+}
 
 export const SignupPage = () => {
 
-    const { onInputChange } = useForm({});
+    const dispatch = useAppDispatch();
+
+    const { onInputChange, isFormValid, formValidation, name, email, password, sourname, lastname } = useForm(initialForm, formValidations);
+    const { nameValid, sournameValid, lastnameValid, emailValid, passwordValid } = formValidation;
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+
         setFormSubmitted(true);
+        if (!isFormValid) return;
+
+        dispatch(startCreatingUser({name, email, password, sourname, lastname}));
     }
 
     return (
@@ -26,10 +53,36 @@ export const SignupPage = () => {
                             type="text"
                             placeholder="Your name"
                             fullWidth
-                            name="displayName"
+                            name="name"
                             onChange={onInputChange}
-                            // error={!!displayNameValid && formSubmitted}
-                            // helperText={displayNameValid}
+                            error={!!nameValid && formSubmitted}
+                            helperText={nameValid}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sx={{mt: 2}}>
+                        <TextField
+                            label="Sourname"
+                            type="text"
+                            placeholder="Your sourname"
+                            fullWidth
+                            name="sourname"
+                            onChange={onInputChange}
+                            error={!!sournameValid && formSubmitted}
+                            helperText={sournameValid}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sx={{mt: 2}}>
+                        <TextField
+                            label="Lastname"
+                            type="text"
+                            placeholder="Your lastname"
+                            fullWidth
+                            name="lastname"
+                            onChange={onInputChange}
+                            error={!!lastnameValid && formSubmitted}
+                            helperText={lastnameValid}
                         />
                     </Grid>
 
@@ -41,8 +94,8 @@ export const SignupPage = () => {
                             fullWidth
                             name="email"
                             onChange={onInputChange}
-                            //error={!!emailValid && formSubmitted}
-                            //helperText={emailValid}
+                            error={!!emailValid && formSubmitted}
+                            helperText={emailValid}
                         />
                     </Grid>
 
@@ -54,8 +107,21 @@ export const SignupPage = () => {
                             fullWidth
                             name="password"
                             onChange={onInputChange}
-                            //error={!!passwordValid && formSubmitted}
-                            //helperText={passwordValid}
+                            error={!!passwordValid && formSubmitted}
+                            helperText={passwordValid}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sx={{mt: 2}}>
+                        <TextField
+                            label="Repeat password"
+                            type="password"
+                            placeholder="repeat password"
+                            fullWidth
+                            name="password2"
+                            onChange={onInputChange}
+                            error={!!passwordValid && formSubmitted}
+                            helperText={passwordValid}
                         />
                     </Grid>
 
