@@ -8,8 +8,8 @@ const registries: Registry[] = [
         qrCodeId: '344',
         date: new Date().toUTCString(),
         name: 'Juan',
-        sourname: 'Hau',
-        lastname: 'Diaz'
+        firstSurname: 'Hau',
+        secondSurname: 'Diaz'
     }
 ]
 
