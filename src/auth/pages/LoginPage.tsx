@@ -4,9 +4,12 @@ import {Google} from "@mui/icons-material";
 
 import {AuthLayout} from "../layout/AuthLayout";
 import {useForm} from "../../hooks/useForm";
-import React, {useState} from "react";
+import React, {useMemo} from "react";
 import {useAppDispatch} from "../../store";
 import {startLogin} from "../../store/auth/thunks";
+import {useSelector} from "react-redux";
+import {selectAuth} from "../../store/auth";
+import {authStatusTypes} from "../types";
 
 const initialForm = {
     email: '',
@@ -16,16 +19,16 @@ const initialForm = {
 export const LoginPage = () => {
 
     const dispatch = useAppDispatch();
+    const { errorMessage, status } = useSelector(selectAuth);
+
+    const isAuthenticating = useMemo(() => status === authStatusTypes.checking, [status]);
 
     const { onInputChange, email, password } = useForm(initialForm);
 
-    const [ formSubmitted, setFormSubmitted ] = useState(false);
-
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        setFormSubmitted(true);
 
-        dispatch(startLogin(email, password));
+       dispatch(startLogin(email, password));
     }
 
     return (
@@ -62,9 +65,9 @@ export const LoginPage = () => {
                         <Grid
                             item
                             xs={12}
-                            // display={ !!errorMessage && formSubmitted ? '' : 'none' }
+                            display={ !!errorMessage ? '' : 'none' }
                         >
-                            {/*<Alert severity='error'>{ errorMessage }</Alert>*/}
+                            {<Alert severity='error'>{ errorMessage }</Alert>}
                         </Grid>
 
                         <Grid item xs={12} sm={6}>
@@ -72,7 +75,7 @@ export const LoginPage = () => {
                                 type='submit'
                                 variant='contained'
                                 fullWidth
-                                // disabled={ isAuthenticating }
+                                disabled={ isAuthenticating }
                             >
                                 Login
                             </Button>
