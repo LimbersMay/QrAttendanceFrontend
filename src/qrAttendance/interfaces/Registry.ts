@@ -3,6 +3,6 @@ export interface Registry {
     qrCodeId: string,
     date: string,
     name: string,
-    sourname: string,
-    lastname: string
+    firstSurname: string,
+    secondSurname: string
 }
