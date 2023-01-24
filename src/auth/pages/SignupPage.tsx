@@ -11,7 +11,6 @@ import {authStatusTypes} from "../types";
 
 const initialForm = {
     name: '',
-    sourname: '',
     lastname: '',
     email: '',
     password: '',
@@ -20,7 +19,6 @@ const initialForm = {
 
 const formValidations: FormValidations = {
    name: [(name: string) => name.length > 1, 'Name is required'],
-    sourname: [(sourname: string) => sourname.length > 1, 'Sourname is required'],
     lastname: [(lastname: string) => lastname.length > 1, 'Lastname is required'],
     email: [(email: string) => email.length > 1, 'Email is required'],
     password: [(password: string, password2: string) => password === password2, 'Passwords must be equal', 'password2'],
@@ -31,8 +29,8 @@ export const SignupPage = () => {
     const { errorMessage, status } = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
 
-    const { onInputChange, isFormValid, formValidation, name, email, password, sourname, lastname } = useForm(initialForm, formValidations);
-    const { nameValid, sournameValid, lastnameValid, emailValid, passwordValid } = formValidation;
+    const { onInputChange, isFormValid, formValidation, name, email, password, lastname } = useForm(initialForm, formValidations);
+    const { nameValid, lastnameValid, emailValid, passwordValid } = formValidation;
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
 
@@ -44,7 +42,7 @@ export const SignupPage = () => {
         setFormSubmitted(true);
         if (!isFormValid) return;
 
-        dispatch(startCreatingUser({name, email, password, sourname, lastname}));
+        dispatch(startCreatingUser({name, email, lastname, password}));
     }
 
     return (
@@ -62,19 +60,6 @@ export const SignupPage = () => {
                             onChange={onInputChange}
                             error={!!nameValid && formSubmitted}
                             helperText={nameValid}
-                        />
-                    </Grid>
-
-                    <Grid item xs={12} sx={{mt: 2}}>
-                        <TextField
-                            label="Sourname"
-                            type="text"
-                            placeholder="Your sourname"
-                            fullWidth
-                            name="sourname"
-                            onChange={onInputChange}
-                            error={!!sournameValid && formSubmitted}
-                            helperText={sournameValid}
                         />
                     </Grid>
 
