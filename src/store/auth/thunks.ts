@@ -7,22 +7,27 @@ export const startCreatingUser = ({name, email, sourname, lastname, password}: {
         // async code here
         dispatch(checkingCredentials());
 
-        const response = await qrAttendanceApi.post('/user/register', {
-            name,
-            email,
-            fathersName: sourname,
-            mothersName: lastname,
-            password
-        });
+        try {
 
-        const { user } = response.data;
+            const response = await qrAttendanceApi.post('/user/register', {
+                name,
+                email,
+                fathersName: sourname,
+                mothersName: lastname,
+                password
+            });
 
-        // sync code here
-        dispatch(login({
-            uid: user.id,
-            displayName: user.name,
-            email: user.email,
-        }));
+            const { user } = response.data;
+
+            // sync code here
+            dispatch(login({
+                uid: user.id,
+                displayName: user.name,
+                email: user.email,
+            }));
+        } catch (error: any) {
+            dispatch(logout(error.response.data.msg));
+        }
     }
 }
 
@@ -30,21 +35,26 @@ export const startLogin = (email: string, password: string): AppThunk => {
     return async(dispatch) => {
         dispatch(checkingCredentials());
 
-        const response = await qrAttendanceApi.post('/auth/login-local', {
-            email,
-            password
-        }, {
-            withCredentials: true,
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
+        try {
+            const response = await qrAttendanceApi.post('/auth/login-local', {
+                email,
+                password
+            }, {
+                withCredentials: true,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
 
-        dispatch(login({
-            uid: response.data.user.id,
-            displayName: response.data.user.name,
-            email: response.data.user.email,
-        }))
+            dispatch(login({
+                uid: response.data.user.id,
+                displayName: response.data.user.name,
+                email: response.data.user.email,
+            }));
+
+        } catch (error: any) {
+            dispatch(logout(error.response.data.msg));
+        }
     }
 }
 
@@ -56,8 +66,6 @@ export const startLogout = (): AppThunk => {
                 'Content-Type': 'application/json'
             }
         });
-
-        console.log('LOGING OUT');
 
         dispatch(logout(null));
     }
