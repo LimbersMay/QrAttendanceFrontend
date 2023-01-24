@@ -1,11 +1,13 @@
 import {AuthLayout} from "../layout/AuthLayout";
-import {Button, Grid, Link, TextField, Typography} from "@mui/material";
+import {Alert, Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {Link as RouterLink} from "react-router-dom";
-import React, {useState} from "react";
+import React, {useMemo, useState} from "react";
 
 import {FormValidations, useForm} from "../../hooks/useForm";
-import {useAppDispatch} from "../../store";
+import {useAppDispatch, useAppSelector} from "../../store";
 import {startCreatingUser} from "../../store/auth/thunks";
+import {selectAuth} from "../../store/auth";
+import {authStatusTypes} from "../types";
 
 const initialForm = {
     name: '',
@@ -26,12 +28,15 @@ const formValidations: FormValidations = {
 
 export const SignupPage = () => {
 
+    const { errorMessage, status } = useAppSelector(selectAuth);
     const dispatch = useAppDispatch();
 
     const { onInputChange, isFormValid, formValidation, name, email, password, sourname, lastname } = useForm(initialForm, formValidations);
     const { nameValid, sournameValid, lastnameValid, emailValid, passwordValid } = formValidation;
 
     const [ formSubmitted, setFormSubmitted ] = useState(false);
+
+    const isAuthenticating = useMemo(() => status === authStatusTypes.checking, [status]);
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -127,13 +132,13 @@ export const SignupPage = () => {
 
                     <Grid
                         container
-                        // display={!!errorMessage && formSubmitted ? '' : 'none'}
+                        display={!!errorMessage ? '' : 'none'}
                     >
                         <Grid
                             item
                             xs={12}
                         >
-                            {/*<Alert severity='error'>{ errorMessage }</Alert>*/}
+                            <Alert severity='error'>{ errorMessage }</Alert>
                         </Grid>
                     </Grid>
 
@@ -143,7 +148,7 @@ export const SignupPage = () => {
                                 variant='contained'
                                 fullWidth
                                 type="submit"
-                                // disabled={isCheckingAuthentication}
+                                disabled={isAuthenticating}
                             >
                                 Signup
                             </Button>
