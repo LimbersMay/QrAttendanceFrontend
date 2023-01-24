@@ -52,8 +52,8 @@ const Row = (props: { row: QrCode }) => {
                                     <TableRow>
                                         <TableCell>Date</TableCell>
                                         <TableCell>Name(s)</TableCell>
-                                        <TableCell align="center">Sourname</TableCell>
-                                        <TableCell align="center">Lastname</TableCell>
+                                        <TableCell align="center">First surname</TableCell>
+                                        <TableCell align="center">Second surname</TableCell>
                                         <TableCell align="center">Actions</TableCell>
                                     </TableRow>
                                 </TableHead>
