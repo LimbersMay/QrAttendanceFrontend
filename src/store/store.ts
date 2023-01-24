@@ -9,7 +9,7 @@ export const store = configureStore({
         qrCode: qrCodeSlice.reducer,
         registry: registrySlice.reducer
     },
-    middleware: [socketMiddleware]
+    //middleware: [socketMiddleware]
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
