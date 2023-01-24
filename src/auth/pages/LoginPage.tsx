@@ -4,17 +4,31 @@ import {Google} from "@mui/icons-material";
 
 import {AuthLayout} from "../layout/AuthLayout";
 import {useForm} from "../../hooks/useForm";
-import React, {useState} from "react";
+import React, {useMemo} from "react";
+import {useAppDispatch} from "../../store";
+import {startLogin} from "../../store/auth/thunks";
+import {useSelector} from "react-redux";
+import {selectAuth} from "../../store/auth";
+import {authStatusTypes} from "../types";
+
+const initialForm = {
+    email: '',
+    password: ''
+}
 
 export const LoginPage = () => {
 
-    const { onInputChange } = useForm({});
+    const dispatch = useAppDispatch();
+    const { errorMessage, status } = useSelector(selectAuth);
 
-    const [ formSubmitted, setFormSubmitted ] = useState(false);
+    const isAuthenticating = useMemo(() => status === authStatusTypes.checking, [status]);
+
+    const { onInputChange, email, password } = useForm(initialForm);
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        setFormSubmitted(true);
+
+       dispatch(startLogin(email, password));
     }
 
     return (
@@ -29,7 +43,7 @@ export const LoginPage = () => {
                             placeholder="email@google.com"
                             fullWidth
                             name="email"
-                            // value={email}
+                            value={email}
                             onChange={onInputChange}
                         />
                     </Grid>
@@ -41,7 +55,7 @@ export const LoginPage = () => {
                             placeholder="password"
                             fullWidth
                             name="password"
-                            // value={password}
+                            value={password}
                             onChange={onInputChange}
                         />
                     </Grid>
@@ -51,9 +65,9 @@ export const LoginPage = () => {
                         <Grid
                             item
                             xs={12}
-                            // display={ !!errorMessage && formSubmitted ? '' : 'none' }
+                            display={ !!errorMessage ? '' : 'none' }
                         >
-                            {/*<Alert severity='error'>{ errorMessage }</Alert>*/}
+                            {<Alert severity='error'>{ errorMessage }</Alert>}
                         </Grid>
 
                         <Grid item xs={12} sm={6}>
@@ -61,7 +75,7 @@ export const LoginPage = () => {
                                 type='submit'
                                 variant='contained'
                                 fullWidth
-                                // disabled={ isAuthenticating }
+                                disabled={ isAuthenticating }
                             >
                                 Login
                             </Button>

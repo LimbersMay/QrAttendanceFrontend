@@ -1,7 +1,15 @@
 import {AppBar, Grid, IconButton, Toolbar, Typography} from "@mui/material";
 import {LogoutOutlined, MenuOutlined} from "@mui/icons-material";
+import {useAppDispatch} from "../../store";
+import {startLogout} from "../../store/auth/thunks";
 
 export const NavBar = ({ drawerWidth = 240 }) => {
+
+    const dispatch = useAppDispatch();
+
+    const handleLogout = () => {
+        dispatch(startLogout());
+    }
 
     return (
         <AppBar
@@ -31,7 +39,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
                 >
                     <Typography variant='h6' noWrap component='div'>QrAttendance</Typography>
 
-                    <IconButton color='error'>
+                    <IconButton color='error' onClick={handleLogout}>
                         <LogoutOutlined/>
                     </IconButton>
                 </Grid>

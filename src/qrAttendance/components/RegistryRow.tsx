@@ -20,7 +20,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
     const [isRowEditing, setIsRowEditing] = useState(false);
     const {formState, onInputChange} = useForm(registryRow);
 
-    const { name, sourname, lastname, date } = formState;
+    const { name, firstSurname, secondSurname, date } = formState;
 
     const handleEdit = () => {
         setIsRowEditing(true);
@@ -59,7 +59,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
             <TableCell align="center">
                 <ConditionalTextField
                     name="sourname"
-                    value={sourname}
+                    value={firstSurname}
                     onChange={onInputChange}
                     condition={isRowEditing}
                     styles={{width: '100px'}}
@@ -68,7 +68,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
             <TableCell align="center">
                 <ConditionalTextField
                     name="lastname"
-                    value={lastname}
+                    value={secondSurname}
                     onChange={onInputChange}
                     condition={isRowEditing}
                     styles={{width: '90px'}}

@@ -11,10 +11,12 @@ import {
 import {SideBarItem} from "./SideBarItem";
 import {selectGroup, startNewGroup} from "../../store/qrAttendance";
 import {useAppDispatch} from "../../store";
+import {selectAuth} from "../../store/auth";
 
 export const SideBar = ({ drawerWidth = 240}) => {
 
     const { groups } = useSelector(selectGroup);
+    const { displayName } = useSelector(selectAuth);
 
     const dispatch = useAppDispatch();
 
@@ -39,7 +41,7 @@ export const SideBar = ({ drawerWidth = 240}) => {
             >
                 <Toolbar>
                     <Typography variant='h6' noWrap component='div'>
-                        LimbertMay
+                        { displayName }
                     </Typography>
                 </Toolbar>
                 <Divider />
