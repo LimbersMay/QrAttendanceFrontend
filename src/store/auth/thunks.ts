@@ -2,7 +2,7 @@ import {AppThunk} from "../store";
 import {checkingCredentials, login, logout} from "./authSlice";
 import {qrAttendanceApi} from "../../api/qrAttendanceApi";
 
-export const startCreatingUser = ({name, email, sourname, lastname, password}: {name: string, email: string, sourname: string, lastname: string, password: string}): AppThunk => {
+export const startCreatingUser = ({name, email, lastname, password}: {name: string, email: string, lastname: string, password: string}): AppThunk => {
     return async (dispatch) => {
         // async code here
         dispatch(checkingCredentials());
@@ -12,8 +12,7 @@ export const startCreatingUser = ({name, email, sourname, lastname, password}: {
             const response = await qrAttendanceApi.post('/user/register', {
                 name,
                 email,
-                fathersName: sourname,
-                mothersName: lastname,
+                lastname,
                 password
             });
 
@@ -46,10 +45,12 @@ export const startLogin = (email: string, password: string): AppThunk => {
                 }
             });
 
+            const { user } = response.data;
+
             dispatch(login({
-                uid: response.data.user.id,
-                displayName: response.data.user.name,
-                email: response.data.user.email,
+                uid: user.id,
+                displayName: user.name,
+                email: user.email,
             }));
 
         } catch (error: any) {
