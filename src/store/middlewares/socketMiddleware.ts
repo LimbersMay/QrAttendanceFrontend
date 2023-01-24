@@ -5,7 +5,7 @@ import { addNewRegistry } from '../qrAttendance';
 import {Registry} from "../../qrAttendance/interfaces";
 
 const socketMiddleware: Middleware = (store) => {
-    const socket = io('http://localhost:5173');
+    const socket = io('http://localhost:3000');
     const handleNewRegistries = (data: Registry) => {
         store.dispatch(addNewRegistry(data));
     }
