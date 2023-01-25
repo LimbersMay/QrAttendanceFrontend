@@ -14,6 +14,7 @@ export const QrAttendancePage = () => {
     const { uid } = useSelector(selectAuth);
     const { active } =  useSelector(selectGroup);
 
+    // Una vez iniciado sesión, cargamos la información adicional del usuario
     useEffect(() => {
         if (uid) dispatch(startLoadingGroups(uid));
     }, []);
