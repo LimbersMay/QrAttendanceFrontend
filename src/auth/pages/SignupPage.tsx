@@ -118,6 +118,7 @@ export const SignupPage = () => {
                     <Grid
                         container
                         display={!!errorMessage ? '' : 'none'}
+                        sx={{mt: 1}}
                     >
                         <Grid
                             item

@@ -8,7 +8,6 @@ export const startCreatingUser = ({name, email, lastname, password}: {name: stri
         dispatch(checkingCredentials());
 
         try {
-
             const response = await qrAttendanceApi.post('/user/register', {
                 name,
                 email,
@@ -25,7 +24,7 @@ export const startCreatingUser = ({name, email, lastname, password}: {name: stri
                 email: user.email,
             }));
         } catch (error: any) {
-            dispatch(logout(error.response.data.msg));
+            dispatch(logout(null));
         }
     }
 }
@@ -54,7 +53,8 @@ export const startLogin = (email: string, password: string): AppThunk => {
             }));
 
         } catch (error: any) {
-            dispatch(logout(error.response.data.msg));
+
+            dispatch(logout(null));
         }
     }
 }

@@ -26,6 +26,8 @@ export const useCheckAuth = () => {
                 displayName: name,
                 email: email,
             }));
+        }).catch(() => {
+            dispatch(logout(null));
         });
 
     }, []);
