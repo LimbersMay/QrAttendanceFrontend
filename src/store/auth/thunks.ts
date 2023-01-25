@@ -1,7 +1,6 @@
 import {AppThunk} from "../store";
 import {checkingCredentials, login, logout} from "./authSlice";
 import {qrAttendanceApi} from "../../api/qrAttendanceApi";
-import {getValidationError} from "../../utilities";
 
 export const startCreatingUser = ({name, email, lastname, password}: {name: string, email: string, lastname: string, password: string}): AppThunk => {
     return async (dispatch) => {
@@ -9,7 +8,6 @@ export const startCreatingUser = ({name, email, lastname, password}: {name: stri
         dispatch(checkingCredentials());
 
         try {
-
             const response = await qrAttendanceApi.post('/user/register', {
                 name,
                 email,
@@ -26,9 +24,7 @@ export const startCreatingUser = ({name, email, lastname, password}: {name: stri
                 email: user.email,
             }));
         } catch (error: any) {
-            if (error.response) return dispatch(logout(error.response.data.msg));
-
-            dispatch(logout(getValidationError(error.code)));
+            dispatch(logout(null));
         }
     }
 }
@@ -58,9 +54,7 @@ export const startLogin = (email: string, password: string): AppThunk => {
 
         } catch (error: any) {
 
-            if (error.response) return dispatch(logout(error.response.data.msg));
-
-            dispatch(logout(getValidationError(error.code)));
+            dispatch(logout(null));
         }
     }
 }

@@ -26,8 +26,8 @@ export const useCheckAuth = () => {
                 displayName: name,
                 email: email,
             }));
-        }).catch((error) => {
-            dispatch(logout(error.message));
+        }).catch(() => {
+            dispatch(logout(null));
         });
 
     }, []);
