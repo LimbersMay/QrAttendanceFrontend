@@ -5,24 +5,18 @@ import {QrCode} from "../../qrAttendance/interfaces";
 import {deleteRegistriesByQrCodeId} from "./registry";
 import {qrAttendanceApi} from "../../api/qrAttendanceApi";
 
-export const startDeleteGroupWithDependencies = (idGroup: string, qrCodes: QrCode[]):AppThunk => {
-    return async(dispatch) => {
+export const startDeleteGroupWithDependencies = (idGroup: string, qrCodes: QrCode[]): AppThunk => {
+    return async (dispatch) => {
 
         // async code here
-        try {
-            await qrAttendanceApi.delete('/group/delete', {
-                data: {
-                    id: idGroup
-                }
-            });
-
-            dispatch(deleteGroup(idGroup));
-
-        } catch (error: any) {
-            console.log('Error: ', error.data.msg);
-        }
+        await qrAttendanceApi.delete('/group/delete', {
+            data: {
+                id: idGroup
+            }
+        });
 
         // sync code here
+        dispatch(deleteGroup(idGroup));
         dispatch(deleteGroup(idGroup));
         qrCodes.forEach(qrCode => {
             dispatch(deleteRegistriesByQrCodeId(qrCode.id));
@@ -30,8 +24,8 @@ export const startDeleteGroupWithDependencies = (idGroup: string, qrCodes: QrCod
         dispatch(deleteQrCodesByGroupId(idGroup));
     }
 }
-export const startDeleteQrCodeWithDependencies = (idQrCode: string):AppThunk => {
-    return async(dispatch) => {
+export const startDeleteQrCodeWithDependencies = (idQrCode: string): AppThunk => {
+    return async (dispatch) => {
 
         // async code here
 
