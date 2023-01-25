@@ -1,6 +1,7 @@
 import {AppThunk} from "../store";
 import {checkingCredentials, login, logout} from "./authSlice";
 import {qrAttendanceApi} from "../../api/qrAttendanceApi";
+import {getValidationError} from "../../utilities";
 
 export const startCreatingUser = ({name, email, lastname, password}: {name: string, email: string, lastname: string, password: string}): AppThunk => {
     return async (dispatch) => {
@@ -25,7 +26,9 @@ export const startCreatingUser = ({name, email, lastname, password}: {name: stri
                 email: user.email,
             }));
         } catch (error: any) {
-            dispatch(logout(error.response.data.msg));
+            if (error.response) return dispatch(logout(error.response.data.msg));
+
+            dispatch(logout(getValidationError(error.code)));
         }
     }
 }
@@ -54,7 +57,10 @@ export const startLogin = (email: string, password: string): AppThunk => {
             }));
 
         } catch (error: any) {
-            dispatch(logout(error.response.data.msg));
+
+            if (error.response) return dispatch(logout(error.response.data.msg));
+
+            dispatch(logout(getValidationError(error.code)));
         }
     }
 }
