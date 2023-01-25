@@ -25,18 +25,32 @@ export const startDeleteGroup = (groupId: string): AppThunk => {
 }
 
 export const startNewGroup = (): AppThunk => {
-    return async(dispatch) => {
+    return async(dispatch, getState) => {
+
+        const userId = getState().auth.uid;
 
         // async code here
-        const newGroup: Group = {
-            name: 'Default',
-            date: new Date().toUTCString(),
-            id: new Date().toISOString() // get the if from the backend
-        }
+        try {
+            const response = await qrAttendanceApi.post('/group/create', {
+                name: 'Default',
+                userId: userId
+            });
 
-        // sync code here
-        dispatch(addEmptyGroup(newGroup));
-        dispatch(setActiveGroup(newGroup));
+            const { group } = response.data;
+
+            const newGroup = {
+                id: group.id,
+                date: group.createdAt,
+                name: group.name
+            }
+
+            // sync code here
+            dispatch(addEmptyGroup(newGroup));
+            dispatch(setActiveGroup(newGroup));
+
+        } catch (error: any) {
+            console.log('Message error: ', error.data.msg)
+        }
     }
 }
 
@@ -46,9 +60,16 @@ export const startLoadingGroups = (userId: string): AppThunk => {
         // async code here
         try {
             const response = await qrAttendanceApi.get(`/group/all/${userId}`);
-            const groups: Group[] = response.data.groups;
 
-            dispatch(setGroups(groups));
+            const { groups } = response.data;
+
+            const mappedGroups: Group[] = groups.map((group: any) => ({
+                id: group.id,
+                name: group.name,
+                date: group.createdAt
+            }));
+
+            dispatch(setGroups(mappedGroups));
 
         } catch (error: any) {
             dispatch(logout(error.response.data.msg));
