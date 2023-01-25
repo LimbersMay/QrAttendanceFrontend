@@ -3,7 +3,6 @@ import {QrAttendanceLayout} from "../layout/QrAttendanceLayout";
 
 import {GroupViewTable, NothingSelectedView} from "../views";
 import {selectGroup, startLoadingGroups} from "../../store/qrAttendance";
-import {selectAuth} from "../../store/auth";
 import {useEffect} from "react";
 import {useAppDispatch} from "../../store";
 
@@ -11,12 +10,11 @@ export const QrAttendancePage = () => {
 
     const dispatch = useAppDispatch();
 
-    const { uid } = useSelector(selectAuth);
     const { active } =  useSelector(selectGroup);
 
     // Una vez iniciado sesión, cargamos la información adicional del usuario
     useEffect(() => {
-        if (uid) dispatch(startLoadingGroups(uid));
+        dispatch(startLoadingGroups());
     }, []);
 
     return (
