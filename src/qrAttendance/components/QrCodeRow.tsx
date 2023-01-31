@@ -14,8 +14,9 @@ import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../store
 export const QrCodeRow = ({
            qrCodeRow,
            handleOpenSubTable,
-           open
-}:{ qrCodeRow: QrCode, handleOpenSubTable: Function, open: boolean }) => {
+           open,
+    registriesLength
+}:{ qrCodeRow: QrCode, handleOpenSubTable: Function, open: boolean, registriesLength: number }) => {
 
     const dispatch = useAppDispatch();
 
@@ -23,7 +24,7 @@ export const QrCodeRow = ({
     const [isEnable, setIsEnable] = useState<boolean>(qrCodeRow.enabled);
 
     const {formState, onInputChange} = useForm(qrCodeRow);
-    const {name, registries, date} = formState;
+    const {name, date} = formState;
 
     const onSelectChange = (event: SelectChangeEvent) => {
         if (event.target.value === 'YES') return setIsEnable(true);
@@ -68,13 +69,7 @@ export const QrCodeRow = ({
                 />
             </TableCell>
             <TableCell align="center">
-                <ConditionalTextField
-                    name="registries"
-                    value={registries}
-                    onChange={onInputChange}
-                    condition={isEditing}
-                    styles={{width: '50px'}}
-                />
+                {registriesLength}
             </TableCell>
             <TableCell align="center">
                 <ConditionalTextField
