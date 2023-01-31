@@ -5,6 +5,7 @@ export const getValidationError = (errorCode: string) => {
         ERR_NETWORK: 'NETWORK ERROR',
         GROUP_NOT_FOUND: 'GROUP NOT FOUND',
         INVALID_CREDENTIALS: 'INVALID CREDENTIALS',
+        DUPLICATED_EMAIL: 'EMAIL ALREADY EXISTS',
     }
 
     return codeMatcher[errorCode] || "Something went wrong";
