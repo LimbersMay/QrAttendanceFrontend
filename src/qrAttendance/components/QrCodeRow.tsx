@@ -3,13 +3,14 @@ import {useState} from "react";
 import {IconButton, MenuItem, Select, SelectChangeEvent, TableCell, TableRow} from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import {Delete, Download, Edit, Save, Visibility} from "@mui/icons-material";
+import {Save} from "@mui/icons-material";
 
 import {useForm} from "../../hooks/useForm";
 import {ConditionalTextField} from "./ConditionalTextField";
 import {QrCode} from "../interfaces";
 import {useAppDispatch} from "../../store";
 import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../store/qrAttendance";
+import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
 
 export const QrCodeRow = ({
            qrCodeRow,
@@ -46,6 +47,14 @@ export const QrCodeRow = ({
 
     const handleDelete = () => {
         dispatch(startDeleteQrCodeWithDependencies(qrCodeRow.id));
+    }
+
+    const handleShow = () => {
+
+    }
+
+    const handleDownload = () => {
+
     }
 
     return (
@@ -91,20 +100,17 @@ export const QrCodeRow = ({
                 }
             </TableCell>
             <TableCell align="center">
-                <IconButton onClick={handleDelete}>
-                    <Visibility/>
-                </IconButton>
-                <IconButton onClick={handleDelete}>
-                    <Download/>
-                </IconButton>
                 {
                     isEditing
                         ? <IconButton onClick={handleSave}><Save/></IconButton>
-                        : <IconButton onClick={handleEdit}><Edit/></IconButton>
+                        : <QrCodeMenuOptions
+                            handleEdit={handleEdit}
+                            handleDelete={handleDelete}
+                            handleShow={handleShow}
+                            handleDownload={handleDownload}
+                        />
                 }
-                <IconButton onClick={handleDelete}>
-                    <Delete/>
-                </IconButton>
+
             </TableCell>
         </TableRow>
     )
