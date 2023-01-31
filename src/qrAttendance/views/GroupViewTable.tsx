@@ -39,7 +39,11 @@ const Row = (props: { row: QrCode }) => {
 
     return (
         <>
-            <QrCodeRow qrCodeRow={row} handleOpenSubTable={handleOpenSubTable} open={open}/>
+            <QrCodeRow qrCodeRow={row}
+                       handleOpenSubTable={handleOpenSubTable}
+                       open={open}
+                       registriesLength={qrCodeRegistries.length}
+            />
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
