@@ -5,13 +5,14 @@ import {
     IconButton,
     TableRow
 } from "@mui/material";
-import {Delete, Edit, Save} from "@mui/icons-material";
+import {Save} from "@mui/icons-material";
 
 import {useForm} from "../../hooks/useForm";
 import {ConditionalTextField} from "./ConditionalTextField";
 import {Registry} from "../interfaces";
 import {useAppDispatch} from "../../store";
 import {startDeleteRegistry, startUpdateRegistry} from "../../store/qrAttendance";
+import {RegistryRowMenuOptions} from "./RegistryMenuOptions";
 
 export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
 
@@ -58,7 +59,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
             </TableCell>
             <TableCell align="center">
                 <ConditionalTextField
-                    name="sourname"
+                    name="firstSurname"
                     value={firstSurname}
                     onChange={onInputChange}
                     condition={isRowEditing}
@@ -67,7 +68,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
             </TableCell>
             <TableCell align="center">
                 <ConditionalTextField
-                    name="lastname"
+                    name="secondSurname"
                     value={secondSurname}
                     onChange={onInputChange}
                     condition={isRowEditing}
@@ -77,12 +78,14 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
             <TableCell align="center">
                 {
                     isRowEditing
-                        ? <IconButton onClick={handleSave}><Save/></IconButton>
-                        : <IconButton onClick={handleEdit}><Edit /></IconButton>
+                        ? <IconButton onClick={handleSave}>
+                            <Save />
+                        </IconButton>
+                        : <RegistryRowMenuOptions
+                            handleEdit={handleEdit}
+                            handleDelete={handleDelete}
+                        />
                 }
-                <IconButton onClick={handleDelete}>
-                    <Delete />
-                </IconButton>
             </TableCell>
         </TableRow>
     )
