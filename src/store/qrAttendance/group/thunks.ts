@@ -39,7 +39,7 @@ export const startNewGroup = (): AppThunk => {
             name: 'Default'
         });
 
-        const {group} = response.data;
+        const {body: group} = response.data;
 
         const newGroup = {
             id: group.id,
@@ -58,7 +58,7 @@ export const startLoadingGroups = (): AppThunk => {
 
         // async code here
         const response = await qrAttendanceApi.get(`/group/all`);
-        const {groups} = response.data;
+        const {body: groups} = response.data;
 
         // sync code here
         const mappedGroups: Group[] = groups.map((group: any) => ({
