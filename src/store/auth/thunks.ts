@@ -8,7 +8,7 @@ export const startCreatingUser = ({name, email, lastname, password}: {name: stri
         dispatch(checkingCredentials());
 
         try {
-            const response = await qrAttendanceApi.post('/user/register', {
+            const response = await qrAttendanceApi.post('/auth/register', {
                 name,
                 email,
                 lastname,
@@ -34,7 +34,7 @@ export const startLogin = (email: string, password: string): AppThunk => {
         dispatch(checkingCredentials());
 
         try {
-            const response = await qrAttendanceApi.post('/auth/login-local', {
+            const response = await qrAttendanceApi.post('/auth/login', {
                 email,
                 password
             }, {
@@ -44,7 +44,8 @@ export const startLogin = (email: string, password: string): AppThunk => {
                 }
             });
 
-            const { user } = response.data;
+            const { body: user } = response.data;
+            
 
             dispatch(login({
                 uid: user.id,
@@ -53,6 +54,8 @@ export const startLogin = (email: string, password: string): AppThunk => {
             }));
 
         } catch (error: any) {
+            console.log(error);
+            
 
             dispatch(logout(null));
         }
