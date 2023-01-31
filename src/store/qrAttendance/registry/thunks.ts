@@ -13,6 +13,7 @@ export const startDeleteRegistry = (registryId: string): AppThunk => {
     return async(dispatch) => {
 
         //  async code here
+        await qrAttendanceApi.delete(`/registry/delete/${registryId}`);
 
         // sync code here
         dispatch(deleteRegistry(registryId));
