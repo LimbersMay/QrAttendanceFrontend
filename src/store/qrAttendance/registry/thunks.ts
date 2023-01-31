@@ -23,6 +23,16 @@ export const startUpdateRegistry = (registry: Registry): AppThunk => {
     return async(dispatch) => {
         // async code here
 
+        await qrAttendanceApi.put(`/registry/update`, {
+            id: registry.id,
+            updatedFields: {
+                name: registry.name,
+                firstSurname: registry.firstSurname,
+                secondSurname: registry.secondSurname,
+                updatedAt: registry.date
+            }
+        });
+
         // sync code here
         dispatch(updateRegistry(registry));
     }
