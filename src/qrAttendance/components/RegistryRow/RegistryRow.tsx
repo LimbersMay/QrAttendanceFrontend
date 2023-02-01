@@ -13,6 +13,8 @@ import {Registry} from "../../interfaces";
 import {useAppDispatch} from "../../../store";
 import {startDeleteRegistry, startUpdateRegistry} from "../../../store/qrAttendance";
 import {RegistryRowMenuOptions} from "./RegistryMenuOptions";
+import {RegistryDatePicker} from "./RegistryDatePicker";
+import dayjs from "dayjs";
 
 export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
 
@@ -21,16 +23,22 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
     const [isRowEditing, setIsRowEditing] = useState(false);
     const {formState, onInputChange} = useForm(registryRow);
 
-    const { name, firstSurname, secondSurname, date } = formState;
+    const { name, firstSurname, secondSurname } = formState;
+    const [ date, setDate ] = useState(registryRow.date);
 
     const handleEdit = () => {
         setIsRowEditing(true);
     }
 
+    const onChangeDate = (date: string) => {
+        setDate(date);
+    }
+
     const handleSave = () => {
         dispatch(startUpdateRegistry({
             ...registryRow,
-            ...formState
+            ...formState,
+            date: date
         }));
         setIsRowEditing(false);
     }
@@ -42,12 +50,13 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
     return (
         <TableRow>
             <TableCell component="th" scope="row">
-                <ConditionalTextField
-                    name="date"
-                    value={date}
-                    onChange={onInputChange}
-                    condition={isRowEditing}
-                />
+
+                {
+                    isRowEditing
+                        ? <RegistryDatePicker date={date} onChangeDate={onChangeDate} />
+                        : dayjs(date).format('MMMM D, YYYY h:mm A')
+                }
+
             </TableCell>
             <TableCell>
                 <ConditionalTextField
