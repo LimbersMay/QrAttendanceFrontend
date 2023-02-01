@@ -5,12 +5,15 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {Save} from "@mui/icons-material";
 
+
+
 import {useForm} from "../../hooks/useForm";
 import {ConditionalTextField} from "./ConditionalTextField";
 import {QrCode} from "../interfaces";
 import {useAppDispatch} from "../../store";
 import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../store/qrAttendance";
 import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
+import {SnackbarUtilities} from "../../utilities/snackbar-manager";
 
 export const QrCodeRow = ({
            qrCodeRow,
@@ -47,6 +50,7 @@ export const QrCodeRow = ({
 
     const handleDelete = () => {
         dispatch(startDeleteQrCodeWithDependencies(qrCodeRow.id));
+        SnackbarUtilities.sucess(`QR Code ${qrCodeRow.name} deleted successfully`);
     }
 
     const handleShow = () => {
