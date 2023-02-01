@@ -13,9 +13,9 @@ import {
 } from '@mui/material';
 
 import {useMemo, useState} from "react";
-import {RegistryRow} from "../components/RegistryRow";
+import {RegistryRow} from "../components/RegistryRow/RegistryRow";
 
-import {QrCodeRow} from "../components/QrCodeRow";
+import {QrCodeRow} from "../components/qrCodeRow/QrCodeRow";
 import {QrCode} from "../interfaces";
 import {TitleRow} from "../components/titleRow/TitleRow";
 import {useSelector} from "react-redux";

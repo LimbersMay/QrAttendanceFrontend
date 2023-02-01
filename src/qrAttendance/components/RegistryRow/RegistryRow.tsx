@@ -7,11 +7,11 @@ import {
 } from "@mui/material";
 import {Save} from "@mui/icons-material";
 
-import {useForm} from "../../hooks/useForm";
-import {ConditionalTextField} from "./ConditionalTextField";
-import {Registry} from "../interfaces";
-import {useAppDispatch} from "../../store";
-import {startDeleteRegistry, startUpdateRegistry} from "../../store/qrAttendance";
+import {useForm} from "../../../hooks/useForm";
+import {ConditionalTextField} from "../ConditionalTextField";
+import {Registry} from "../../interfaces";
+import {useAppDispatch} from "../../../store";
+import {startDeleteRegistry, startUpdateRegistry} from "../../../store/qrAttendance";
 import {RegistryRowMenuOptions} from "./RegistryMenuOptions";
 
 export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {

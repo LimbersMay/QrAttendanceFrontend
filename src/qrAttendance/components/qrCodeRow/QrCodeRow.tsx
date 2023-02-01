@@ -7,13 +7,13 @@ import {Save} from "@mui/icons-material";
 
 
 
-import {useForm} from "../../hooks/useForm";
-import {ConditionalTextField} from "./ConditionalTextField";
-import {QrCode} from "../interfaces";
-import {useAppDispatch} from "../../store";
-import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../store/qrAttendance";
+import {useForm} from "../../../hooks/useForm";
+import {ConditionalTextField} from "../ConditionalTextField";
+import {QrCode} from "../../interfaces";
+import {useAppDispatch} from "../../../store";
+import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../../store/qrAttendance";
 import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
-import {SnackbarUtilities} from "../../utilities/snackbar-manager";
+import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
 
 export const QrCodeRow = ({
            qrCodeRow,
