@@ -14,7 +14,7 @@ export const startLoadingQrCodes = (): AppThunk => {
                 id: qrCode.id,
                 groupId: qrCode.groupId,
                 name: qrCode.name,
-                date: qrCode.createdAt,
+                date: qrCode.manualRegistrationDate,
                 enabled: qrCode.enabled
             }
         });
@@ -59,7 +59,7 @@ export const startUpdateQrCode = (qrCode: QrCode): AppThunk => {
             updatedFields: {
                 name,
                 enabled,
-                updatedAt: date
+                manualRegistrationDate: date
             }
         });
 
