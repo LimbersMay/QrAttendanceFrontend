@@ -9,14 +9,19 @@ export const startCreatingUser = ({name, email, lastname, password}: {name: stri
         dispatch(checkingCredentials());
 
         try {
-            const response = await qrAttendanceApi.post('/auth/register', {
+            await qrAttendanceApi.post('/auth/register', {
                 name,
                 email,
                 lastname,
                 password
             });
 
-            const { user } = response.data;
+            const response = await qrAttendanceApi.post('/auth/login', {
+                email,
+                password
+            });
+
+            const { body: user } = response.data;
 
             // sync code here
             dispatch(login({
