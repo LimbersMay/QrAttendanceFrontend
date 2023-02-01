@@ -12,6 +12,8 @@ import {
     startNewQrCode,
     startUpdateGroup
 } from "../../../store/qrAttendance";
+import ConfirmDialog from "./ConfirmDialog";
+import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
 
 export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: QrCode[]}) => {
 
@@ -22,12 +24,18 @@ export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: 
     const dispatch = useAppDispatch();
 
     const { formState, onInputChange } = useForm(initialStateForm);
+
     const [isRowEditing, setIsRowEditing] = useState<boolean>(false);
+    const [isTryingToDelete, setIsTryingToDelete] = useState<boolean>(false);
 
     const { groupTitle } = formState;
 
     const handleEditRow = () => {
         setIsRowEditing(true);
+    }
+
+    const handleToggleDeleteDialog = () => {
+        setIsTryingToDelete(!isTryingToDelete);
     }
 
     const handleSaveRow = () => {
@@ -37,6 +45,7 @@ export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: 
 
     const handleDeleteRow = () => {
         dispatch(startDeleteGroupWithDependencies(group.id, qrCodes));
+        SnackbarUtilities.sucess(`Group deleted successfully`);
     }
 
     const handleAddEmptyRow = () => {
@@ -95,10 +104,15 @@ export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: 
                      : <Tooltip title={'Edit title'} ><IconButton onClick={handleEditRow}> <EditOutlined /> </IconButton></Tooltip>
                 }
                 <Tooltip title={'Delete group'}>
-                    <IconButton onClick={handleDeleteRow}>
+                    <IconButton onClick={handleToggleDeleteDialog}>
                         <DeleteOutlined/>
                     </IconButton>
                 </Tooltip>
+
+                {
+                    isTryingToDelete && <ConfirmDialog onConfirm={handleDeleteRow} onCancel={handleToggleDeleteDialog} />
+                }
+
             </TableCell>
 
         </TableRow>
