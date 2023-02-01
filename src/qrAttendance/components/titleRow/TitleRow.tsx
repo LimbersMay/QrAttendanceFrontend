@@ -2,16 +2,16 @@ import React, {useMemo, useState} from "react";
 
 import {IconButton, TableCell, tableCellClasses, TableRow, TextField, Tooltip} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, SaveOutlined, DeleteOutlined} from "@mui/icons-material";
-import {useForm} from "../../hooks/useForm";
+import {useForm} from "../../../hooks/useForm";
 
-import {ConditionalTextField} from "./ConditionalTextField";
-import {Group, QrCode} from "../interfaces";
-import {useAppDispatch} from "../../store";
+import {ConditionalTextField} from "../ConditionalTextField";
+import {Group, QrCode} from "../../interfaces";
+import {useAppDispatch} from "../../../store";
 import {
     startDeleteGroupWithDependencies,
     startNewQrCode,
     startUpdateGroup
-} from "../../store/qrAttendance";
+} from "../../../store/qrAttendance";
 
 export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: QrCode[]}) => {
 

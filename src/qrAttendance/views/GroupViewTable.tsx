@@ -17,7 +17,7 @@ import {RegistryRow} from "../components/RegistryRow";
 
 import {QrCodeRow} from "../components/QrCodeRow";
 import {QrCode} from "../interfaces";
-import {TitleRow} from "../components/TitleRow";
+import {TitleRow} from "../components/titleRow/TitleRow";
 import {useSelector} from "react-redux";
 import {selectGroup, selectQrCode, selectRegistry} from "../../store/qrAttendance";
 
