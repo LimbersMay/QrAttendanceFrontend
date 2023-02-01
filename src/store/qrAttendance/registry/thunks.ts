@@ -30,7 +30,7 @@ export const startUpdateRegistry = (registry: Registry): AppThunk => {
                 name: registry.name,
                 firstSurname: registry.firstSurname,
                 secondSurname: registry.secondSurname,
-                updatedAt: registry.date
+                checkinTime: registry.date
             }
         });
 
@@ -50,7 +50,7 @@ export const startLoadingRegistries = (): AppThunk => {
             return {
                 id: registry.id,
                 qrCodeId: registry.qrCodeId,
-                date: registry.date,
+                date: registry.checkinTime,
                 name: registry.name,
                 firstSurname: registry.firstSurname,
                 secondSurname: registry.secondSurname
