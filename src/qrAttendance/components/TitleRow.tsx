@@ -1,6 +1,6 @@
 import React, {useMemo, useState} from "react";
 
-import {IconButton, TableCell, tableCellClasses, TableRow, TextField} from "@mui/material";
+import {IconButton, TableCell, tableCellClasses, TableRow, TextField, Tooltip} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, SaveOutlined, DeleteOutlined} from "@mui/icons-material";
 import {useForm} from "../../hooks/useForm";
 
@@ -83,17 +83,22 @@ export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: 
                         )
                     }}
                 />
-                <IconButton onClick={handleAddEmptyRow}>
-                    <AddOutlined/>
-                </IconButton>
+                <Tooltip title={'Add new qr code'} >
+                    <IconButton onClick={handleAddEmptyRow}>
+                        <AddOutlined/>
+                    </IconButton>
+                </Tooltip>
+
                 {
                     isRowEditing
                      ? <IconButton onClick={handleSaveRow}> <SaveOutlined /> </IconButton>
-                     : <IconButton onClick={handleEditRow}> <EditOutlined /> </IconButton>
+                     : <Tooltip title={'Edit title'} ><IconButton onClick={handleEditRow}> <EditOutlined /> </IconButton></Tooltip>
                 }
-                <IconButton onClick={handleDeleteRow}>
-                    <DeleteOutlined/>
-                </IconButton>
+                <Tooltip title={'Delete group'}>
+                    <IconButton onClick={handleDeleteRow}>
+                        <DeleteOutlined/>
+                    </IconButton>
+                </Tooltip>
             </TableCell>
 
         </TableRow>
