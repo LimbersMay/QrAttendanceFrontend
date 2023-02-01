@@ -16,7 +16,7 @@ export const AxiosInterceptor = () => {
         (error) => {
 
             if (error.response) {
-                SnackbarUtilities.error(getValidationError(error.response.data.msg));
+                SnackbarUtilities.error(getValidationError(error.response.data.body));
             }
 
             if (!error.response) {

@@ -4,6 +4,7 @@ import {TurnedInNot} from "@mui/icons-material";
 import {Group} from "../interfaces";
 import {useAppDispatch} from "../../store";
 import {setActiveGroup} from "../../store/qrAttendance";
+import dayjs from "dayjs";
 
 export const SideBarItem = ({ group }: {group: Group}) => {
 
@@ -21,7 +22,7 @@ export const SideBarItem = ({ group }: {group: Group}) => {
                 </ListItemIcon>
                 <Grid container>
                     <ListItemText primary={group.name}/>
-                    <ListItemText secondary={group.date}/>
+                    <ListItemText secondary={dayjs(group.date).format('DD/MM/YYYY')}/>
                 </Grid>
             </ListItemButton>
         </ListItem>

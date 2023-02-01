@@ -13,11 +13,11 @@ import {
 } from '@mui/material';
 
 import {useMemo, useState} from "react";
-import {RegistryRow} from "../components/RegistryRow";
+import {RegistryRow} from "../components/RegistryRow/RegistryRow";
 
-import {QrCodeRow} from "../components/QrCodeRow";
+import {QrCodeRow} from "../components/qrCodeRow/QrCodeRow";
 import {QrCode} from "../interfaces";
-import {TitleRow} from "../components/TitleRow";
+import {TitleRow} from "../components/titleRow/TitleRow";
 import {useSelector} from "react-redux";
 import {selectGroup, selectQrCode, selectRegistry} from "../../store/qrAttendance";
 
@@ -39,7 +39,11 @@ const Row = (props: { row: QrCode }) => {
 
     return (
         <>
-            <QrCodeRow qrCodeRow={row} handleOpenSubTable={handleOpenSubTable} open={open}/>
+            <QrCodeRow qrCodeRow={row}
+                       handleOpenSubTable={handleOpenSubTable}
+                       open={open}
+                       registriesLength={qrCodeRegistries.length}
+            />
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
                     <Collapse in={open} timeout="auto" unmountOnExit>

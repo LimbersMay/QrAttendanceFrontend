@@ -5,13 +5,16 @@ import {
     IconButton,
     TableRow
 } from "@mui/material";
-import {Delete, Edit, Save} from "@mui/icons-material";
+import {Save} from "@mui/icons-material";
 
-import {useForm} from "../../hooks/useForm";
-import {ConditionalTextField} from "./ConditionalTextField";
-import {Registry} from "../interfaces";
-import {useAppDispatch} from "../../store";
-import {startDeleteRegistry, startUpdateRegistry} from "../../store/qrAttendance";
+import {useForm} from "../../../hooks/useForm";
+import {ConditionalTextField} from "../ConditionalTextField";
+import {Registry} from "../../interfaces";
+import {useAppDispatch} from "../../../store";
+import {startDeleteRegistry, startUpdateRegistry} from "../../../store/qrAttendance";
+import {RegistryRowMenuOptions} from "./RegistryMenuOptions";
+import {RegistryDatePicker} from "./RegistryDatePicker";
+import dayjs from "dayjs";
 
 export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
 
@@ -20,16 +23,22 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
     const [isRowEditing, setIsRowEditing] = useState(false);
     const {formState, onInputChange} = useForm(registryRow);
 
-    const { name, firstSurname, secondSurname, date } = formState;
+    const { name, firstSurname, secondSurname } = formState;
+    const [ date, setDate ] = useState(registryRow.date);
 
     const handleEdit = () => {
         setIsRowEditing(true);
     }
 
+    const onChangeDate = (date: string) => {
+        setDate(date);
+    }
+
     const handleSave = () => {
         dispatch(startUpdateRegistry({
             ...registryRow,
-            ...formState
+            ...formState,
+            date: date
         }));
         setIsRowEditing(false);
     }
@@ -41,12 +50,13 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
     return (
         <TableRow>
             <TableCell component="th" scope="row">
-                <ConditionalTextField
-                    name="date"
-                    value={date}
-                    onChange={onInputChange}
-                    condition={isRowEditing}
-                />
+
+                {
+                    isRowEditing
+                        ? <RegistryDatePicker date={date} onChangeDate={onChangeDate} />
+                        : dayjs(date).format('MMMM D, YYYY h:mm A')
+                }
+
             </TableCell>
             <TableCell>
                 <ConditionalTextField
@@ -58,7 +68,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
             </TableCell>
             <TableCell align="center">
                 <ConditionalTextField
-                    name="sourname"
+                    name="firstSurname"
                     value={firstSurname}
                     onChange={onInputChange}
                     condition={isRowEditing}
@@ -67,7 +77,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
             </TableCell>
             <TableCell align="center">
                 <ConditionalTextField
-                    name="lastname"
+                    name="secondSurname"
                     value={secondSurname}
                     onChange={onInputChange}
                     condition={isRowEditing}
@@ -77,12 +87,14 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
             <TableCell align="center">
                 {
                     isRowEditing
-                        ? <IconButton onClick={handleSave}><Save/></IconButton>
-                        : <IconButton onClick={handleEdit}><Edit /></IconButton>
+                        ? <IconButton onClick={handleSave}>
+                            <Save />
+                        </IconButton>
+                        : <RegistryRowMenuOptions
+                            handleEdit={handleEdit}
+                            handleDelete={handleDelete}
+                        />
                 }
-                <IconButton onClick={handleDelete}>
-                    <Delete />
-                </IconButton>
             </TableCell>
         </TableRow>
     )

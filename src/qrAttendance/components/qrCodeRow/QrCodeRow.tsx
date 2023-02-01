@@ -3,27 +3,35 @@ import {useState} from "react";
 import {IconButton, MenuItem, Select, SelectChangeEvent, TableCell, TableRow} from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import {Delete, Download, Edit, Save, Visibility} from "@mui/icons-material";
+import {Save} from "@mui/icons-material";
 
-import {useForm} from "../../hooks/useForm";
-import {ConditionalTextField} from "./ConditionalTextField";
-import {QrCode} from "../interfaces";
-import {useAppDispatch} from "../../store";
-import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../store/qrAttendance";
+
+
+import {useForm} from "../../../hooks/useForm";
+import {ConditionalTextField} from "../ConditionalTextField";
+import {QrCode} from "../../interfaces";
+import {useAppDispatch} from "../../../store";
+import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../../store/qrAttendance";
+import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
+import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
+import {QrCodeDatePicker} from "./QrCodeDatePicker";
+import dayjs from "dayjs";
 
 export const QrCodeRow = ({
            qrCodeRow,
            handleOpenSubTable,
-           open
-}:{ qrCodeRow: QrCode, handleOpenSubTable: Function, open: boolean }) => {
+           open,
+    registriesLength
+}:{ qrCodeRow: QrCode, handleOpenSubTable: Function, open: boolean, registriesLength: number }) => {
 
     const dispatch = useAppDispatch();
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isEnable, setIsEnable] = useState<boolean>(qrCodeRow.enabled);
+    const [ date, setDate ] = useState<string>(qrCodeRow.date);
 
     const {formState, onInputChange} = useForm(qrCodeRow);
-    const {name, registries, date} = formState;
+    const {name} = formState;
 
     const onSelectChange = (event: SelectChangeEvent) => {
         if (event.target.value === 'YES') return setIsEnable(true);
@@ -39,15 +47,30 @@ export const QrCodeRow = ({
         dispatch(startUpdateQrCode({
             ...qrCodeRow,
             ...formState,
-            enabled: isEnable
+            enabled: isEnable,
+            date: date
         }));
     }
 
     const handleDelete = () => {
         dispatch(startDeleteQrCodeWithDependencies(qrCodeRow.id));
+        SnackbarUtilities.sucess(`QR Code ${qrCodeRow.name} deleted successfully`);
+    }
+
+    const handleShow = () => {
+
+    }
+
+    const handleDownload = () => {
+
+    }
+
+    const onChangeDate = (date: string) => {
+        setDate(date);
     }
 
     return (
+        /* Rows of the table with QrCode components */
         <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
             <TableCell>
                 <IconButton
@@ -68,22 +91,14 @@ export const QrCodeRow = ({
                 />
             </TableCell>
             <TableCell align="center">
-                <ConditionalTextField
-                    name="registries"
-                    value={registries}
-                    onChange={onInputChange}
-                    condition={isEditing}
-                    styles={{width: '50px'}}
-                />
+                {registriesLength}
             </TableCell>
             <TableCell align="center">
-                <ConditionalTextField
-                    name="date"
-                    value={date}
-                    onChange={onInputChange}
-                    condition={isEditing}
-                    styles={{width: '100px'}}
-                />
+                {
+                    isEditing
+                        ? <QrCodeDatePicker date={qrCodeRow.date} onChangeDate={onChangeDate}/>
+                        : dayjs(date).format('DD/MM/YYYY')
+                }
             </TableCell>
             <TableCell align="center">
                 {
@@ -96,20 +111,17 @@ export const QrCodeRow = ({
                 }
             </TableCell>
             <TableCell align="center">
-                <IconButton onClick={handleDelete}>
-                    <Visibility/>
-                </IconButton>
-                <IconButton onClick={handleDelete}>
-                    <Download/>
-                </IconButton>
                 {
                     isEditing
                         ? <IconButton onClick={handleSave}><Save/></IconButton>
-                        : <IconButton onClick={handleEdit}><Edit/></IconButton>
+                        : <QrCodeMenuOptions
+                            handleEdit={handleEdit}
+                            handleDelete={handleDelete}
+                            handleShow={handleShow}
+                            handleDownload={handleDownload}
+                        />
                 }
-                <IconButton onClick={handleDelete}>
-                    <Delete/>
-                </IconButton>
+
             </TableCell>
         </TableRow>
     )

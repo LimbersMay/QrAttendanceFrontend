@@ -9,11 +9,7 @@ export const startDeleteGroupWithDependencies = (idGroup: string, qrCodes: QrCod
     return async (dispatch) => {
 
         // async code here
-        await qrAttendanceApi.delete('/group/delete', {
-            data: {
-                id: idGroup
-            }
-        });
+        await qrAttendanceApi.delete(`/group/delete/${idGroup}`);
 
         // sync code here
         dispatch(deleteGroup(idGroup));
@@ -28,6 +24,7 @@ export const startDeleteQrCodeWithDependencies = (idQrCode: string): AppThunk =>
     return async (dispatch) => {
 
         // async code here
+        await qrAttendanceApi.delete(`/qrCode/delete/${idQrCode}`);
 
         // sync code here
         dispatch(deleteQrCode(idQrCode));
