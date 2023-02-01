@@ -14,6 +14,8 @@ import {useAppDispatch} from "../../../store";
 import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../../store/qrAttendance";
 import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
+import {QrCodeDatePicker} from "./QrCodeDatePicker";
+import dayjs from "dayjs";
 
 export const QrCodeRow = ({
            qrCodeRow,
@@ -26,9 +28,10 @@ export const QrCodeRow = ({
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isEnable, setIsEnable] = useState<boolean>(qrCodeRow.enabled);
+    const [ date, setDate ] = useState<string>(qrCodeRow.date);
 
     const {formState, onInputChange} = useForm(qrCodeRow);
-    const {name, date} = formState;
+    const {name} = formState;
 
     const onSelectChange = (event: SelectChangeEvent) => {
         if (event.target.value === 'YES') return setIsEnable(true);
@@ -44,7 +47,8 @@ export const QrCodeRow = ({
         dispatch(startUpdateQrCode({
             ...qrCodeRow,
             ...formState,
-            enabled: isEnable
+            enabled: isEnable,
+            date: date
         }));
     }
 
@@ -61,7 +65,12 @@ export const QrCodeRow = ({
 
     }
 
+    const onChangeDate = (date: string) => {
+        setDate(date);
+    }
+
     return (
+        /* Rows of the table with QrCode components */
         <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
             <TableCell>
                 <IconButton
@@ -85,13 +94,11 @@ export const QrCodeRow = ({
                 {registriesLength}
             </TableCell>
             <TableCell align="center">
-                <ConditionalTextField
-                    name="date"
-                    value={date}
-                    onChange={onInputChange}
-                    condition={isEditing}
-                    styles={{width: '100px'}}
-                />
+                {
+                    isEditing
+                        ? <QrCodeDatePicker date={qrCodeRow.date} onChangeDate={onChangeDate}/>
+                        : dayjs(date).format('DD/MM/YYYY')
+                }
             </TableCell>
             <TableCell align="center">
                 {
