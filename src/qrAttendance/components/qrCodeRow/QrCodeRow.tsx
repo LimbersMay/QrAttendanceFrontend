@@ -5,8 +5,6 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {Save} from "@mui/icons-material";
 
-
-
 import {useForm} from "../../../hooks/useForm";
 import {ConditionalTextField} from "../ConditionalTextField";
 import {QrCode} from "../../interfaces";
@@ -16,6 +14,7 @@ import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
 import {QrCodeDatePicker} from "./QrCodeDatePicker";
 import dayjs from "dayjs";
+import {QrCheckIn} from "./QrCheckIn";
 
 export const QrCodeRow = ({
            qrCodeRow,
@@ -27,6 +26,8 @@ export const QrCodeRow = ({
     const dispatch = useAppDispatch();
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [isQrShowing, setIsQrShowing] = useState<boolean>(false);
+
     const [isEnable, setIsEnable] = useState<boolean>(qrCodeRow.enabled);
     const [ date, setDate ] = useState<string>(qrCodeRow.date);
 
@@ -57,8 +58,8 @@ export const QrCodeRow = ({
         SnackbarUtilities.sucess(`QR Code ${qrCodeRow.name} deleted successfully`);
     }
 
-    const handleShow = () => {
-
+    const handleToggleShowQr = () => {
+        setIsQrShowing(!isQrShowing);
     }
 
     const handleDownload = () => {
@@ -117,12 +118,23 @@ export const QrCodeRow = ({
                         : <QrCodeMenuOptions
                             handleEdit={handleEdit}
                             handleDelete={handleDelete}
-                            handleShow={handleShow}
+                            handleShow={handleToggleShowQr}
                             handleDownload={handleDownload}
                         />
                 }
-
             </TableCell>
+
+            {
+                isQrShowing
+                &&
+                <QrCheckIn
+                    isQrShowing={isQrShowing}
+                    url={qrCodeRow.url}
+                    title={qrCodeRow.name}
+                    handleToggleShowQr={handleToggleShowQr}
+                />
+            }
+
         </TableRow>
     )
 }
