@@ -5,8 +5,8 @@ export const CheckInFormRouter = () => {
     return (
         <Routes>
 
-            <Route path={"/"} element={<CheckInFormPage />}/>
-
+            <Route path={"/:formId"} element={<CheckInFormPage />}/>
+            <Route path={"/*"} element={<CheckInFormPage />}/>
         </Routes>
     )
 }
