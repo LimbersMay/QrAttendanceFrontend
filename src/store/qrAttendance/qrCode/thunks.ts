@@ -12,6 +12,7 @@ export const startLoadingQrCodes = (): AppThunk => {
         const qrCodes: QrCode[] = body.map((qrCode: any) => {
             return {
                 id: qrCode.id,
+                url: qrCode.url,
                 groupId: qrCode.groupId,
                 name: qrCode.name,
                 date: qrCode.manualRegistrationDate,
@@ -38,6 +39,7 @@ export const startNewQrCode = (groupId: string): AppThunk => {
         const newQrCode: QrCode = {
             groupId: groupId,
             id: body.id,
+            url: body.url,
             name: body.name,
             date: body.createdAt,
             enabled: false
