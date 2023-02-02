@@ -1,13 +1,46 @@
 import {AuthLayout} from "../../auth/layout/AuthLayout";
-import {Alert, Button, Grid, Link, TextField, Typography} from "@mui/material";
-import {Google} from "@mui/icons-material";
-import {Link as RouterLink} from "react-router-dom";
-import React from "react";
+import {Button, Grid, TextField} from "@mui/material";
+import React, {useState} from "react";
+import {FormValidations, useForm} from "../../hooks/useForm";
+import {SnackbarUtilities} from "../../utilities/snackbar-manager";
+import {useAppDispatch} from "../../store";
+import {startSubmitCheckInForm} from "../../store/checkInForm/thunks";
+
+import io from "../../utilities/socketIo";
+import {useParams} from "react-router-dom";
+
+const initialForm = {
+    name: '',
+    firstSurname: '',
+    secondSurname: '',
+};
+
+const formValidations: FormValidations = {
+    name: [(name: string) => name.length > 2, 'Name is required'],
+    firstSurname: [(firstSurname: string) => firstSurname.length > 2, 'First surname is required'],
+    secondSurname: [(secondSurname: string) => secondSurname.length > 2, 'Second surname is required'],
+}
 
 export const CheckInFormPage = () => {
 
+    const { formId = '' } = useParams();
+
+    const dispatch = useAppDispatch();
+
+    const { name, firstSurname, secondSurname, isFormValid, formValidation, onInputChange  } = useForm(initialForm, formValidations);
+    const { nameValid, firstSurnameValid, secondSurnameValid } = formValidation;
+
+    const [formSubmitted, setFormSubmitted] = useState(false);
+
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
+
+        setFormSubmitted(true);
+        if (!isFormValid) return;
+
+        dispatch(startSubmitCheckInForm({io, name, firstSurname, secondSurname, formId}));
+
+        SnackbarUtilities.sucess('Attendance successfully registered');
     }
 
     return (
@@ -22,8 +55,10 @@ export const CheckInFormPage = () => {
                             placeholder="Your name"
                             fullWidth
                             name="name"
-                            // value={email}
-                            // onChange={onInputChange}
+                            value={name}
+                            onChange={onInputChange}
+                            error={!!nameValid && formSubmitted}
+                            helperText={nameValid}
                         />
                     </Grid>
 
@@ -34,8 +69,10 @@ export const CheckInFormPage = () => {
                             placeholder="Your first surname"
                             fullWidth
                             name="firstSurname"
-                            // value={password}
-                            // onChange={onInputChange}
+                            value={firstSurname}
+                            onChange={onInputChange}
+                            error={!!firstSurnameValid && formSubmitted}
+                            helperText={firstSurnameValid}
                         />
                     </Grid>
 
@@ -46,8 +83,10 @@ export const CheckInFormPage = () => {
                             placeholder="Your second surname"
                             fullWidth
                             name="secondSurname"
-                            // value={password}
-                            // onChange={onInputChange}
+                            value={secondSurname}
+                            onChange={onInputChange}
+                            error={!!secondSurnameValid && formSubmitted}
+                            helperText={secondSurnameValid}
                         />
                     </Grid>
 
@@ -58,7 +97,6 @@ export const CheckInFormPage = () => {
                                 type='submit'
                                 variant='contained'
                                 fullWidth
-                                //disabled={ isAuthenticating }
                             >
                                 Submit
                             </Button>
