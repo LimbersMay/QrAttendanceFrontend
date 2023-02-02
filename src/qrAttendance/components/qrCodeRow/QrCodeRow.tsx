@@ -129,7 +129,7 @@ export const QrCodeRow = ({
                 &&
                 <QrCheckIn
                     isQrShowing={isQrShowing}
-                    url={qrCodeRow.url}
+                    url={`${qrCodeRow.url}/${qrCodeRow.formId}`}
                     title={qrCodeRow.name}
                     handleToggleShowQr={handleToggleShowQr}
                 />
