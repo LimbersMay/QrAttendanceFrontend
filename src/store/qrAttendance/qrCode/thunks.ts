@@ -31,7 +31,8 @@ export const startNewQrCode = (groupId: string): AppThunk => {
         const response = await qrAttendanceApi.post('/qrCode/create', {
             groupId: groupId,
             name: 'Default',
-            enabled: false
+            enabled: false,
+            url: 'http://localhost:5173/'
         });
 
         const {body} = response.data;
