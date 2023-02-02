@@ -13,6 +13,7 @@ export const startLoadingQrCodes = (): AppThunk => {
             return {
                 id: qrCode.id,
                 url: qrCode.url,
+                formId: qrCode.formId,
                 groupId: qrCode.groupId,
                 name: qrCode.name,
                 date: qrCode.manualRegistrationDate,
@@ -32,7 +33,7 @@ export const startNewQrCode = (groupId: string): AppThunk => {
             groupId: groupId,
             name: 'Default',
             enabled: false,
-            url: 'http://localhost:5173/'
+            url: 'http://localhost:5173/checkIn'
         });
 
         const {body} = response.data;
@@ -41,6 +42,7 @@ export const startNewQrCode = (groupId: string): AppThunk => {
             groupId: groupId,
             id: body.id,
             url: body.url,
+            formId: body.formId,
             name: body.name,
             date: body.createdAt,
             enabled: false
