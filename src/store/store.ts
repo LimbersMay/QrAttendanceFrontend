@@ -1,7 +1,8 @@
 import {AnyAction, configureStore, ThunkAction} from '@reduxjs/toolkit';
 import {authSlice} from "./auth";
 import {groupSlice, qrCodeSlice, registrySlice} from "./qrAttendance";
-import socketMiddleware from "./middlewares/socketMiddleware";
+import SocketMiddleware from "./middlewares/socketMiddleware";
+
 export const store = configureStore({
     reducer: {
         auth: authSlice.reducer,
@@ -9,8 +10,10 @@ export const store = configureStore({
         qrCode: qrCodeSlice.reducer,
         registry: registrySlice.reducer
     },
-    //middleware: [socketMiddleware]
-});
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware()
+            .prepend(SocketMiddleware)
+    });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
