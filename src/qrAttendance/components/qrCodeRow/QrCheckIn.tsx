@@ -25,7 +25,7 @@ export const QrCheckIn = ({ url, title, isQrShowing, handleToggleShowQr }: { url
                     <QRCode
                         size={100}
                         style={{ height: "auto", maxWidth: "50%", width: "80%" }}
-                        value={"google.com"}
+                        value={url}
                         viewBox={`0 0 256 256`}
                     />
                 </Box>
