@@ -16,6 +16,7 @@
     "@mui/material": "^5.11.4",
     "@mui/x-date-pickers": "^5.0.16",
     "@reduxjs/toolkit": "^1.9.1",
+    "@types/xlsx": "^0.0.36",
     "axios": "^1.2.3",
     "dayjs": "^1.11.7",
     "moment": "^2.29.4",
@@ -25,7 +26,8 @@
     "react-qr-code": "^2.0.11",
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.6.2",
-    "socket.io-client": "^4.5.4"
+    "socket.io-client": "^4.5.4",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",
