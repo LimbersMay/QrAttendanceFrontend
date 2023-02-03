@@ -2,13 +2,15 @@ import {AnyAction, configureStore, ThunkAction} from '@reduxjs/toolkit';
 import {authSlice} from "./auth";
 import {groupSlice, qrCodeSlice, registrySlice} from "./qrAttendance";
 import SocketMiddleware from "./middlewares/socketMiddleware";
+import {preferencesSlice} from "./qrAttendance/preferences/preferencesSlice";
 
 export const store = configureStore({
     reducer: {
         auth: authSlice.reducer,
         group: groupSlice.reducer,
         qrCode: qrCodeSlice.reducer,
-        registry: registrySlice.reducer
+        registry: registrySlice.reducer,
+        preferences: preferencesSlice.reducer
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware()
