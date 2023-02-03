@@ -24,7 +24,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
     const {formState, onInputChange} = useForm(registryRow);
 
     const { name, firstSurname, secondSurname } = formState;
-    const [ date, setDate ] = useState(registryRow.date);
+    const [ date, setDate ] = useState(registryRow.checkinTime);
 
     const handleEdit = () => {
         setIsRowEditing(true);
@@ -38,7 +38,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
         dispatch(startUpdateRegistry({
             ...registryRow,
             ...formState,
-            date: date
+            checkinTime: date
         }));
         setIsRowEditing(false);
     }
