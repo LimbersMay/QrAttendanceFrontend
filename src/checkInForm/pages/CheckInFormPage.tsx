@@ -2,7 +2,6 @@ import {AuthLayout} from "../../auth/layout/AuthLayout";
 import {Button, Grid, TextField} from "@mui/material";
 import React, {useState} from "react";
 import {FormValidations, useForm} from "../../hooks/useForm";
-import {SnackbarUtilities} from "../../utilities/snackbar-manager";
 import {useAppDispatch} from "../../store";
 import {startSubmitCheckInForm} from "../../store/checkInForm/thunks";
 
@@ -16,9 +15,9 @@ const initialForm = {
 };
 
 const formValidations: FormValidations = {
-    name: [(name: string) => name.length > 2, 'Name is required'],
-    firstSurname: [(firstSurname: string) => firstSurname.length > 2, 'First surname is required'],
-    secondSurname: [(secondSurname: string) => secondSurname.length > 2, 'Second surname is required'],
+    name: [(name: string) => name.length > 1, 'Name is required'],
+    firstSurname: [(firstSurname: string) => firstSurname.length > 1, 'First surname is required'],
+    secondSurname: [(secondSurname: string) => secondSurname.length > 1, 'Second surname is required'],
 }
 
 export const CheckInFormPage = () => {
@@ -39,8 +38,6 @@ export const CheckInFormPage = () => {
         if (!isFormValid) return;
 
         dispatch(startSubmitCheckInForm({io, name, firstSurname, secondSurname, formId}));
-
-        SnackbarUtilities.sucess('Attendance successfully registered');
     }
 
     return (
