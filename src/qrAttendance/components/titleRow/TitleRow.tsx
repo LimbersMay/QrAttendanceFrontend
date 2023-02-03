@@ -77,8 +77,14 @@ export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: 
             </TableCell>
 
             {/* TODO: Add a search field */}
-            <TableCell align="right" colSpan={2}>
+            <TableCell
+                align="right"
+                colSpan={2}
+            >
                 <TextField
+                    // extra small(xs): none
+                    // small(sm): table-cell
+                    sx={{display: { xs: 'none', sm: 'table-cell' }}}
                     id="outlined-search"
                     label="Search"
                     type="search"
