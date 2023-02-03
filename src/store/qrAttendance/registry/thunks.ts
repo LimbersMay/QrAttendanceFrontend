@@ -3,12 +3,6 @@ import {Registry} from "../../../qrAttendance/interfaces";
 import {deleteRegistry, setRegistries, updateRegistry} from "./registrySlice";
 import {qrAttendanceApi} from "../../../api/qrAttendanceApi";
 
-export const startAddNewRegistry = (): AppThunk => {
-    return async(dispatch) => {
-
-    }
-}
-
 export const startDeleteRegistry = (registryId: string): AppThunk => {
     return async(dispatch) => {
 
@@ -30,7 +24,7 @@ export const startUpdateRegistry = (registry: Registry): AppThunk => {
                 name: registry.name,
                 firstSurname: registry.firstSurname,
                 secondSurname: registry.secondSurname,
-                checkinTime: registry.date
+                checkinTime: registry.checkinTime
             }
         });
 
@@ -50,7 +44,7 @@ export const startLoadingRegistries = (): AppThunk => {
             return {
                 id: registry.id,
                 qrCodeId: registry.qrCodeId,
-                date: registry.checkinTime,
+                checkinTime: registry.checkinTime,
                 name: registry.name,
                 firstSurname: registry.firstSurname,
                 secondSurname: registry.secondSurname
