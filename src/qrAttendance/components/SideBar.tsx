@@ -28,7 +28,8 @@ export const SideBar = ({ drawerWidth = 240}) => {
         <Box
             component='nav'
             sx={{
-                width: { sm: drawerWidth }, flexShrink: { sm: 0 }
+                width: { sm: drawerWidth , md: drawerWidth }, flexShrink: { sm: 0 },
+                display: { xs: 'none', sm: 'block' }
             }}
         >
             <Drawer
