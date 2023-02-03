@@ -1,11 +1,25 @@
-import {AppBar, Grid, IconButton, Toolbar, Typography} from "@mui/material";
-import {LogoutOutlined, MenuOutlined} from "@mui/icons-material";
-import {useAppDispatch} from "../../store";
+import {AppBar, Avatar, Box, Grid, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography} from "@mui/material";
+import {MenuOutlined} from "@mui/icons-material";
+import {useAppDispatch, useAppSelector} from "../../store";
 import {startLogout} from "../../store/auth/thunks";
+import React from "react";
+import {selectAuth} from "../../store/auth";
 
 export const NavBar = ({ drawerWidth = 240 }) => {
 
     const dispatch = useAppDispatch();
+
+    const { displayName } = useAppSelector(selectAuth);
+
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+
+    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     const handleLogout = () => {
         dispatch(startLogout());
@@ -39,11 +53,40 @@ export const NavBar = ({ drawerWidth = 240 }) => {
                 >
                     <Typography variant='h6' noWrap component='div'>QrAttendance</Typography>
 
-                    <IconButton color='error' onClick={handleLogout}>
-                        <LogoutOutlined/>
-                    </IconButton>
+                    <Box sx={{ flexGrow: 0 }}>
+                        <Tooltip title="Open settings">
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                <Avatar alt={`${displayName}`} src="/static/images/avatar/2.jpg" />
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ mt: '45px' }}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                        >
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">Profile</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={handleCloseUserMenu}>
+                                <Typography textAlign="center">My account</Typography>
+                            </MenuItem>
+                            <MenuItem onClick={handleLogout}>
+                                <Typography textAlign="center">Logout</Typography>
+                            </MenuItem>
+                        </Menu>
+                    </Box>
                 </Grid>
-
             </Toolbar>
         </AppBar>
     )
