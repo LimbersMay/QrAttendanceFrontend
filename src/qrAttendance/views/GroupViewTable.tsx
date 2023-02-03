@@ -42,7 +42,7 @@ const Row = (props: { row: QrCode }) => {
             <QrCodeRow qrCodeRow={row}
                        handleOpenSubTable={handleOpenSubTable}
                        open={open}
-                       registriesLength={qrCodeRegistries.length}
+                       registries={qrCodeRegistries}
             />
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>

@@ -1,17 +1,28 @@
 import { Middleware, Dispatch, AnyAction } from 'redux';
-import io from 'socket.io-client';
-import { addNewRegistry } from '../qrAttendance';
-
+import socket from "../../utilities/socketIo";
 import {Registry} from "../../qrAttendance/interfaces";
+import {addNewRegistry} from "../qrAttendance";
+import {SnackbarUtilities} from "../../utilities/snackbar-manager";
+import {getValidationError} from "../../utilities";
 
 const socketMiddleware: Middleware = (store) => {
-    const socket = io('http://localhost:3000');
-    const handleNewRegistries = (data: Registry) => {
+
+    socket.on("new-attendance", (data: Registry) => {
         store.dispatch(addNewRegistry(data));
-    }
-    socket.on('new-registries', (data: any) => {
-        handleNewRegistries(data);
     });
+
+    socket.on("register-attendance-error", (message: string) => {
+        SnackbarUtilities.error(getValidationError(message));
+    });
+
+    socket.on("register-attendance-success", () => {
+        SnackbarUtilities.sucess('Attendance registered successfully');
+    });
+
+    socket.on("already-registered-attendance", (message: string) => {
+        SnackbarUtilities.info(getValidationError(message));
+    });
+
     return (next: Dispatch) => (action: AnyAction) => {
         next(action);
     }

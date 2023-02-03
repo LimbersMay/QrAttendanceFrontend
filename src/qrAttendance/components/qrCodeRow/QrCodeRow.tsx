@@ -5,28 +5,30 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {Save} from "@mui/icons-material";
 
-
-
 import {useForm} from "../../../hooks/useForm";
 import {ConditionalTextField} from "../ConditionalTextField";
-import {QrCode} from "../../interfaces";
+import {QrCode, Registry} from "../../interfaces";
 import {useAppDispatch} from "../../../store";
-import { startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../../store/qrAttendance";
+import {startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../../store/qrAttendance";
 import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
 import {QrCodeDatePicker} from "./QrCodeDatePicker";
 import dayjs from "dayjs";
+import {QrCheckIn} from "./QrCheckIn";
+import {generateExcelFromRegistries} from "../../helpers/generateExcelFromRegistries";
 
 export const QrCodeRow = ({
            qrCodeRow,
            handleOpenSubTable,
            open,
-    registriesLength
-}:{ qrCodeRow: QrCode, handleOpenSubTable: Function, open: boolean, registriesLength: number }) => {
+    registries
+}:{ qrCodeRow: QrCode, handleOpenSubTable: Function, open: boolean, registries: Registry[] }) => {
 
     const dispatch = useAppDispatch();
 
     const [isEditing, setIsEditing] = useState<boolean>(false);
+    const [isQrShowing, setIsQrShowing] = useState<boolean>(false);
+
     const [isEnable, setIsEnable] = useState<boolean>(qrCodeRow.enabled);
     const [ date, setDate ] = useState<string>(qrCodeRow.date);
 
@@ -57,12 +59,12 @@ export const QrCodeRow = ({
         SnackbarUtilities.sucess(`QR Code ${qrCodeRow.name} deleted successfully`);
     }
 
-    const handleShow = () => {
-
+    const handleToggleShowQr = () => {
+        setIsQrShowing(!isQrShowing);
     }
 
     const handleDownload = () => {
-
+        generateExcelFromRegistries(qrCodeRow.id, registries);
     }
 
     const onChangeDate = (date: string) => {
@@ -91,7 +93,7 @@ export const QrCodeRow = ({
                 />
             </TableCell>
             <TableCell align="center">
-                {registriesLength}
+                {registries.length}
             </TableCell>
             <TableCell align="center">
                 {
@@ -117,12 +119,23 @@ export const QrCodeRow = ({
                         : <QrCodeMenuOptions
                             handleEdit={handleEdit}
                             handleDelete={handleDelete}
-                            handleShow={handleShow}
+                            handleShow={handleToggleShowQr}
                             handleDownload={handleDownload}
                         />
                 }
-
             </TableCell>
+
+            {
+                isQrShowing
+                &&
+                <QrCheckIn
+                    isQrShowing={isQrShowing}
+                    url={`${qrCodeRow.url}/${qrCodeRow.formId}`}
+                    title={qrCodeRow.name}
+                    handleToggleShowQr={handleToggleShowQr}
+                />
+            }
+
         </TableRow>
     )
 }

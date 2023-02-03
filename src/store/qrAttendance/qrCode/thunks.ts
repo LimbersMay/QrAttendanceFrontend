@@ -12,6 +12,8 @@ export const startLoadingQrCodes = (): AppThunk => {
         const qrCodes: QrCode[] = body.map((qrCode: any) => {
             return {
                 id: qrCode.id,
+                url: qrCode.url,
+                formId: qrCode.formId,
                 groupId: qrCode.groupId,
                 name: qrCode.name,
                 date: qrCode.manualRegistrationDate,
@@ -30,7 +32,8 @@ export const startNewQrCode = (groupId: string): AppThunk => {
         const response = await qrAttendanceApi.post('/qrCode/create', {
             groupId: groupId,
             name: 'Default',
-            enabled: false
+            enabled: false,
+            url: 'http://localhost:5173/checkIn'
         });
 
         const {body} = response.data;
@@ -38,6 +41,8 @@ export const startNewQrCode = (groupId: string): AppThunk => {
         const newQrCode: QrCode = {
             groupId: groupId,
             id: body.id,
+            url: body.url,
+            formId: body.formId,
             name: body.name,
             date: body.createdAt,
             enabled: false
