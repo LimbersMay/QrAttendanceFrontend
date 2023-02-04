@@ -5,7 +5,7 @@ import {startLogout} from "../../store/auth/thunks";
 import React from "react";
 import {selectAuth} from "../../store/auth";
 
-export const NavBar = ({ drawerWidth = 240 }) => {
+export const NavBar = ({ handleDrawerToggle, drawerWidth = 240 }: {handleDrawerToggle: any, drawerWidth: number }) => {
 
     const dispatch = useAppDispatch();
 
@@ -35,6 +35,7 @@ export const NavBar = ({ drawerWidth = 240 }) => {
         >
             <Toolbar>
                 <IconButton
+                    onClick={handleDrawerToggle}
                     color='inherit'
                     edge='start'
                     sx={{
