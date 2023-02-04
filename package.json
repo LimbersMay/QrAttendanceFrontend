@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "npx http-server ./dist -a 0.0.0.0",
+    "start": "npx http-server ./dist -host 0.0.0.0",
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
@@ -17,6 +17,7 @@
     "@mui/material": "^5.11.4",
     "@mui/x-date-pickers": "^5.0.16",
     "@reduxjs/toolkit": "^1.9.1",
+    "@types/node": "^18.11.18",
     "@types/xlsx": "^0.0.36",
     "axios": "^1.2.3",
     "dayjs": "^1.11.7",
