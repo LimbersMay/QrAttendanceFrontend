@@ -11,14 +11,20 @@ export const QrAttendanceLayout = ({ children }: {children: React.ReactNode}) =>
 
     if (isSmallScreen) drawerWidth = 220;
 
+    // responsive for mobile
+    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
     return (
         <Box sx={{ display: 'flex'}}>
 
             {/* Navbar drawerWidth*/}
-            <NavBar drawerWidth={drawerWidth}/>
+            <NavBar drawerWidth={drawerWidth} handleDrawerToggle={handleDrawerToggle}/>
 
             {/* Sidebar drawerWidth*/}
-            <SideBar drawerWidth={drawerWidth}/>
+            <SideBar drawerWidth={drawerWidth} mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle}/>
 
             <Box
                 component='main'
