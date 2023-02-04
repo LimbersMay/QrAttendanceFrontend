@@ -33,7 +33,7 @@ export const startNewQrCode = (groupId: string): AppThunk => {
             groupId: groupId,
             name: 'Default',
             enabled: false,
-            url: 'http://localhost:5173/checkIn'
+            url: 'https://easyqrattendance.up.railway.app/checkIn'
         });
 
         const {body} = response.data;
