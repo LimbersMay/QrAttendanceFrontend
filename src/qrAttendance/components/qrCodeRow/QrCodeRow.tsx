@@ -64,7 +64,7 @@ export const QrCodeRow = ({
     }
 
     const handleDownload = () => {
-        generateExcelFromRegistries(qrCodeRow.id, registries);
+        generateExcelFromRegistries(qrCodeRow,registries);
     }
 
     const onChangeDate = (date: string) => {
@@ -95,7 +95,7 @@ export const QrCodeRow = ({
             <TableCell align="center">
                 {registries.length}
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>
                 {
                     isEditing
                         ? <QrCodeDatePicker date={qrCodeRow.date} onChangeDate={onChangeDate}/>
