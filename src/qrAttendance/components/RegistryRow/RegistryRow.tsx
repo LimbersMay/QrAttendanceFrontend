@@ -84,7 +84,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
                     styles={{width: '90px'}}
                 />
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>
                 {
                     isRowEditing
                         ? <IconButton onClick={handleSave}>

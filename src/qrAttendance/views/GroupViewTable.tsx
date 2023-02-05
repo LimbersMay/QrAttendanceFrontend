@@ -58,7 +58,7 @@ const Row = (props: { row: QrCode }) => {
                                         <TableCell>Name(s)</TableCell>
                                         <TableCell align="center">First surname</TableCell>
                                         <TableCell align="center">Second surname</TableCell>
-                                        <TableCell align="center">Actions</TableCell>
+                                        <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>Actions</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -94,9 +94,9 @@ export const GroupViewTable = () => {
                     <TitleRow group={group} qrCodes={groupQrCodes} />
                     <TableRow>
                         <TableCell />
-                        <TableCell>QrCode name</TableCell>
+                        <TableCell>QR Code name</TableCell>
                         <TableCell align="center">Registries</TableCell>
-                        <TableCell align="center">Date</TableCell>
+                        <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>Date</TableCell>
                         <TableCell align="center">Enabled</TableCell>
                         <TableCell align="center">Actions</TableCell>
                     </TableRow>
