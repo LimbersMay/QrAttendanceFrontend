@@ -84,7 +84,7 @@ export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: 
                 <TextField
                     // extra small(xs): none
                     // small(sm): table-cell
-                    sx={{display: { xs: 'none', sm: 'table-cell' }}}
+                    sx={{display: { xs: 'none', sm: 'inline-block' }}}
                     id="outlined-search"
                     label="Search"
                     type="search"
