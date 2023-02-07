@@ -10,12 +10,16 @@ import {useParams} from "react-router-dom";
 
 const initialForm = {
     name: '',
+    group: '',
+    career: '',
     firstSurname: '',
     secondSurname: '',
 };
 
 const formValidations: FormValidations = {
     name: [(name: string) => name.length > 1, 'Name is required'],
+    group: [(group: string) => group.length > 1, 'Group is required'],
+    career: [(career: string) => career.length > 1, 'Career is required'],
     firstSurname: [(firstSurname: string) => firstSurname.length > 1, 'First surname is required'],
     secondSurname: [(secondSurname: string) => secondSurname.length > 1, 'Second surname is required'],
 }
@@ -26,8 +30,8 @@ export const CheckInFormPage = () => {
 
     const dispatch = useAppDispatch();
 
-    const { name, firstSurname, secondSurname, isFormValid, formValidation, onInputChange  } = useForm(initialForm, formValidations);
-    const { nameValid, firstSurnameValid, secondSurnameValid } = formValidation;
+    const { name, group, career, firstSurname, secondSurname, isFormValid, formValidation, onInputChange  } = useForm(initialForm, formValidations);
+    const { nameValid, groupValid, careerValid, firstSurnameValid, secondSurnameValid } = formValidation;
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -37,13 +41,41 @@ export const CheckInFormPage = () => {
         setFormSubmitted(true);
         if (!isFormValid) return;
 
-        dispatch(startSubmitCheckInForm({io, name, firstSurname, secondSurname, formId}));
+        dispatch(startSubmitCheckInForm({io, name, group, career, firstSurname, secondSurname, formId}));
     }
 
     return (
         <AuthLayout title={'Check In Form'}>
             <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster">
                 <Grid container>
+
+                    <Grid item xs={12} sx={{mt: 2}}>
+                        <TextField
+                            label="Group"
+                            type="text"
+                            placeholder="Your group (1A, 3B..)"
+                            fullWidth
+                            name="group"
+                            value={group}
+                            onChange={onInputChange}
+                            error={!!groupValid && formSubmitted}
+                            helperText={groupValid}
+                        />
+                    </Grid>
+
+                    <Grid item xs={12} sx={{mt: 2}}>
+                        <TextField
+                            label="Career"
+                            type="text"
+                            placeholder="Your career"
+                            fullWidth
+                            name="career"
+                            value={career}
+                            onChange={onInputChange}
+                            error={!!careerValid && formSubmitted}
+                            helperText={careerValid}
+                        />
+                    </Grid>
 
                     <Grid item xs={12} sx={{mt: 2}}>
                         <TextField

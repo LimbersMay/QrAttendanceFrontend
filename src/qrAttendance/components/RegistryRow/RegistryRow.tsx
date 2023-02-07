@@ -23,7 +23,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
     const [isRowEditing, setIsRowEditing] = useState(false);
     const {formState, onInputChange} = useForm(registryRow);
 
-    const { name, firstSurname, secondSurname } = formState;
+    const { name, group, career, firstSurname, secondSurname } = formState;
     const [ date, setDate ] = useState(registryRow.checkinTime);
 
     const handleEdit = () => {
@@ -58,7 +58,23 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
                 }
 
             </TableCell>
-            <TableCell>
+            <TableCell align="center">
+                <ConditionalTextField
+                    name="group"
+                    value={group}
+                    onChange={onInputChange}
+                    condition={isRowEditing}
+                />
+            </TableCell>
+            <TableCell align="center">
+                <ConditionalTextField
+                    name="career"
+                    value={career}
+                    onChange={onInputChange}
+                    condition={isRowEditing}
+                />
+            </TableCell>
+            <TableCell align="center">
                 <ConditionalTextField
                     name="name"
                     value={name}
@@ -66,7 +82,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
                     condition={isRowEditing}
                 />
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>
                 <ConditionalTextField
                     name="firstSurname"
                     value={firstSurname}
@@ -75,7 +91,7 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
                     styles={{width: '100px'}}
                 />
             </TableCell>
-            <TableCell align="center">
+            <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>
                 <ConditionalTextField
                     name="secondSurname"
                     value={secondSurname}
