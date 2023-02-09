@@ -10,9 +10,9 @@ export const generateExcelFromRegistries = (qrCodeRow: QrCode, registries: Regis
             'CheckInTime': dayjs(registry.checkinTime).format('DD/MM/YYYY HH:mm:ss A'),
             'Group': registry.group,
             'Career': registry.career,
-            'Name': registry.name,
             'First Surname': registry.firstSurname,
             'Second Surname': registry.secondSurname,
+            'Name': registry.name
         }
     });
 
