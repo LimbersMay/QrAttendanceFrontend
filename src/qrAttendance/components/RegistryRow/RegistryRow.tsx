@@ -74,14 +74,6 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
                     condition={isRowEditing}
                 />
             </TableCell>
-            <TableCell align="center">
-                <ConditionalTextField
-                    name="name"
-                    value={name}
-                    onChange={onInputChange}
-                    condition={isRowEditing}
-                />
-            </TableCell>
             <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>
                 <ConditionalTextField
                     name="firstSurname"
@@ -98,6 +90,14 @@ export const RegistryRow = ({registryRow }: { registryRow: Registry}) => {
                     onChange={onInputChange}
                     condition={isRowEditing}
                     styles={{width: '90px'}}
+                />
+            </TableCell>
+            <TableCell align="center">
+                <ConditionalTextField
+                    name="name"
+                    value={name}
+                    onChange={onInputChange}
+                    condition={isRowEditing}
                 />
             </TableCell>
             <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>
