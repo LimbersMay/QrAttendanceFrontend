@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const qrAttendanceApi = axios.create({
-    baseURL: 'http://localhost:3000/api',
+    baseURL: 'https://qrattendancebackend.up.railway.app/api',
     withCredentials: true,
     params: {}
 });
