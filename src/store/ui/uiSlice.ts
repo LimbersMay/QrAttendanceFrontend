@@ -3,10 +3,12 @@ import {RootState} from "../store";
 
 interface uiInitialState {
     isQrCodeModalOpen: boolean;
+    isShowingQrCode: boolean;
 }
 
 const initialState: uiInitialState = {
-    isQrCodeModalOpen: false
+    isQrCodeModalOpen: false,
+    isShowingQrCode: false
 }
 
 export const uiSlice = createSlice({
