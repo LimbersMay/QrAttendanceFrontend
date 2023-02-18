@@ -13,7 +13,7 @@ import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
 import {QrCheckIn} from "./QrCheckIn";
 import {generateExcelFromRegistries} from "../../helpers/generateExcelFromRegistries";
 import {QrCodeModal} from "./QrCodeModal";
-import {onOpenQrCodeModal} from "../../../store/ui/uiSlice";
+import {useUiSlice} from "../../../hooks/useUiSlice";
 
 export const QrCodeRow = memo(({
            qrCodeRow,
@@ -24,10 +24,12 @@ export const QrCodeRow = memo(({
 
     const dispatch = useAppDispatch();
 
+    const { openQrCodeModal } = useUiSlice();
+
     const [isQrShowing, setIsQrShowing] = useState<boolean>(false);
 
     const handleEdit = () => {
-        dispatch(onOpenQrCodeModal());
+        openQrCodeModal()
         dispatch(setActiveQrCode(qrCodeRow));
     }
 
