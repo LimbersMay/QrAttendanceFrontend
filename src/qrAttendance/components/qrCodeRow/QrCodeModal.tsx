@@ -6,10 +6,10 @@ import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {useAppDispatch, useAppSelector} from "../../../store";
-import {onCloseQrCodeModal, selectUi} from "../../../store/ui/uiSlice";
 import {Divider, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import {QrCodeDatePicker} from "./QrCodeDatePicker";
 import {selectQrCode, setActiveQrCode, startUpdateQrCode} from "../../../store/qrAttendance";
+import {useUiSlice} from "../../../hooks/useUiSlice";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -33,8 +33,9 @@ export const QrCodeModal = () => {
 
     const dispatch = useAppDispatch();
 
-    const {isQrCodeModalOpen} = useAppSelector(selectUi);
     const {activeQrCode} = useAppSelector(selectQrCode);
+
+    const { closeQrCodeModal, isQrCodeModalOpen } = useUiSlice();
 
     const [formState, setFormState] = useState(activeQrCode || initialState);
     const {name, date, enabled} = formState;
@@ -73,7 +74,7 @@ export const QrCodeModal = () => {
     }
 
     const handleClose = () => {
-        dispatch(onCloseQrCodeModal());
+        closeQrCodeModal();
         dispatch(setActiveQrCode(null));
     };
 
@@ -89,7 +90,7 @@ export const QrCodeModal = () => {
             date
         }));
 
-        dispatch(onCloseQrCodeModal());
+        closeQrCodeModal();
         dispatch(setActiveQrCode(null));
     }
 
