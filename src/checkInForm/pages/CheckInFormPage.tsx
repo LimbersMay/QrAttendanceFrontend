@@ -1,5 +1,5 @@
 import {AuthLayout} from "../../auth/layout/AuthLayout";
-import {Button, Grid, MenuItem, Select, TextField} from "@mui/material";
+import {Button, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import React, {useState} from "react";
 import {FormValidations, useForm} from "../../hooks/useForm";
 import {useAppDispatch} from "../../store";
@@ -19,7 +19,6 @@ const initialForm = {
 const formValidations: FormValidations = {
     name: [(name: string) => name.length > 1, 'Name is required'],
     group: [(group: string) => group.length > 1, 'Group is required'],
-    career: [(career: string) => career.length > 1, 'Career is required'],
     firstSurname: [(firstSurname: string) => firstSurname.length > 1, 'First surname is required'],
     secondSurname: [(secondSurname: string) => secondSurname.length > 1, 'Second surname is required'],
 }
@@ -30,10 +29,15 @@ export const CheckInFormPage = () => {
 
     const dispatch = useAppDispatch();
 
-    const { name, group, career, firstSurname, secondSurname, isFormValid, formValidation, onInputChange  } = useForm(initialForm, formValidations);
+    const { name, group, firstSurname, secondSurname, isFormValid, formValidation, onInputChange  } = useForm(initialForm, formValidations);
     const { nameValid, groupValid, firstSurnameValid, secondSurnameValid } = formValidation;
+    const [career, setCareerValue] = useState<string>('Computer Systems Engineering');
 
     const [formSubmitted, setFormSubmitted] = useState(false);
+
+    const onSelectChange = (event: SelectChangeEvent) => {
+        setCareerValue(event.target.value);
+    }
 
     const onSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -68,13 +72,13 @@ export const CheckInFormPage = () => {
                     </Grid>
 
                     <Grid item xs={12} sx={{mt: 2}}>
-                        <Select fullWidth variant={'outlined'} defaultValue={"CSE"}>
-                            <MenuItem value="CSE" >Computer Systems Engineering</MenuItem>
-                            <MenuItem value="CE">Civil Engineering</MenuItem>
-                            <MenuItem value="EN">Environmental Engineering</MenuItem>
-                            <MenuItem value="IE">Industrial Engineering</MenuItem>
-                            <MenuItem value="EIA">Engineering in Administration</MenuItem>
-                            <MenuItem value="BME">Bussines Management Engineering</MenuItem>
+                        <Select fullWidth variant={'outlined'} defaultValue={career} onChange={onSelectChange}>
+                            <MenuItem value="Computer Systems Engineering">Computer Systems Engineering</MenuItem>
+                            <MenuItem value="Civil Engineering">Civil Engineering</MenuItem>
+                            <MenuItem value="Environmental Engineering">Environmental Engineering</MenuItem>
+                            <MenuItem value="Industrial Engineering">Industrial Engineering</MenuItem>
+                            <MenuItem value="Engineering in Administration">Engineering in Administration</MenuItem>
+                            <MenuItem value="Bussines Management Engineering">Bussines Management Engineering</MenuItem>
                         </Select>
                     </Grid>
 
