@@ -1,23 +1,21 @@
-import {useState} from "react";
+import {memo, useState} from "react";
 
-import {IconButton, MenuItem, Select, SelectChangeEvent, TableCell, TableRow} from "@mui/material";
+import dayjs from "dayjs";
+import {IconButton, TableCell, TableRow} from "@mui/material";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import {Save} from "@mui/icons-material";
 
-import {useForm} from "../../../hooks/useForm";
-import {ConditionalTextField} from "../ConditionalTextField";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import {QrCode, Registry} from "../../interfaces";
 import {useAppDispatch} from "../../../store";
-import {startDeleteQrCodeWithDependencies, startUpdateQrCode} from "../../../store/qrAttendance";
+import {setActiveQrCode, startDeleteQrCodeWithDependencies} from "../../../store/qrAttendance";
 import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
-import {QrCodeDatePicker} from "./QrCodeDatePicker";
-import dayjs from "dayjs";
 import {QrCheckIn} from "./QrCheckIn";
 import {generateExcelFromRegistries} from "../../helpers/generateExcelFromRegistries";
+import {QrCodeModal} from "./QrCodeModal";
+import {onOpenQrCodeModal} from "../../../store/ui/uiSlice";
 
-export const QrCodeRow = ({
+export const QrCodeRow = memo(({
            qrCodeRow,
            handleOpenSubTable,
            open,
@@ -26,32 +24,11 @@ export const QrCodeRow = ({
 
     const dispatch = useAppDispatch();
 
-    const [isEditing, setIsEditing] = useState<boolean>(false);
     const [isQrShowing, setIsQrShowing] = useState<boolean>(false);
 
-    const [isEnable, setIsEnable] = useState<boolean>(qrCodeRow.enabled);
-    const [ date, setDate ] = useState<string>(qrCodeRow.date);
-
-    const {formState, onInputChange} = useForm(qrCodeRow);
-    const {name} = formState;
-
-    const onSelectChange = (event: SelectChangeEvent) => {
-        if (event.target.value === 'YES') return setIsEnable(true);
-        setIsEnable(false);
-    }
-
     const handleEdit = () => {
-        setIsEditing(true);
-    }
-
-    const handleSave = () => {
-        setIsEditing(false);
-        dispatch(startUpdateQrCode({
-            ...qrCodeRow,
-            ...formState,
-            enabled: isEnable,
-            date: date
-        }));
+        dispatch(onOpenQrCodeModal());
+        dispatch(setActiveQrCode(qrCodeRow));
     }
 
     const handleDelete = () => {
@@ -67,10 +44,6 @@ export const QrCodeRow = ({
         generateExcelFromRegistries(qrCodeRow,registries);
     }
 
-    const onChangeDate = (date: string) => {
-        setDate(date);
-    }
-
     return (
         /* Rows of the table with QrCode components */
         <TableRow sx={{'& > *': {borderBottom: 'unset'}}}>
@@ -84,44 +57,25 @@ export const QrCodeRow = ({
                 </IconButton>
             </TableCell>
             <TableCell component="th" scope="row">
-                <ConditionalTextField
-                    name="name"
-                    value={name}
-                    onChange={onInputChange}
-                    condition={isEditing}
-                    styles={{width: '120px'}}
-                />
+                { qrCodeRow.name }
             </TableCell>
             <TableCell align="center">
                 {registries.length}
             </TableCell>
             <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>
-                {
-                    isEditing
-                        ? <QrCodeDatePicker date={qrCodeRow.date} onChangeDate={onChangeDate}/>
-                        : dayjs(date).format('DD/MM/YYYY')
-                }
+                { dayjs(qrCodeRow.date).format('DD/MM/YYYY') }
+            </TableCell>
+            <TableCell align="center">
+                { qrCodeRow.enabled ? 'YES' : 'NO'}
             </TableCell>
             <TableCell align="center">
                 {
-                    isEditing
-                        ? <Select variant={'standard'} value={isEnable ? 'YES' : 'NO'} onChange={onSelectChange}>
-                            <MenuItem value="YES">Yes</MenuItem>
-                            <MenuItem value="NO">No</MenuItem>
-                        </Select>
-                        : isEnable ? 'YES' : 'NO'
-                }
-            </TableCell>
-            <TableCell align="center">
-                {
-                    isEditing
-                        ? <IconButton onClick={handleSave}><Save/></IconButton>
-                        : <QrCodeMenuOptions
-                            handleEdit={handleEdit}
-                            handleDelete={handleDelete}
-                            handleShow={handleToggleShowQr}
-                            handleDownload={handleDownload}
-                        />
+                    <QrCodeMenuOptions
+                        handleEdit={handleEdit}
+                        handleDelete={handleDelete}
+                        handleShow={handleToggleShowQr}
+                        handleDownload={handleDownload}
+                    />
                 }
             </TableCell>
 
@@ -136,6 +90,8 @@ export const QrCodeRow = ({
                 />
             }
 
+            <QrCodeModal/>
+
         </TableRow>
     )
-}
+});
