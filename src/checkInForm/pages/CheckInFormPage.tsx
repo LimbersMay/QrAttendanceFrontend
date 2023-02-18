@@ -1,5 +1,5 @@
 import {AuthLayout} from "../../auth/layout/AuthLayout";
-import {Button, Grid, TextField} from "@mui/material";
+import {Button, Grid, MenuItem, Select, TextField} from "@mui/material";
 import React, {useState} from "react";
 import {FormValidations, useForm} from "../../hooks/useForm";
 import {useAppDispatch} from "../../store";
@@ -31,7 +31,7 @@ export const CheckInFormPage = () => {
     const dispatch = useAppDispatch();
 
     const { name, group, career, firstSurname, secondSurname, isFormValid, formValidation, onInputChange  } = useForm(initialForm, formValidations);
-    const { nameValid, groupValid, careerValid, firstSurnameValid, secondSurnameValid } = formValidation;
+    const { nameValid, groupValid, firstSurnameValid, secondSurnameValid } = formValidation;
 
     const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -55,6 +55,10 @@ export const CheckInFormPage = () => {
                             type="text"
                             placeholder="Your group (1A, 3B..)"
                             fullWidth
+
+                            // enable only 2 characters
+                            inputProps={{maxLength: 2, style: {textTransform: 'uppercase'}}}
+
                             name="group"
                             value={group}
                             onChange={onInputChange}
@@ -64,17 +68,14 @@ export const CheckInFormPage = () => {
                     </Grid>
 
                     <Grid item xs={12} sx={{mt: 2}}>
-                        <TextField
-                            label="Career"
-                            type="text"
-                            placeholder="Your career"
-                            fullWidth
-                            name="career"
-                            value={career}
-                            onChange={onInputChange}
-                            error={!!careerValid && formSubmitted}
-                            helperText={careerValid}
-                        />
+                        <Select fullWidth variant={'outlined'} defaultValue={"CSE"}>
+                            <MenuItem value="CSE" >Computer Systems Engineering</MenuItem>
+                            <MenuItem value="CE">Civil Engineering</MenuItem>
+                            <MenuItem value="EN">Environmental Engineering</MenuItem>
+                            <MenuItem value="IE">Industrial Engineering</MenuItem>
+                            <MenuItem value="EIA">Engineering in Administration</MenuItem>
+                            <MenuItem value="BME">Bussines Management Engineering</MenuItem>
+                        </Select>
                     </Grid>
 
                     <Grid item xs={12} sx={{mt: 2}}>
