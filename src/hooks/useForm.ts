@@ -1,4 +1,5 @@
 import React, {useEffect, useMemo, useState} from "react";
+import {SelectChangeEvent} from "@mui/material";
 
 type FormValidation<T> = Record<string, string | null>
 
@@ -43,6 +44,22 @@ export const useForm = <T>( initialForm: FormState<T>, formValidations: FormVali
         });
     }
 
+    const onSelectChange = (event: SelectChangeEvent) => {
+        const { name, value } = event.target;
+
+        setFormState({
+            ...formState,
+            [name]: value
+        });
+    }
+
+    const onDateChange = (name: string, value: string) => {
+        setFormState({
+            ...formState,
+            [name]: value
+        });
+    }
+
     const onResetForm = () => {
         setFormState(initialForm);
     }
@@ -67,6 +84,8 @@ export const useForm = <T>( initialForm: FormState<T>, formValidations: FormVali
         formState,
         onInputChange,
         onResetForm,
+        onSelectChange,
+        onDateChange,
         ...formValidation,
         formValidation,
         isFormValid
