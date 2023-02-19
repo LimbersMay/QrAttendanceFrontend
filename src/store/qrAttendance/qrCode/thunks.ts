@@ -26,11 +26,14 @@ export const startLoadingQrCodes = (): AppThunk => {
     }
 }
 
-export const startNewQrCode = (groupId: string): AppThunk => {
-    return async (dispatch) => {
+export const startNewQrCode = (): AppThunk => {
+    return async (dispatch, getState) => {
+
+        const { active } = getState().group;
+        const id = active?.id || '';
 
         const response = await qrAttendanceApi.post('/qrCode/create', {
-            groupId: groupId,
+            groupId: id,
             name: 'Default',
             enabled: false,
             url: 'https://easyqrattendance.up.railway.app/checkIn'
@@ -39,7 +42,7 @@ export const startNewQrCode = (groupId: string): AppThunk => {
         const {body} = response.data;
 
         const newQrCode: QrCode = {
-            groupId: groupId,
+            groupId: id,
             id: body.id,
             url: body.url,
             formId: body.formId,
