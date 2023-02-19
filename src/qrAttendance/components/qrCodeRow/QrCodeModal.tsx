@@ -8,6 +8,7 @@ import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
 import {useForm} from "../../../hooks/useForm";
 import {QrCode} from "../../interfaces";
 import {ModalLayout} from "../ModalLayout";
+import {useGroupSlice} from "../../../hooks/useGroupSlice";
 
 const initialState: QrCode = {
     id: "",
@@ -21,7 +22,8 @@ const initialState: QrCode = {
 
 export const QrCodeModal = () => {
 
-    const {activeQrCode, handleUpdateQrCode} = useQrCodeSlice();
+    const {activeQrCode, handleUpdateQrCode, handleStartNewQrCode} = useQrCodeSlice();
+    const { active: activeGroup } = useGroupSlice();
     const {toggleQrCodeModal, isQrCodeModalOpen} = useUiSlice();
 
     const {formState, onInputChange, onDateChange} = useForm(activeQrCode || initialState);
@@ -30,13 +32,19 @@ export const QrCodeModal = () => {
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        if (!activeQrCode) return;
+        if (!activeGroup) return;
+
+        if (!activeQrCode) {
+            handleStartNewQrCode(name, date, enabled);
+            toggleQrCodeModal();
+            return;
+        }
 
         handleUpdateQrCode({
             ...activeQrCode,
-            enabled,
             name,
-            date
+            date,
+            enabled
         });
 
         toggleQrCodeModal();
