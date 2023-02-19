@@ -6,14 +6,11 @@ import {useForm} from "../../../hooks/useForm";
 
 import {ConditionalTextField} from "../ConditionalTextField";
 import {Group, QrCode} from "../../interfaces";
-import {useAppDispatch} from "../../../store";
-import {
-    startDeleteGroupWithDependencies,
-    startNewQrCode,
-    startUpdateGroup
-} from "../../../store/qrAttendance";
 import ConfirmDialog from "./ConfirmDialog";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
+import {useGroupSlice} from "../../../hooks/useGroupSlice";
+import {useQrAttendanceSlice} from "../../../hooks/useQrAttendanceSlice";
+import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
 
 export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: QrCode[]}) => {
 
@@ -21,7 +18,9 @@ export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: 
         groupTitle: group.name,
     }), [group]);
 
-    const dispatch = useAppDispatch();
+    const { updateGroup } = useGroupSlice();
+    const { handleStartNewQrCode } = useQrCodeSlice();
+    const { deleteGroupWithDependencies } = useQrAttendanceSlice();
 
     const { formState, onInputChange } = useForm(initialStateForm);
 
@@ -40,16 +39,16 @@ export const TitleRow = React.memo(({ group, qrCodes }: {group: Group, qrCodes: 
 
     const handleSaveRow = () => {
         setIsRowEditing(false);
-        dispatch(startUpdateGroup({ ...group, name: groupTitle}));
+        updateGroup({ ...group, name: groupTitle});
     }
 
     const handleDeleteRow = () => {
-        dispatch(startDeleteGroupWithDependencies(group.id, qrCodes));
+        deleteGroupWithDependencies(group.id, qrCodes);
         SnackbarUtilities.sucess(`Group deleted successfully`);
     }
 
     const handleAddEmptyRow = () => {
-        dispatch(startNewQrCode(group.id));
+        handleStartNewQrCode();
     }
 
     return (
