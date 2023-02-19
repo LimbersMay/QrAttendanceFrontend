@@ -85,8 +85,7 @@ export const LoginPage = () => {
                             <Button
                                 variant='contained'
                                 fullWidth
-                                // onClick={onGoogleSignIn}
-                                // disabled={ isAuthenticating }
+                                href='https://qrattendancebackend.up.railway.app/api/auth/login-google'
                             >
                                 <Google/>
                                 <Typography sx={{ml: 1}}>Google</Typography>

@@ -60,9 +60,6 @@ export const startLogin = (email: string, password: string): AppThunk => {
             }));
 
         } catch (error: any) {
-            console.log(error);
-            
-
             dispatch(logout(null));
         }
     }

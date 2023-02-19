@@ -20,8 +20,8 @@ export const SideBarItem = ({ group }: {group: Group}) => {
                 <ListItemIcon>
                     <TurnedInNot />
                 </ListItemIcon>
-                <Grid container>
-                    <ListItemText primary={group.name}/>
+                <Grid container alignItems="center">
+                    <ListItemText primary={group.name} sx={{mr: '10%'}}/>
                     <ListItemText secondary={dayjs(group.date).format('DD/MM/YYYY')}/>
                 </Grid>
             </ListItemButton>

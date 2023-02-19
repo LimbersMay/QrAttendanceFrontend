@@ -3,20 +3,22 @@ import {
     Box, Button,
     Divider,
     Drawer,
-    Grid,
-    List,
+    Grid, List, Theme,
     Toolbar,
-    Typography
+    Typography, useMediaQuery
 } from "@mui/material";
 import {SideBarItem} from "./SideBarItem";
 import {selectGroup, startNewGroup} from "../../store/qrAttendance";
 import {useAppDispatch} from "../../store";
 import {selectAuth} from "../../store/auth";
+import React from "react";
 
-export const SideBar = ({ drawerWidth = 240}) => {
+export const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle}: {drawerWidth: number, mobileOpen: boolean, handleDrawerToggle: any}) => {
 
     const { groups } = useSelector(selectGroup);
     const { displayName } = useSelector(selectAuth);
+
+    const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
     const dispatch = useAppDispatch();
 
@@ -28,14 +30,19 @@ export const SideBar = ({ drawerWidth = 240}) => {
         <Box
             component='nav'
             sx={{
-                width: { sm: drawerWidth }, flexShrink: { sm: 0 }
+                width: { sm: drawerWidth , md: drawerWidth }, flexShrink: { sm: 0 },
+                display: { sm: 'block' }
             }}
         >
             <Drawer
-                variant='permanent' // Temporary
-                open
+                variant={ isSmallScreen ? 'temporary' : 'permanent'} // Temporary
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                ModalProps={{
+                    keepMounted: true, // Better open performance on mobile.
+                }}
                 sx={{
-                    display: {xs: 'block'},
+                    display: {xs: 'block', sm: 'block'},
                     '& .MuiDrawer-paper': {boxSizing: 'border-box', width: drawerWidth}
                 }}
             >
