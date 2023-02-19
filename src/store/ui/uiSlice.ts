@@ -20,11 +20,17 @@ export const uiSlice = createSlice({
         },
         onCloseQrCodeModal: (state) => {
             state.isQrCodeModalOpen = false;
+        },
+        onShowQrCode: (state) => {
+            state.isShowingQrCode = true;
+        },
+        onHideQrCode: (state) => {
+            state.isShowingQrCode = false;
         }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { onOpenQrCodeModal, onCloseQrCodeModal } = uiSlice.actions;
+export const { onOpenQrCodeModal, onCloseQrCodeModal, onShowQrCode, onHideQrCode } = uiSlice.actions;
 export const selectUi = (state: RootState) => state.ui;
