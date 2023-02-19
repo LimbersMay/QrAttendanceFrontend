@@ -52,7 +52,7 @@ export const TitleModal = () => {
 
                     <Grid item xs={12} sx={{mt: 2}}>
                         <TextField
-                            label="Name"
+                            label="Group name"
                             name="name"
                             value={name}
                             fullWidth
