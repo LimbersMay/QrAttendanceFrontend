@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../store";
-import {onCloseQrCodeModal, onOpenQrCodeModal, selectUi} from "../store/ui/uiSlice";
+import {onCloseQrCodeModal, onHideQrCode, onOpenQrCodeModal, onShowQrCode, selectUi} from "../store/ui/uiSlice";
 
 export const useUiSlice = () => {
 
@@ -14,6 +14,14 @@ export const useUiSlice = () => {
         dispatch(onCloseQrCodeModal());
     }
 
+    const showQrCode = () => {
+        dispatch((onShowQrCode()));
+    }
+
+    const hideQrCode = () => {
+        dispatch(onHideQrCode());
+    }
+
     return {
         // properties
         isShowingQrCode,
@@ -21,6 +29,8 @@ export const useUiSlice = () => {
 
         // methods
         openQrCodeModal,
-        closeQrCodeModal
+        closeQrCodeModal,
+        showQrCode,
+        hideQrCode
     }
 }
