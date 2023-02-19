@@ -2,6 +2,9 @@ import {AppThunk} from "../../store";
 import {QrCode} from "../../../qrAttendance/interfaces";
 import {addEmptyQrCode, setQrCodes, updateQrCode} from "./qrCodeSlice";
 import {qrAttendanceApi} from "../../../api/qrAttendanceApi";
+import {getEnvironments} from "../../../helpers/getEnvironments";
+
+const { VITE_APIURL } = getEnvironments();
 
 export const startLoadingQrCodes = (): AppThunk => {
     return async (dispatch) => {
@@ -37,7 +40,7 @@ export const startNewQrCode = (name: string, manualRegistrationDate: string, ena
             name,
             enabled,
             manualRegistrationDate,
-            url: 'https://easyqrattendance.up.railway.app/checkIn'
+            url: `${VITE_APIURL}/checkIn`
         });
 
         const {body} = response.data;
