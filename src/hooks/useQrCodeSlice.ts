@@ -20,6 +20,7 @@ export const useQrCodeSlice = () => {
 
     const handleDeleteQrCode = () => {
         dispatch(startDeleteQrCodeWithDependencies(`${activeQrCode?.id}`));
+        dispatch(setActiveQrCode(null));
         SnackbarUtilities.sucess(`QR Code ${activeQrCode?.name} deleted successfully`);
     }
 
@@ -28,8 +29,8 @@ export const useQrCodeSlice = () => {
         SnackbarUtilities.sucess(`QR Code ${qrCode.name} updated successfully`);
     }
 
-    const handleStartNewQrCode = () => {
-        dispatch(startNewQrCode());
+    const handleStartNewQrCode = (name: string, date: string, enabled: boolean) => {
+        dispatch(startNewQrCode(name, date, enabled));
     }
 
     return {
