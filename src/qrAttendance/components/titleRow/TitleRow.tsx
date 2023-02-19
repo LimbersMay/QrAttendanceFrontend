@@ -8,7 +8,6 @@ import {Group, QrCode} from "../../interfaces";
 import ConfirmDialog from "./ConfirmDialog";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
 import {useQrAttendanceSlice} from "../../../hooks/useQrAttendanceSlice";
-import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
 import {useUiSlice} from "../../../hooks/useUiSlice";
 import {TitleModal} from "./TitleModal";
 
@@ -18,8 +17,7 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
         groupTitle: group.name,
     }), [group]);
 
-    const { toggleTitleModal } = useUiSlice();
-    const {handleStartNewQrCode} = useQrCodeSlice();
+    const { toggleTitleModal, toggleQrCodeModal } = useUiSlice();
     const {deleteGroupWithDependencies} = useQrAttendanceSlice();
 
     const {formState} = useForm(initialStateForm);
@@ -37,7 +35,7 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
     }
 
     const handleAddEmptyRow = () => {
-        handleStartNewQrCode();
+        toggleQrCodeModal();
     }
 
     return (
