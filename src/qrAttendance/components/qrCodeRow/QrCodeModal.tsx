@@ -31,7 +31,7 @@ const initialState = {
 export const QrCodeModal = () => {
 
     const { activeQrCode, handleSetActiveQrCode, handleUpdateQrCode } = useQrCodeSlice();
-    const { closeQrCodeModal, isQrCodeModalOpen } = useUiSlice();
+    const { toggleQrCodeModal, isQrCodeModalOpen } = useUiSlice();
 
     const [formState, setFormState] = useState(activeQrCode || initialState);
     const {name, date, enabled} = formState;
@@ -69,11 +69,6 @@ export const QrCodeModal = () => {
         changeFormState(event);
     }
 
-    const handleClose = () => {
-        closeQrCodeModal();
-        handleSetActiveQrCode(null);
-    };
-
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
 
@@ -86,7 +81,7 @@ export const QrCodeModal = () => {
             date
         });
 
-        closeQrCodeModal();
+        toggleQrCodeModal();
         handleSetActiveQrCode(null);
     }
 
@@ -96,7 +91,7 @@ export const QrCodeModal = () => {
                 aria-labelledby="transition-modal-title"
                 aria-describedby="transition-modal-description"
                 open={isQrCodeModalOpen}
-                onClose={handleClose}
+                onClose={toggleQrCodeModal}
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{

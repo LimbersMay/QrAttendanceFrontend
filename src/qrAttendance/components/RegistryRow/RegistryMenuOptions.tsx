@@ -9,7 +9,7 @@ const ITEM_HEIGHT = 48;
 
 export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => {
 
-    const { openRegistryModal } = useUiSlice();
+    const { toggleRegistryModal } = useUiSlice();
     const { handleSetActiveRegistry, handleDeleteRegistry } = useRegistrySlice();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -48,7 +48,7 @@ export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => 
                     },
                 }}
             >
-                <MenuItem onClick={openRegistryModal}>
+                <MenuItem onClick={toggleRegistryModal}>
                     <Edit />
                     <Typography sx={{ml: '7px'}}>Edit</Typography>
                 </MenuItem>

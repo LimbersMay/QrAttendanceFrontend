@@ -35,7 +35,7 @@ export const RegistryModal = () => {
 
     const { active: activeRegistry, updateRegistry } = useRegistrySlice();
 
-    const { isRegistryModalOpen, closeRegistryModal } = useUiSlice();
+    const { isRegistryModalOpen, toggleRegistryModal } = useUiSlice();
 
     const [formState, setFormState] = useState(activeRegistry || initialState);
     const {name, checkInTime, group, career, firstSurname, secondSurname} = formState;
@@ -73,10 +73,6 @@ export const RegistryModal = () => {
         changeFormState(event);
     }
 
-    const handleClose = () => {
-        closeRegistryModal();
-    };
-
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
 
@@ -90,7 +86,7 @@ export const RegistryModal = () => {
         console.log(activeRegistry);
         console.log(formState);
 
-        closeRegistryModal();
+        toggleRegistryModal();
     }
 
     return (
@@ -98,7 +94,7 @@ export const RegistryModal = () => {
             aria-labelledby="transition-modal-title"
             aria-describedby="transition-modal-description"
             open={isRegistryModalOpen}
-            onClose={handleClose}
+            onClose={toggleRegistryModal}
             closeAfterTransition
             BackdropComponent={Backdrop}
             BackdropProps={{

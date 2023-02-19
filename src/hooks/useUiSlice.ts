@@ -1,25 +1,14 @@
 import {useAppDispatch, useAppSelector} from "../store";
 import {
-    onCloseQrCodeModal, onCloseRegistryModal,
     onHideQrCode,
-    onOpenQrCodeModal,
-    onOpenRegistryModal,
-    onShowQrCode,
+    onShowQrCode, onToggleQrCodeModal, onToggleRegistryModal, onToggleTitleModal,
     selectUi
 } from "../store/ui/uiSlice";
 
 export const useUiSlice = () => {
 
     const dispatch = useAppDispatch();
-    const { isShowingQrCode, isQrCodeModalOpen, isRegistryModalOpen } = useAppSelector(selectUi);
-
-    const openQrCodeModal = () => {
-        dispatch(onOpenQrCodeModal());
-    }
-
-    const closeQrCodeModal = () => {
-        dispatch(onCloseQrCodeModal());
-    }
+    const { isShowingQrCode, isQrCodeModalOpen, isRegistryModalOpen, isTitleModalOpen } = useAppSelector(selectUi);
 
     const showQrCode = () => {
         dispatch((onShowQrCode()));
@@ -29,12 +18,16 @@ export const useUiSlice = () => {
         dispatch(onHideQrCode());
     }
 
-    const openRegistryModal = () => {
-        dispatch(onOpenRegistryModal());
+    const toggleQrCodeModal = () => {
+        dispatch(onToggleQrCodeModal());
     }
 
-    const closeRegistryModal = () => {
-        dispatch(onCloseRegistryModal());
+    const toggleRegistryModal = () => {
+        dispatch(onToggleRegistryModal());
+    }
+
+    const toggleTitleModal = () => {
+        dispatch(onToggleTitleModal());
     }
 
     return {
@@ -42,13 +35,13 @@ export const useUiSlice = () => {
         isShowingQrCode,
         isQrCodeModalOpen,
         isRegistryModalOpen,
+        isTitleModalOpen,
 
         // methods
-        openQrCodeModal,
-        closeQrCodeModal,
         showQrCode,
         hideQrCode,
-        openRegistryModal,
-        closeRegistryModal
+        toggleTitleModal,
+        toggleQrCodeModal,
+        toggleRegistryModal
     }
 }

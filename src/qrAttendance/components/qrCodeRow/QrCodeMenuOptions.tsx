@@ -9,7 +9,7 @@ const ITEM_HEIGHT = 48;
 
 export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: any, qrCode: QrCode }) => {
 
-    const { showQrCode, openQrCodeModal } = useUiSlice();
+    const { showQrCode, toggleQrCodeModal } = useUiSlice();
     const { handleSetActiveQrCode, handleDeleteQrCode } = useQrCodeSlice();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -53,7 +53,7 @@ export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: a
                     <Typography sx={{ml: '7px'}}>Show</Typography>
                 </MenuItem>
 
-                <MenuItem onClick={openQrCodeModal}>
+                <MenuItem onClick={toggleQrCodeModal}>
                     <Edit />
                     <Typography sx={{ml: '7px'}}>Edit</Typography>
                 </MenuItem>

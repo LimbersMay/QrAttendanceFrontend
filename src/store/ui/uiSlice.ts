@@ -5,40 +5,39 @@ interface uiInitialState {
     isQrCodeModalOpen: boolean;
     isRegistryModalOpen: boolean;
     isShowingQrCode: boolean;
+    isTitleModalOpen: boolean;
 }
 
 const initialState: uiInitialState = {
     isQrCodeModalOpen: false,
     isRegistryModalOpen: false,
-    isShowingQrCode: false
+    isShowingQrCode: false,
+    isTitleModalOpen: false
 }
 
 export const uiSlice = createSlice({
     name: 'ui',
     initialState,
     reducers: {
-        onOpenQrCodeModal: (state) => {
-            state.isQrCodeModalOpen = true;
-        },
-        onCloseQrCodeModal: (state) => {
-            state.isQrCodeModalOpen = false;
-        },
         onShowQrCode: (state) => {
             state.isShowingQrCode = true;
         },
         onHideQrCode: (state) => {
             state.isShowingQrCode = false;
         },
-        onOpenRegistryModal: (state) => {
-            state.isRegistryModalOpen = true;
+        onToggleQrCodeModal: (state) => {
+            state.isQrCodeModalOpen = !state.isQrCodeModalOpen;
         },
-        onCloseRegistryModal: (state) => {
-            state.isRegistryModalOpen = false;
+        onToggleRegistryModal: (state) => {
+            state.isRegistryModalOpen = !state.isRegistryModalOpen;
+        },
+        onToggleTitleModal: (state) => {
+            state.isTitleModalOpen = !state.isTitleModalOpen;
         }
     }
 });
 
 
 // Action creators are generated for each case reducer function
-export const { onOpenQrCodeModal, onCloseQrCodeModal, onShowQrCode, onHideQrCode, onOpenRegistryModal, onCloseRegistryModal } = uiSlice.actions;
+export const { onToggleQrCodeModal, onShowQrCode, onHideQrCode, onToggleRegistryModal, onToggleTitleModal } = uiSlice.actions;
 export const selectUi = (state: RootState) => state.ui;
