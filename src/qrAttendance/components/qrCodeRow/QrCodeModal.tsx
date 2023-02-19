@@ -5,11 +5,10 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {useAppDispatch, useAppSelector} from "../../../store";
 import {Divider, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import {QrCodeDatePicker} from "./QrCodeDatePicker";
-import {selectQrCode, setActiveQrCode, startUpdateQrCode} from "../../../store/qrAttendance";
 import {useUiSlice} from "../../../hooks/useUiSlice";
+import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -31,10 +30,7 @@ const initialState = {
 
 export const QrCodeModal = () => {
 
-    const dispatch = useAppDispatch();
-
-    const {activeQrCode} = useAppSelector(selectQrCode);
-
+    const { activeQrCode, handleSetActiveQrCode, handleUpdateQrCode } = useQrCodeSlice();
     const { closeQrCodeModal, isQrCodeModalOpen } = useUiSlice();
 
     const [formState, setFormState] = useState(activeQrCode || initialState);
@@ -75,7 +71,7 @@ export const QrCodeModal = () => {
 
     const handleClose = () => {
         closeQrCodeModal();
-        dispatch(setActiveQrCode(null));
+        handleSetActiveQrCode(null);
     };
 
     const onSubmit = (event: FormEvent) => {
@@ -83,15 +79,15 @@ export const QrCodeModal = () => {
 
         if (!activeQrCode) return;
 
-        dispatch(startUpdateQrCode({
+        handleUpdateQrCode({
             ...activeQrCode,
             enabled,
             name,
             date
-        }));
+        });
 
         closeQrCodeModal();
-        dispatch(setActiveQrCode(null));
+        handleSetActiveQrCode(null);
     }
 
 
