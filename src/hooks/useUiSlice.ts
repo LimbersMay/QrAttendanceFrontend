@@ -1,10 +1,17 @@
 import {useAppDispatch, useAppSelector} from "../store";
-import {onCloseQrCodeModal, onHideQrCode, onOpenQrCodeModal, onShowQrCode, selectUi} from "../store/ui/uiSlice";
+import {
+    onCloseQrCodeModal, onCloseRegistryModal,
+    onHideQrCode,
+    onOpenQrCodeModal,
+    onOpenRegistryModal,
+    onShowQrCode,
+    selectUi
+} from "../store/ui/uiSlice";
 
 export const useUiSlice = () => {
 
     const dispatch = useAppDispatch();
-    const { isShowingQrCode, isQrCodeModalOpen } = useAppSelector(selectUi);
+    const { isShowingQrCode, isQrCodeModalOpen, isRegistryModalOpen } = useAppSelector(selectUi);
 
     const openQrCodeModal = () => {
         dispatch(onOpenQrCodeModal());
@@ -22,15 +29,26 @@ export const useUiSlice = () => {
         dispatch(onHideQrCode());
     }
 
+    const openRegistryModal = () => {
+        dispatch(onOpenRegistryModal());
+    }
+
+    const closeRegistryModal = () => {
+        dispatch(onCloseRegistryModal());
+    }
+
     return {
         // properties
         isShowingQrCode,
         isQrCodeModalOpen,
+        isRegistryModalOpen,
 
         // methods
         openQrCodeModal,
         closeQrCodeModal,
         showQrCode,
-        hideQrCode
+        hideQrCode,
+        openRegistryModal,
+        closeRegistryModal
     }
 }
