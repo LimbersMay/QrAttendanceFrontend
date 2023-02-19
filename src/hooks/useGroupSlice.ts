@@ -1,5 +1,5 @@
 import {useAppDispatch, useAppSelector} from "../store";
-import {selectGroup, startUpdateGroup} from "../store/qrAttendance";
+import {selectGroup, setActiveGroup, startUpdateGroup} from "../store/qrAttendance";
 import {Group} from "../qrAttendance/interfaces";
 
 export const useGroupSlice = () => {
@@ -11,12 +11,17 @@ export const useGroupSlice = () => {
         dispatch(startUpdateGroup(group));
     }
 
+    const handleSetActiveGroup = (group: Group) => {
+        dispatch(setActiveGroup(group));
+    }
+
     return {
         // properties
         groups,
         active,
 
         // methods
-        updateGroup
+        updateGroup,
+        handleSetActiveGroup
     }
 }
