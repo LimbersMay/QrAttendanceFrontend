@@ -19,6 +19,8 @@ export const QrCodeRow = memo(({
                                }: { qrCodeRow: QrCode, handleOpenSubTable: Function, open: boolean, registries: Registry[] }) => {
 
 
+    const { name, date, enabled } = qrCodeRow;
+
     const handleDownload = () => {
         generateExcelFromRegistries(qrCodeRow,registries);
     }
@@ -36,16 +38,16 @@ export const QrCodeRow = memo(({
                 </IconButton>
             </TableCell>
             <TableCell component="th" scope="row">
-                {qrCodeRow.name}
+                {name}
             </TableCell>
             <TableCell align="center">
                 {registries.length}
             </TableCell>
             <TableCell align="center" sx={{display: {xs: 'none', sm: 'table-cell'}}}>
-                {dayjs(qrCodeRow.date).format('DD/MM/YYYY')}
+                {dayjs(date).format('DD/MM/YYYY')}
             </TableCell>
             <TableCell align="center">
-                {qrCodeRow.enabled ? 'YES' : 'NO'}
+                {enabled ? 'YES' : 'NO'}
             </TableCell>
             <TableCell align="center">
                 <QrCodeMenuOptions
