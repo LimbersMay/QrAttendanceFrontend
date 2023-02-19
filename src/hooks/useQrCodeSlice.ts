@@ -1,5 +1,10 @@
 import {useAppDispatch, useAppSelector} from "../store";
-import {selectQrCode, setActiveQrCode, startDeleteQrCodeWithDependencies} from "../store/qrAttendance";
+import {
+    selectQrCode,
+    setActiveQrCode,
+    startDeleteQrCodeWithDependencies,
+    startUpdateQrCode
+} from "../store/qrAttendance";
 import {QrCode} from "../qrAttendance/interfaces";
 import {SnackbarUtilities} from "../utilities/snackbar-manager";
 
@@ -17,6 +22,11 @@ export const useQrCodeSlice = () => {
         SnackbarUtilities.sucess(`QR Code ${activeQrCode?.name} deleted successfully`);
     }
 
+    const handleUpdateQrCode = (qrCode: QrCode) => {
+        dispatch(startUpdateQrCode(qrCode));
+        SnackbarUtilities.sucess(`QR Code ${qrCode.name} updated successfully`);
+    }
+
     return {
         // properties
         activeQrCode,
@@ -24,6 +34,7 @@ export const useQrCodeSlice = () => {
 
         // methods
         handleSetActiveQrCode,
-        handleDeleteQrCode
+        handleDeleteQrCode,
+        handleUpdateQrCode
     }
 }
