@@ -1,19 +1,28 @@
-import React from 'react';
+import { MouseEvent, useState } from 'react';
 import {Divider, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import {Delete, Edit, MoreVert} from "@mui/icons-material";
+import {useUiSlice} from "../../../hooks/useUiSlice";
+import {useRegistrySlice} from "../../../hooks/useRegistrySlice";
+import {Registry} from "../../interfaces";
 
 const ITEM_HEIGHT = 48;
 
-export const RegistryRowMenuOptions = ({ handleEdit, handleDelete }: { handleEdit: any, handleDelete: any }) => {
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => {
+
+    const { openRegistryModal } = useUiSlice();
+    const { handleSetActiveRegistry, handleDeleteRegistry } = useRegistrySlice();
+
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
+        handleSetActiveRegistry(registry);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
+        handleSetActiveRegistry(null);
     };
 
     return (
@@ -39,14 +48,14 @@ export const RegistryRowMenuOptions = ({ handleEdit, handleDelete }: { handleEdi
                     },
                 }}
             >
-                <MenuItem onClick={handleEdit}>
+                <MenuItem onClick={openRegistryModal}>
                     <Edit />
                     <Typography sx={{ml: '7px'}}>Edit</Typography>
                 </MenuItem>
 
                 <Divider />
 
-                <MenuItem onClick={handleDelete}>
+                <MenuItem onClick={handleDeleteRegistry}>
                     <Delete />
                     <Typography sx={{ml: '7px'}}>Delete</Typography>
                 </MenuItem>
