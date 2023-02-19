@@ -1,28 +1,17 @@
-import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
+import React, { FormEvent} from "react";
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Divider, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
+import {Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
 import {useUiSlice} from "../../../hooks/useUiSlice";
 import {useRegistrySlice} from "../../../hooks/useRegistrySlice";
 import {RegistryDatePicker} from "./RegistryDatePicker";
+import {useForm} from "../../../hooks/useForm";
+import {Registry} from "../../interfaces";
+import {ModalLayout} from "../ModalLayout";
 
-const style = {
-    position: 'absolute' as 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-};
-
-const initialState = {
+const initialState: Registry = {
+    id: "",
+    qrCodeId: "",
     name: "",
     checkInTime: "2023-02-18T02:19:01.000Z",
     career: "",
@@ -34,44 +23,10 @@ const initialState = {
 export const RegistryModal = () => {
 
     const { active: activeRegistry, updateRegistry } = useRegistrySlice();
-
     const { isRegistryModalOpen, toggleRegistryModal } = useUiSlice();
 
-    const [formState, setFormState] = useState(activeRegistry || initialState);
+    const { formState, onInputChange, onSelectChange, onDateChange } = useForm(activeRegistry || initialState);
     const {name, checkInTime, group, career, firstSurname, secondSurname} = formState;
-
-    useEffect(() => {
-        setFormState(activeRegistry || initialState);
-    }, [activeRegistry]);
-
-    const changeFormState = ({target}: ChangeEvent<HTMLInputElement> | SelectChangeEvent) => {
-        const {name, value} = target;
-
-        setFormState({
-            ...formState,
-            [name]: value
-        })
-    }
-
-    const onSelectChange = (event: SelectChangeEvent) => {
-        const {name, value} = event.target;
-
-        setFormState({
-            ...formState,
-            [name]: value
-        });
-    }
-
-    const onDateChange = (date: string) => {
-        setFormState({
-            ...formState,
-            checkInTime: date
-        })
-    }
-
-    const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        changeFormState(event);
-    }
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -90,19 +45,7 @@ export const RegistryModal = () => {
     }
 
     return (
-        <Modal
-            aria-labelledby="transition-modal-title"
-            aria-describedby="transition-modal-description"
-            open={isRegistryModalOpen}
-            onClose={toggleRegistryModal}
-            closeAfterTransition
-            BackdropComponent={Backdrop}
-            BackdropProps={{
-                timeout: 500,
-            }}
-        >
-            <Fade in={isRegistryModalOpen}>
-                <Box sx={style}>
+        <ModalLayout condition={isRegistryModalOpen} handleClose={toggleRegistryModal}>
                     <form onSubmit={onSubmit}>
                         <Grid container>
 
@@ -112,7 +55,7 @@ export const RegistryModal = () => {
                             </Grid>
 
                             <Grid item xs={12} sx={{mt: 2}}>
-                                <RegistryDatePicker date={checkInTime} onChangeDate={onDateChange} />
+                                <RegistryDatePicker date={checkInTime} onChangeDate={(date: string) => onDateChange("checkInTime", date)} />
                             </Grid>
 
                             <Grid item xs={12} sx={{mt: 2}}>
@@ -186,8 +129,6 @@ export const RegistryModal = () => {
                             </Grid>
                         </Grid>
                     </form>
-                </Box>
-            </Fade>
-        </Modal>
+        </ModalLayout>
     );
 }
