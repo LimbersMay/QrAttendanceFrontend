@@ -2,7 +2,7 @@ import {useAppDispatch, useAppSelector} from "../store";
 import {
     selectQrCode,
     setActiveQrCode,
-    startDeleteQrCodeWithDependencies,
+    startDeleteQrCodeWithDependencies, startNewQrCode,
     startUpdateQrCode
 } from "../store/qrAttendance";
 import {QrCode} from "../qrAttendance/interfaces";
@@ -11,6 +11,7 @@ import {SnackbarUtilities} from "../utilities/snackbar-manager";
 export const useQrCodeSlice = () => {
 
     const dispatch = useAppDispatch();
+
     const { activeQrCode, qrCodes } = useAppSelector(selectQrCode);
 
     const handleSetActiveQrCode = (qrCode: QrCode | null) => {
@@ -27,6 +28,10 @@ export const useQrCodeSlice = () => {
         SnackbarUtilities.sucess(`QR Code ${qrCode.name} updated successfully`);
     }
 
+    const handleStartNewQrCode = () => {
+        dispatch(startNewQrCode());
+    }
+
     return {
         // properties
         activeQrCode,
@@ -35,6 +40,7 @@ export const useQrCodeSlice = () => {
         // methods
         handleSetActiveQrCode,
         handleDeleteQrCode,
-        handleUpdateQrCode
+        handleUpdateQrCode,
+        handleStartNewQrCode
     }
 }
