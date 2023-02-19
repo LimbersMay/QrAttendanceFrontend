@@ -30,7 +30,7 @@ const initialState = {
 
 export const QrCodeModal = () => {
 
-    const { activeQrCode, handleSetActiveQrCode, handleUpdateQrCode } = useQrCodeSlice();
+    const { activeQrCode, handleUpdateQrCode } = useQrCodeSlice();
     const { toggleQrCodeModal, isQrCodeModalOpen } = useUiSlice();
 
     const [formState, setFormState] = useState(activeQrCode || initialState);
@@ -82,7 +82,6 @@ export const QrCodeModal = () => {
         });
 
         toggleQrCodeModal();
-        handleSetActiveQrCode(null);
     }
 
 
@@ -104,7 +103,7 @@ export const QrCodeModal = () => {
                             <Grid container>
 
                                 <Grid item xs={12} sx={{textAlign: "center"}}>
-                                    <Typography variant="h6">Editing</Typography>
+                                    <Typography variant="h6">Editing {activeQrCode?.name}</Typography>
                                     <Divider />
                                 </Grid>
 
