@@ -3,13 +3,14 @@ import {Divider, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import {Delete, Download, Edit, MoreVert, Visibility} from "@mui/icons-material";
 import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
 import {QrCode} from "../../interfaces";
+import {useUiSlice} from "../../../hooks/useUiSlice";
 
 const ITEM_HEIGHT = 48;
 
-export const QrCodeMenuOptions = ({ handleShow, handleEdit, handleDownload, handleDelete, qrCode }: { handleShow: any, handleEdit: any, handleDownload: any, handleDelete: any, qrCode: QrCode
-}) => {
+export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: any, qrCode: QrCode }) => {
 
-    const { handleSetActiveQrCode } = useQrCodeSlice();
+    const { showQrCode, openQrCodeModal } = useUiSlice();
+    const { handleSetActiveQrCode, handleDeleteQrCode } = useQrCodeSlice();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -47,12 +48,12 @@ export const QrCodeMenuOptions = ({ handleShow, handleEdit, handleDownload, hand
                     },
                 }}
             >
-                <MenuItem onClick={handleShow}>
+                <MenuItem onClick={showQrCode}>
                     <Visibility />
                     <Typography sx={{ml: '7px'}}>Show</Typography>
                 </MenuItem>
 
-                <MenuItem onClick={handleEdit}>
+                <MenuItem onClick={openQrCodeModal}>
                     <Edit />
                     <Typography sx={{ml: '7px'}}>Edit</Typography>
                 </MenuItem>
@@ -64,7 +65,7 @@ export const QrCodeMenuOptions = ({ handleShow, handleEdit, handleDownload, hand
 
                 <Divider />
 
-                <MenuItem onClick={handleDelete}>
+                <MenuItem onClick={handleDeleteQrCode}>
                     <Delete />
                     <Typography sx={{ml: '7px'}}>Delete</Typography>
                 </MenuItem>
