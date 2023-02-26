@@ -4,7 +4,7 @@ import {getEnvironments} from "../helpers/getEnvironments";
 const { VITE_APIURL } = getEnvironments();
 
 export const qrAttendanceApi = axios.create({
-    baseURL: `${VITE_APIURL}/api`,
+    baseURL: 'https://qrattendancebackend.up.railway.app/api',
     withCredentials: true,
     params: {}
 });

@@ -40,7 +40,7 @@ export const startNewQrCode = (name: string, manualRegistrationDate: string, ena
             name,
             enabled,
             manualRegistrationDate,
-            url: `${VITE_APIURL}/checkIn`
+            url: 'https://qrattendancebackend.up.railway.app/checkIn'
         });
 
         const {body} = response.data;
