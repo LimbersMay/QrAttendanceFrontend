@@ -10,6 +10,7 @@ import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
 import {useQrAttendanceSlice} from "../../../hooks/useQrAttendanceSlice";
 import {useUiSlice} from "../../../hooks/useUiSlice";
 import {TitleModal} from "./TitleModal";
+import {QrCodeModal} from "../qrCodeRow/QrCodeModal";
 
 export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[] }) => {
 
@@ -102,6 +103,7 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
             </TableRow>
 
             <TitleModal/>
+            <QrCodeModal />
         </>
     )
 });
