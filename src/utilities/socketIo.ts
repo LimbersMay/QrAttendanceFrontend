@@ -4,7 +4,7 @@ import {getEnvironments} from "../helpers/getEnvironments";
 
 const { VITE_APIURL } = getEnvironments();
 
-const socket = io(VITE_APIURL, {
+const socket = io('https://qrattendancebackend.up.railway.app', {
     withCredentials: true,
     protocols: ['websocket', 'polling', 'flashsocket'],
     secure: true,
