@@ -5,7 +5,6 @@ import Typography from "@mui/material/Typography";
 import {FormEvent} from "react";
 import {useGroupSlice} from "../../../hooks/useGroupSlice";
 import {useForm} from "../../../hooks/useForm";
-import {QrCodeDatePicker} from "../qrCodeRow/QrCodeDatePicker";
 import Button from "@mui/material/Button";
 
 const initialState = {
@@ -19,8 +18,8 @@ export const TitleModal = () => {
     const { isTitleModalOpen, toggleTitleModal } = useUiSlice();
     const { active, updateGroup, handleSetActiveGroup } = useGroupSlice();
 
-    const { formState, onInputChange, onDateChange } = useForm(active || initialState);
-    const { name, date } = formState;
+    const { formState, onInputChange } = useForm(active || initialState);
+    const { name } = formState;
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -29,8 +28,7 @@ export const TitleModal = () => {
 
         updateGroup({
             ...active,
-            name,
-            date
+            name
         });
 
         handleSetActiveGroup(formState);
@@ -44,10 +42,6 @@ export const TitleModal = () => {
                     <Grid item xs={12} sx={{textAlign: "center"}}>
                         <Typography variant="h6">Editing {active?.name}</Typography>
                         <Divider />
-                    </Grid>
-
-                    <Grid item xs={12} sx={{mt: 2}}>
-                        <QrCodeDatePicker date={date} onChangeDate={(date: string) => onDateChange('date', date)}/>
                     </Grid>
 
                     <Grid item xs={12} sx={{mt: 2}}>
