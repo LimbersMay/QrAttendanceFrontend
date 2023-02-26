@@ -45,7 +45,7 @@ export const CheckInFormPage = () => {
         setFormSubmitted(true);
         if (!isFormValid) return;
 
-        dispatch(startSubmitCheckInForm({io, name, group, career, firstSurname, secondSurname, formId}));
+        dispatch(startSubmitCheckInForm({io, name, group: group.toUpperCase(), career, firstSurname, secondSurname, formId}));
     }
 
     return (
