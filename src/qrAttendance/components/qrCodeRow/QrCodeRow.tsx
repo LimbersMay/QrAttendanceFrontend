@@ -9,7 +9,6 @@ import {QrCode, Registry} from "../../interfaces";
 import {QrCodeMenuOptions} from "./QrCodeMenuOptions";
 import {QrCheckIn} from "./QrCheckIn";
 import {generateExcelFromRegistries} from "../../helpers/generateExcelFromRegistries";
-import {QrCodeModal} from "./QrCodeModal";
 
 export const QrCodeRow = memo(({
                                    qrCodeRow,
@@ -57,9 +56,6 @@ export const QrCodeRow = memo(({
             </TableCell>
 
             <QrCheckIn/>
-
-            <QrCodeModal/>
-
         </TableRow>
     )
 });
