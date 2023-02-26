@@ -7,7 +7,7 @@ export const generateExcelFromRegistries = (qrCodeRow: QrCode, registries: Regis
     const registriesToExport = registries.filter(registry => registry.qrCodeId === qrCodeRow.id);
     const registriesToExcel = registriesToExport.map(registry => {
         return {
-            'Check-in time': dayjs(registry.checkinTime).format('DD/MM/YYYY HH:mm:ss A'),
+            'Check-in time': dayjs(registry.checkInTime).format('DD/MM/YYYY HH:mm:ss A'),
             'Group': registry.group,
             'Career': registry.career,
             'First Surname': registry.firstSurname,
