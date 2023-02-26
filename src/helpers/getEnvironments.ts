@@ -1,8 +1,7 @@
 
 export const getEnvironments = () => {
-    import.meta.env;
 
     return {
-        ...import.meta.env
+        VITE_APIURL: "https://easyqrattendance.up.railway.app"
     }
 }
