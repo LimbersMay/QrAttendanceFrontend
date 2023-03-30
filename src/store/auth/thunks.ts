@@ -1,7 +1,7 @@
 import {AppThunk} from "../store";
 import {checkingCredentials, login, logout} from "./authSlice";
 import {qrAttendanceApi} from "../../api/qrAttendanceApi";
-import {setActiveGroup, setGroups, setQrCodes, setRegistries} from "../qrAttendance";
+import {onSetActiveGroup, setGroups, setQrCodes, setRegistries} from "../qrAttendance";
 
 export const startCreatingUser = ({name, email, lastname, password}: {name: string, email: string, lastname: string, password: string}): AppThunk => {
     return async (dispatch) => {
@@ -75,7 +75,7 @@ export const startLogout = (): AppThunk => {
         });
 
         dispatch(logout(null));
-        dispatch(setActiveGroup(null));
+        dispatch(onSetActiveGroup(null));
         dispatch(setGroups([]));
         dispatch(setQrCodes([]));
         dispatch(setRegistries([]));
