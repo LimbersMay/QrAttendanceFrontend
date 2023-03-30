@@ -1,6 +1,10 @@
 
-import io from 'socket.io-client';
-const socket = io('https://qrattendancebackend.up.railway.app', {
+import * as io from 'socket.io-client';
+import {getEnvironments} from "../helpers/getEnvironments";
+
+const { VITE_APIURL } = getEnvironments();
+
+const socket = io.io('https://qrattendancebackend.up.railway.app', {
     withCredentials: true,
     protocols: ['websocket', 'polling', 'flashsocket'],
     secure: true,

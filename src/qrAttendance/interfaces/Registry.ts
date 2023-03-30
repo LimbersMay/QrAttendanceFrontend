@@ -1,7 +1,7 @@
 export interface Registry {
     id: string,
     qrCodeId: string,
-    checkinTime: string,
+    checkInTime: string,
     name: string,
     group: string,
     career: string,
