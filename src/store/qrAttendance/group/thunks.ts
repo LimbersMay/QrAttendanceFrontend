@@ -1,5 +1,5 @@
 import {AppThunk} from "../../store";
-import {addEmptyGroup, deleteGroup, setActiveGroup, setGroups, updateGroup} from "./groupSlice";
+import {addEmptyGroup, deleteGroup, onSetActiveGroup, setGroups, updateGroup} from "./groupSlice";
 import {Group} from "../../../qrAttendance/interfaces";
 import {qrAttendanceApi} from "../../../api/qrAttendanceApi";
 
@@ -49,7 +49,7 @@ export const startNewGroup = (): AppThunk => {
 
         // sync code here
         dispatch(addEmptyGroup(newGroup));
-        dispatch(setActiveGroup(newGroup));
+        dispatch(onSetActiveGroup(newGroup));
     }
 }
 
