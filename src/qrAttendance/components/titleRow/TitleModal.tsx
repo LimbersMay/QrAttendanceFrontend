@@ -16,22 +16,22 @@ const initialState = {
 export const TitleModal = () => {
 
     const { isTitleModalOpen, toggleTitleModal } = useUiSlice();
-    const { active, updateGroup, handleSetActiveGroup } = useGroupSlice();
+    const { active, startUpdateGroup, setActiveGroup } = useGroupSlice();
 
     const { formState, onInputChange } = useForm(active || initialState);
     const { name } = formState;
 
-    const onSubmit = (event: FormEvent) => {
+    const onSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
         if (!active) return;
 
-        updateGroup({
+        await startUpdateGroup({
             ...active,
             name
         });
 
-        handleSetActiveGroup(formState);
+        setActiveGroup(formState);
         toggleTitleModal();
     }
 
