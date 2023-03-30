@@ -16,7 +16,7 @@ export const groupSlice = createSlice({
     name: 'group',
     initialState,
     reducers: {
-        setActiveGroup: (state, action: PayloadAction<Group | null>) => {
+        onSetActiveGroup: (state, action: PayloadAction<Group | null>) => {
             state.active = action.payload;
         },
         setGroups(state, action: PayloadAction<Group[]>) {
@@ -41,5 +41,5 @@ export const groupSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { setActiveGroup, updateGroup, deleteGroup, addEmptyGroup, setGroups } = groupSlice.actions;
+export const { onSetActiveGroup, updateGroup, deleteGroup, addEmptyGroup, setGroups } = groupSlice.actions;
 export const selectGroup = (state: RootState) => state.group;
