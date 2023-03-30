@@ -2,16 +2,15 @@ import {Grid, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/m
 import {TurnedInNot} from "@mui/icons-material";
 
 import {Group} from "../interfaces";
-import {useAppDispatch} from "../../store";
-import {setActiveGroup} from "../../store/qrAttendance";
 import dayjs from "dayjs";
+import {useGroupSlice} from "../../hooks/useGroupSlice";
 
 export const SideBarItem = ({ group }: {group: Group}) => {
 
-    const dispatch = useAppDispatch();
+    const { setActiveGroup } = useGroupSlice();
 
     const onClickGroup = () => {
-        dispatch(setActiveGroup(group));
+        setActiveGroup(group);
     }
 
     return (
