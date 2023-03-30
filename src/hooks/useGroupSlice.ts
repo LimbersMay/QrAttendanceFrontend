@@ -1,18 +1,50 @@
 import {useAppDispatch, useAppSelector} from "../store";
-import {selectGroup, setActiveGroup, startUpdateGroup} from "../store/qrAttendance";
+import {selectGroup, onSetActiveGroup, updateGroup, addEmptyGroup} from "../store/qrAttendance";
 import {Group} from "../qrAttendance/interfaces";
+import {qrAttendanceApi} from "../api/qrAttendanceApi";
 
 export const useGroupSlice = () => {
 
     const dispatch = useAppDispatch();
-    const { groups, active } = useAppSelector(selectGroup);
+    const {groups, active} = useAppSelector(selectGroup);
 
-    const updateGroup = (group: Group) => {
-        dispatch(startUpdateGroup(group));
+    const startUpdateGroup = async (group: Group) => {
+        // async code here
+        const {id, name} = group;
+
+        await qrAttendanceApi.put('/group/update', {
+            id: id,
+            updatedFields: {
+                name
+            }
+        });
+
+        // sync code here
+        dispatch(updateGroup(group));
     }
 
-    const handleSetActiveGroup = (group: Group) => {
-        dispatch(setActiveGroup(group));
+    const startNewGroup = async () => {
+
+        // async code here
+        const response = await qrAttendanceApi.post('/group/create', {
+            name: 'Default'
+        });
+
+        const {body: group} = response.data;
+
+        const newGroup = {
+            id: group.id,
+            date: group.createdAt,
+            name: group.name
+        }
+
+        // sync code here
+        dispatch(addEmptyGroup(newGroup));
+        dispatch(onSetActiveGroup(newGroup));
+    }
+
+    const setActiveGroup = (group: Group) => {
+        dispatch(onSetActiveGroup(group));
     }
 
     return {
@@ -21,7 +53,8 @@ export const useGroupSlice = () => {
         active,
 
         // methods
-        updateGroup,
-        handleSetActiveGroup
+        startUpdateGroup,
+        setActiveGroup,
+        startNewGroup
     }
 }
