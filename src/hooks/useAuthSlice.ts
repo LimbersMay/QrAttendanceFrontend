@@ -13,7 +13,7 @@ interface CreatingUserProps {
 export const useAuthSlice = () => {
 
     const dispatch = useAppDispatch();
-    const { displayName } = useAppSelector(selectAuth);
+    const { displayName, errorMessage, status } = useAppSelector(selectAuth);
 
     const startCreatingUser = async ({name, email, lastname, password}: CreatingUserProps) => {
         // async code here
@@ -91,6 +91,8 @@ export const useAuthSlice = () => {
     return {
         // properties
         displayName,
+        errorMessage,
+        status,
 
         // methods
         startCreatingUser,
