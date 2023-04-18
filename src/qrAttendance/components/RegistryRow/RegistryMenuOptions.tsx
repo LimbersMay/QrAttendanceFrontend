@@ -10,19 +10,19 @@ const ITEM_HEIGHT = 48;
 export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => {
 
     const { toggleRegistryModal } = useUiSlice();
-    const { handleSetActiveRegistry, handleDeleteRegistry } = useRegistrySlice();
+    const { setActiveRegistry, startDeleteRegistry } = useRegistrySlice();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
-        handleSetActiveRegistry(registry);
+        setActiveRegistry(registry);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
-        handleSetActiveRegistry(null);
+        setActiveRegistry(null);
     };
 
     return (
@@ -55,7 +55,7 @@ export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => 
 
                 <Divider />
 
-                <MenuItem onClick={handleDeleteRegistry}>
+                <MenuItem onClick={startDeleteRegistry}>
                     <Delete />
                     <Typography sx={{ml: '7px'}}>Delete</Typography>
                 </MenuItem>
