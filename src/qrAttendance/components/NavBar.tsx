@@ -1,15 +1,11 @@
+import React from "react";
 import {AppBar, Avatar, Box, Grid, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography} from "@mui/material";
 import {MenuOutlined} from "@mui/icons-material";
-import {useAppDispatch, useAppSelector} from "../../store";
-import {startLogout} from "../../store/auth/thunks";
-import React from "react";
-import {selectAuth} from "../../store/auth";
+import {useAuthSlice} from "../../hooks/useAuthSlice";
 
 export const NavBar = ({ handleDrawerToggle, drawerWidth = 240 }: {handleDrawerToggle: any, drawerWidth: number }) => {
 
-    const dispatch = useAppDispatch();
-
-    const { displayName } = useAppSelector(selectAuth);
+    const { startLogout, displayName } = useAuthSlice();
 
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -21,8 +17,8 @@ export const NavBar = ({ handleDrawerToggle, drawerWidth = 240 }: {handleDrawerT
         setAnchorElUser(null);
     };
 
-    const handleLogout = () => {
-        dispatch(startLogout());
+    const handleLogout = async () => {
+        await startLogout();
     }
 
     return (
