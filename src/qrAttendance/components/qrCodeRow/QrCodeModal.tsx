@@ -22,25 +22,25 @@ const initialState: QrCode = {
 
 export const QrCodeModal = () => {
 
-    const {activeQrCode, handleUpdateQrCode, handleStartNewQrCode} = useQrCodeSlice();
+    const {activeQrCode, startUpdateQrCode, startNewQrCode} = useQrCodeSlice();
     const { active: activeGroup } = useGroupSlice();
     const {toggleQrCodeModal, isQrCodeModalOpen} = useUiSlice();
 
     const {formState, onInputChange, onDateChange} = useForm(activeQrCode || initialState);
     const {name, date, enabled} = formState;
 
-    const onSubmit = (event: FormEvent) => {
+    const onSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
         if (!activeGroup) return;
 
         if (!activeQrCode) {
-            handleStartNewQrCode(name, date, enabled);
+            await startNewQrCode(name, date, enabled);
             toggleQrCodeModal();
             return;
         }
 
-        handleUpdateQrCode({
+        await startUpdateQrCode({
             ...activeQrCode,
             name,
             date,
