@@ -16,7 +16,7 @@ export const registrySlice = createSlice({
     name: 'registry',
     initialState,
     reducers: {
-        setActiveRegistry: (state, action: PayloadAction<Registry | null>) => {
+        onSetActiveRegistry: (state, action: PayloadAction<Registry | null>) => {
             state.active = action.payload;
         },
         addNewRegistry: (state, action: PayloadAction<Registry>) => {
@@ -41,5 +41,5 @@ export const registrySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setActiveRegistry, addNewRegistry, deleteRegistry, deleteRegistriesByQrCodeId, updateRegistry, setRegistries } = registrySlice.actions;
+export const { onSetActiveRegistry, addNewRegistry, deleteRegistry, deleteRegistriesByQrCodeId, updateRegistry, setRegistries } = registrySlice.actions;
 export const selectRegistry = (state: RootState) => state.registry;
