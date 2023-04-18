@@ -2,12 +2,12 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Group} from "../../../qrAttendance/interfaces";
 import {RootState} from "../../store";
 
-interface groupState {
+export interface GroupState {
     active: Group | null;
     groups: Group[];
 }
 
-const initialState: groupState = {
+const initialState: GroupState = {
     active: null,
     groups: []
 }
