@@ -22,24 +22,21 @@ const initialState: Registry = {
 
 export const RegistryModal = () => {
 
-    const { active: activeRegistry, updateRegistry } = useRegistrySlice();
+    const { active: activeRegistry, startUpdateRegistry } = useRegistrySlice();
     const { isRegistryModalOpen, toggleRegistryModal } = useUiSlice();
 
     const { formState, onInputChange, onSelectChange, onDateChange } = useForm(activeRegistry || initialState);
     const {name, checkInTime, group, career, firstSurname, secondSurname} = formState;
 
-    const onSubmit = (event: FormEvent) => {
+    const onSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
         if (!activeRegistry) return;
 
-        updateRegistry({
+        await startUpdateRegistry({
             ...activeRegistry,
             ...formState
         });
-
-        console.log(activeRegistry);
-        console.log(formState);
 
         toggleRegistryModal();
     }
