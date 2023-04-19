@@ -4,7 +4,7 @@ import {Alert, Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {AuthLayout} from "../layout/AuthLayout";
 import {FormValidations, useForm} from "../../hooks/useForm";
 import {authStatusTypes} from "../types";
-import {useAuthSlice} from "../../hooks/useAuthSlice";
+import {useAuthStore} from "../../hooks/useAuthStore";
 
 const initialForm = {
     name: '',
@@ -23,7 +23,7 @@ const formValidations: FormValidations = {
 
 export const SignupPage = () => {
 
-    const { startCreatingUser, errorMessage, status } = useAuthSlice();
+    const { startCreatingUser, errorMessage, status } = useAuthStore();
 
     const { onInputChange, isFormValid, formValidation, name, email, password, lastname } = useForm(initialForm, formValidations);
     const { nameValid, lastnameValid, emailValid, passwordValid } = formValidation;

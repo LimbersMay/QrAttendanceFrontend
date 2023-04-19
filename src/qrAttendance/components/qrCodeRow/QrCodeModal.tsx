@@ -3,12 +3,12 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Divider, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import {QrCodeDatePicker} from "./QrCodeDatePicker";
-import {useUiSlice} from "../../../hooks/useUiSlice";
-import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
+import {useUiStore} from "../../../hooks/useUiStore";
+import {useQrCodeStore} from "../../../hooks/useQrCodeStore";
 import {useForm} from "../../../hooks/useForm";
 import {QrCode} from "../../interfaces";
 import {ModalLayout} from "../ModalLayout";
-import {useGroupSlice} from "../../../hooks/useGroupSlice";
+import {useGroupStore} from "../../../hooks/useGroupStore";
 
 const initialState: QrCode = {
     id: "",
@@ -22,9 +22,9 @@ const initialState: QrCode = {
 
 export const QrCodeModal = () => {
 
-    const {activeQrCode, startUpdateQrCode, startNewQrCode} = useQrCodeSlice();
-    const { active: activeGroup } = useGroupSlice();
-    const {toggleQrCodeModal, isQrCodeModalOpen} = useUiSlice();
+    const {activeQrCode, startUpdateQrCode, startNewQrCode} = useQrCodeStore();
+    const { active: activeGroup } = useGroupStore();
+    const {toggleQrCodeModal, isQrCodeModalOpen} = useUiStore();
 
     const {formState, onInputChange, onDateChange} = useForm(activeQrCode || initialState);
     const {name, date, enabled} = formState;

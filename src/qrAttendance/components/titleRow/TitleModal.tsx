@@ -1,9 +1,9 @@
 import {ModalLayout} from "../ModalLayout";
-import {useUiSlice} from "../../../hooks/useUiSlice";
+import {useUiStore} from "../../../hooks/useUiStore";
 import {Divider, Grid, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {FormEvent} from "react";
-import {useGroupSlice} from "../../../hooks/useGroupSlice";
+import {useGroupStore} from "../../../hooks/useGroupStore";
 import {useForm} from "../../../hooks/useForm";
 import Button from "@mui/material/Button";
 
@@ -15,8 +15,8 @@ const initialState = {
 
 export const TitleModal = () => {
 
-    const { isTitleModalOpen, toggleTitleModal } = useUiSlice();
-    const { active, startUpdateGroup, setActiveGroup } = useGroupSlice();
+    const { isTitleModalOpen, toggleTitleModal } = useUiStore();
+    const { active, startUpdateGroup, setActiveGroup } = useGroupStore();
 
     const { formState, onInputChange } = useForm(active || initialState);
     const { name } = formState;

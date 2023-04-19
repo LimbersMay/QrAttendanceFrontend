@@ -10,7 +10,7 @@ interface CreatingUserProps {
     password: string;
 }
 
-export const useAuthSlice = () => {
+export const useAuthStore = () => {
 
     const dispatch = useAppDispatch();
     const { displayName, errorMessage, status } = useAppSelector(selectAuth);

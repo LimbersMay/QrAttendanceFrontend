@@ -1,13 +1,13 @@
 import {Box, Dialog, DialogContent, DialogTitle, IconButton} from "@mui/material";
 import {Close} from "@mui/icons-material";
 import QRCode from 'react-qr-code';
-import {useUiSlice} from "../../../hooks/useUiSlice";
-import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
+import {useUiStore} from "../../../hooks/useUiStore";
+import {useQrCodeStore} from "../../../hooks/useQrCodeStore";
 
 export const QrCheckIn = () => {
 
-    const { isShowingQrCode, hideQrCode } = useUiSlice();
-    const { activeQrCode } = useQrCodeSlice();
+    const { isShowingQrCode, hideQrCode } = useUiStore();
+    const { activeQrCode } = useQrCodeStore();
 
     return (
         <Dialog open={isShowingQrCode} maxWidth="sm" fullWidth>

@@ -1,4 +1,4 @@
-import {useGroupSlice} from "../../src/hooks/useGroupSlice";
+import {useGroupStore} from "../../src/hooks/useGroupStore";
 import {renderHook} from "@testing-library/react";
 import {configureStore} from "@reduxjs/toolkit";
 import {groupSlice, GroupState} from "../../src/store/qrAttendance";
@@ -17,7 +17,7 @@ const getMockStore = (initialState: GroupState) => {
     })
 }
 
-describe('Tests for useGroupSlice', () => {
+describe('Tests for useGroupStore', () => {
 
     beforeEach(() => clearAllMocks());
 
@@ -25,7 +25,7 @@ describe('Tests for useGroupSlice', () => {
 
         const mockStore = getMockStore({ ...initialState});
 
-        const { result } = renderHook(() => useGroupSlice(), {
+        const { result } = renderHook(() => useGroupStore(), {
             wrapper: ({ children }) => <Provider store={mockStore}>{ children }</Provider>
         });
 

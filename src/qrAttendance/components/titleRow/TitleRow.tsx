@@ -7,8 +7,8 @@ import {useForm} from "../../../hooks/useForm";
 import {Group, QrCode} from "../../interfaces";
 import ConfirmDialog from "./ConfirmDialog";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
-import {useQrAttendanceSlice} from "../../../hooks/useQrAttendanceSlice";
-import {useUiSlice} from "../../../hooks/useUiSlice";
+import {useQrAttendanceStore} from "../../../hooks/useQrAttendanceStore";
+import {useUiStore} from "../../../hooks/useUiStore";
 import {TitleModal} from "./TitleModal";
 import {QrCodeModal} from "../qrCodeRow/QrCodeModal";
 
@@ -18,8 +18,8 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
         groupTitle: group.name,
     }), [group]);
 
-    const { toggleTitleModal, toggleQrCodeModal } = useUiSlice();
-    const {deleteGroupWithDependencies} = useQrAttendanceSlice();
+    const { toggleTitleModal, toggleQrCodeModal } = useUiStore();
+    const {deleteGroupWithDependencies} = useQrAttendanceStore();
 
     const {formState} = useForm(initialStateForm);
     const [isTryingToDelete, setIsTryingToDelete] = useState<boolean>(false);

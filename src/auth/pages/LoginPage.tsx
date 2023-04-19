@@ -5,7 +5,7 @@ import {Google} from "@mui/icons-material";
 import {AuthLayout} from "../layout/AuthLayout";
 import {useForm} from "../../hooks/useForm";
 import {authStatusTypes} from "../types";
-import {useAuthSlice} from "../../hooks/useAuthSlice";
+import {useAuthStore} from "../../hooks/useAuthStore";
 
 const initialForm = {
     email: '',
@@ -14,7 +14,7 @@ const initialForm = {
 
 export const LoginPage = () => {
 
-    const { startLogin, errorMessage, status } = useAuthSlice();
+    const { startLogin, errorMessage, status } = useAuthStore();
 
     const isAuthenticating = useMemo(() => status === authStatusTypes.checking, [status]);
 

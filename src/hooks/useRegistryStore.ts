@@ -7,7 +7,7 @@ import {
 import {Registry} from "../qrAttendance/interfaces";
 import {qrAttendanceApi} from "../api/qrAttendanceApi";
 
-export const useRegistrySlice = () => {
+export const useRegistryStore = () => {
 
     const dispatch = useAppDispatch();
     const {registries, active} = useAppSelector(selectRegistry);

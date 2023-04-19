@@ -5,7 +5,7 @@ import {
     selectUi
 } from "../store/ui/uiSlice";
 
-export const useUiSlice = () => {
+export const useUiStore = () => {
 
     const dispatch = useAppDispatch();
     const { isShowingQrCode, isQrCodeModalOpen, isRegistryModalOpen, isTitleModalOpen } = useAppSelector(selectUi);

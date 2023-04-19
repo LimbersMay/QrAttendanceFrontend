@@ -2,8 +2,8 @@ import React, { FormEvent} from "react";
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
-import {useUiSlice} from "../../../hooks/useUiSlice";
-import {useRegistrySlice} from "../../../hooks/useRegistrySlice";
+import {useUiStore} from "../../../hooks/useUiStore";
+import {useRegistryStore} from "../../../hooks/useRegistryStore";
 import {RegistryDatePicker} from "./RegistryDatePicker";
 import {useForm} from "../../../hooks/useForm";
 import {Registry} from "../../interfaces";
@@ -22,8 +22,8 @@ const initialState: Registry = {
 
 export const RegistryModal = () => {
 
-    const { active: activeRegistry, startUpdateRegistry } = useRegistrySlice();
-    const { isRegistryModalOpen, toggleRegistryModal } = useUiSlice();
+    const { active: activeRegistry, startUpdateRegistry } = useRegistryStore();
+    const { isRegistryModalOpen, toggleRegistryModal } = useUiStore();
 
     const { formState, onInputChange, onSelectChange, onDateChange } = useForm(activeRegistry || initialState);
     const {name, checkInTime, group, career, firstSurname, secondSurname} = formState;

@@ -3,7 +3,7 @@ import {selectGroup, onSetActiveGroup, updateGroup, addEmptyGroup} from "../stor
 import {Group} from "../qrAttendance/interfaces";
 import {qrAttendanceApi} from "../api/qrAttendanceApi";
 
-export const useGroupSlice = () => {
+export const useGroupStore = () => {
 
     const dispatch = useAppDispatch();
     const {groups, active} = useAppSelector(selectGroup);

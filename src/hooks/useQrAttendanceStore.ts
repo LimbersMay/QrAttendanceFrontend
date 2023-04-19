@@ -2,7 +2,7 @@ import {useAppDispatch} from "../store";
 import {QrCode} from "../qrAttendance/interfaces";
 import {startDeleteGroupWithDependencies} from "../store/qrAttendance";
 
-export const useQrAttendanceSlice = () => {
+export const useQrAttendanceStore = () => {
 
     const dispatch = useAppDispatch();
 

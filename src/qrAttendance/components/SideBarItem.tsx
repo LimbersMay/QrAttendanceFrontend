@@ -3,11 +3,11 @@ import {TurnedInNot} from "@mui/icons-material";
 
 import {Group} from "../interfaces";
 import dayjs from "dayjs";
-import {useGroupSlice} from "../../hooks/useGroupSlice";
+import {useGroupStore} from "../../hooks/useGroupStore";
 
 export const SideBarItem = ({ group }: {group: Group}) => {
 
-    const { setActiveGroup } = useGroupSlice();
+    const { setActiveGroup } = useGroupStore();
 
     const onClickGroup = () => {
         setActiveGroup(group);

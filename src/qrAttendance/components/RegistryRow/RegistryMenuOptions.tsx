@@ -1,16 +1,16 @@
 import { MouseEvent, useState } from 'react';
 import {Divider, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import {Delete, Edit, MoreVert} from "@mui/icons-material";
-import {useUiSlice} from "../../../hooks/useUiSlice";
-import {useRegistrySlice} from "../../../hooks/useRegistrySlice";
+import {useUiStore} from "../../../hooks/useUiStore";
+import {useRegistryStore} from "../../../hooks/useRegistryStore";
 import {Registry} from "../../interfaces";
 
 const ITEM_HEIGHT = 48;
 
 export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => {
 
-    const { toggleRegistryModal } = useUiSlice();
-    const { setActiveRegistry, startDeleteRegistry } = useRegistrySlice();
+    const { toggleRegistryModal } = useUiStore();
+    const { setActiveRegistry, startDeleteRegistry } = useRegistryStore();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);

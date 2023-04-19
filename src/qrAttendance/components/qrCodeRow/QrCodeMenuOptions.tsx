@@ -1,16 +1,16 @@
 import React from 'react';
 import {Divider, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import {Delete, Download, Edit, MoreVert, Visibility} from "@mui/icons-material";
-import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
+import {useQrCodeStore} from "../../../hooks/useQrCodeStore";
 import {QrCode} from "../../interfaces";
-import {useUiSlice} from "../../../hooks/useUiSlice";
+import {useUiStore} from "../../../hooks/useUiStore";
 
 const ITEM_HEIGHT = 48;
 
 export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: any, qrCode: QrCode }) => {
 
-    const { showQrCode, toggleQrCodeModal } = useUiSlice();
-    const { setActiveQrCode, startDeleteQrCode } = useQrCodeSlice();
+    const { showQrCode, toggleQrCodeModal } = useUiStore();
+    const { setActiveQrCode, startDeleteQrCode } = useQrCodeStore();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);

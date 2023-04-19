@@ -9,11 +9,11 @@ import {
 } from "@mui/material";
 import {SideBarItem} from "./SideBarItem";
 import {selectAuth} from "../../store/auth";
-import {useGroupSlice} from "../../hooks/useGroupSlice";
+import {useGroupStore} from "../../hooks/useGroupStore";
 
 export const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle}: {drawerWidth: number, mobileOpen: boolean, handleDrawerToggle: any}) => {
 
-    const { groups, startNewGroup } = useGroupSlice();
+    const { groups, startNewGroup } = useGroupStore();
     const { displayName } = useSelector(selectAuth);
 
     const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));

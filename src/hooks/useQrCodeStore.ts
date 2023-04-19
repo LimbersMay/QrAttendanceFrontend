@@ -8,7 +8,7 @@ import {QrCode} from "../qrAttendance/interfaces";
 import {SnackbarUtilities} from "../utilities/snackbar-manager";
 import {qrAttendanceApi} from "../api/qrAttendanceApi";
 
-export const useQrCodeSlice = () => {
+export const useQrCodeStore = () => {
 
     const dispatch = useAppDispatch();
 
