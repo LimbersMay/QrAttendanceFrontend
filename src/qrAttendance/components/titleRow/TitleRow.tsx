@@ -1,5 +1,4 @@
 import React, {useMemo, useState} from "react";
-
 import {IconButton, TableCell, tableCellClasses, TableRow, TextField, Tooltip} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, DeleteOutlined} from "@mui/icons-material";
 import {useForm} from "../../../hooks/useForm";
@@ -19,7 +18,7 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
     }), [group]);
 
     const { toggleTitleModal, toggleQrCodeModal } = useUiStore();
-    const {deleteGroupWithDependencies} = useQrAttendanceStore();
+    const {startDeleteGroupWithDependencies} = useQrAttendanceStore();
 
     const {formState} = useForm(initialStateForm);
     const [isTryingToDelete, setIsTryingToDelete] = useState<boolean>(false);
@@ -30,8 +29,8 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
         setIsTryingToDelete(!isTryingToDelete);
     }
 
-    const handleDeleteRow = () => {
-        deleteGroupWithDependencies(group.id, qrCodes);
+    const handleDeleteRow = async () => {
+        await startDeleteGroupWithDependencies(group.id, qrCodes);
         SnackbarUtilities.sucess(`Group deleted successfully`);
     }
 
