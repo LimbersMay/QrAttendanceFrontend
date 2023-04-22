@@ -13,7 +13,6 @@ export const useQrAttendanceStore = () => {
     const dispatch = useAppDispatch();
     const { activeQrCode } = useAppSelector(selectQrCode);
 
-    // TODO: Move all the code of the global thunks here, deleteGroupWithDependencies and deleteQrCodeWithDependencies
     const startDeleteGroupWithDependencies = async (groupId: string, qrCodes: QrCode[]) => {
 
         // async code here
