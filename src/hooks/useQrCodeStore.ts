@@ -2,7 +2,7 @@ import {useAppDispatch, useAppSelector} from "../store";
 import {
     selectQrCode,
     onSetActiveQrCode,
-    updateQrCode, addEmptyQrCode, selectGroup, deleteQrCode, deleteRegistriesByQrCodeId
+    updateQrCode, addEmptyQrCode, selectGroup
 } from "../store/qrAttendance";
 import {QrCode} from "../qrAttendance/interfaces";
 import {SnackbarUtilities} from "../utilities/snackbar-manager";
