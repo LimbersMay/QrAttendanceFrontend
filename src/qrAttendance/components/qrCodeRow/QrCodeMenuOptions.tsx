@@ -4,13 +4,15 @@ import {Delete, Download, Edit, MoreVert, Visibility} from "@mui/icons-material"
 import {useQrCodeStore} from "../../../hooks/useQrCodeStore";
 import {QrCode} from "../../interfaces";
 import {useUiStore} from "../../../hooks/useUiStore";
+import {useQrAttendanceStore} from "../../../hooks/useQrAttendanceStore";
 
 const ITEM_HEIGHT = 48;
 
 export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: any, qrCode: QrCode }) => {
 
     const { showQrCode, toggleQrCodeModal } = useUiStore();
-    const { setActiveQrCode, startDeleteQrCode } = useQrCodeStore();
+    const { setActiveQrCode } = useQrCodeStore();
+    const { startDeleteQrCodeWithDependencies } = useQrAttendanceStore();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
@@ -65,7 +67,7 @@ export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: a
 
                 <Divider />
 
-                <MenuItem onClick={startDeleteQrCode}>
+                <MenuItem onClick={startDeleteQrCodeWithDependencies}>
                     <Delete />
                     <Typography sx={{ml: '7px'}}>Delete</Typography>
                 </MenuItem>
