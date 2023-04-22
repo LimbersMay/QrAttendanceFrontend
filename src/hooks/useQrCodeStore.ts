@@ -19,20 +19,6 @@ export const useQrCodeStore = () => {
         dispatch(onSetActiveQrCode(qrCode));
     }
 
-    const startDeleteQrCode = async () => {
-        const idQrCode = `${activeQrCode?.id}`;
-
-        // async code here
-        await qrAttendanceApi.delete(`/qrCode/delete/${idQrCode}`);
-
-        // sync code here
-        dispatch(deleteQrCode(idQrCode));
-        dispatch(deleteRegistriesByQrCodeId(idQrCode));
-
-        dispatch(onSetActiveQrCode(null));
-        SnackbarUtilities.sucess(`QR Code ${activeQrCode?.name} deleted successfully`);
-    }
-
     const startUpdateQrCode = async (qrCode: QrCode) => {
 
         // async code here
@@ -88,7 +74,6 @@ export const useQrCodeStore = () => {
 
         // methods
         setActiveQrCode,
-        startDeleteQrCode,
         startUpdateQrCode,
         startNewQrCode
     }
