@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {QrCode} from "../../../qrAttendance/interfaces";
 import {RootState} from "../../store";
 
-interface QrCodeState {
+export interface QrCodeState {
     qrCodes: QrCode[];
     activeQrCode: QrCode | null;
 }
