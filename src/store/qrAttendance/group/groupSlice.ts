@@ -24,7 +24,7 @@ export const groupSlice = createSlice({
         },
         updateGroup: (state, { payload }: PayloadAction<Group>) => {
             state.groups = state.groups.map(group => {
-                if (state.active && (payload.id === group.id)) return payload;
+                if (payload.id === group.id) return payload;
 
                 return group;
             })
