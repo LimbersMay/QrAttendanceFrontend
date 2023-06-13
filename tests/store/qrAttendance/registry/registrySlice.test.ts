@@ -25,7 +25,7 @@ describe('Tests for qrCodeSlice', () => {
 
     });
 
-    test('setQegistries should set the registries', () => {
+    test('setRegistries should set the registries', () => {
         const newState = registrySlice.reducer(initialState, setRegistries(registries));
         expect(newState.registries).toEqual([...registries]);
     });
