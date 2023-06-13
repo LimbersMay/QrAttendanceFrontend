@@ -1,5 +1,11 @@
 import clearAllMocks = jest.clearAllMocks;
-import {onHideQrCode, onShowQrCode, onToggleQrCodeModal, uiSlice} from "../../../src/store/ui/uiSlice";
+import {
+    onHideQrCode,
+    onShowQrCode,
+    onToggleQrCodeModal,
+    onToggleRegistryModal, onToggleTitleModal,
+    uiSlice
+} from "../../../src/store/ui/uiSlice";
 
 describe('Tests for uiSlice', () => {
     beforeEach(() => clearAllMocks());
@@ -32,5 +38,21 @@ describe('Tests for uiSlice', () => {
 
         expect(openedQrCodeModal.isQrCodeModalOpen).toBeTruthy();
         expect(closedQrCodeModal.isQrCodeModalOpen).toBeFalsy();
+    });
+
+    test('onToggleRegistryModal should toggle the isRegistryModalOpen', () => {
+        const openedRegistryModal = uiSlice.reducer(initialState, onToggleRegistryModal());
+        const closedRegistryModal = uiSlice.reducer(openedRegistryModal, onToggleRegistryModal());
+
+        expect(openedRegistryModal.isRegistryModalOpen).toBeTruthy();
+        expect(closedRegistryModal.isRegistryModalOpen).toBeFalsy();
+    });
+
+    test('onToggleTitleModal should toggle the isTitleModalOpen', () => {
+        const openedTitleModal = uiSlice.reducer(initialState, onToggleTitleModal());
+        const closedTitleModal = uiSlice.reducer(openedTitleModal, onToggleTitleModal());
+
+        expect(openedTitleModal.isTitleModalOpen).toBeTruthy();
+        expect(closedTitleModal.isTitleModalOpen).toBeFalsy();
     });
 });
