@@ -1,6 +1,5 @@
 import clearAllMocks = jest.clearAllMocks;
 import {onHideQrCode, onShowQrCode, onToggleQrCodeModal, uiSlice} from "../../../src/store/ui/uiSlice";
-import {qrCodeModalOpenedState} from "../../fixtures/uiStates";
 
 describe('Tests for uiSlice', () => {
     beforeEach(() => clearAllMocks());
