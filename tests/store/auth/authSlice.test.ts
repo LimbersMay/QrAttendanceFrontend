@@ -32,4 +32,18 @@ describe('Tests for authSlice', () => {
             errorMessage: null
         });
     });
+
+    test('should logout the user with error message', () => {
+
+        const errorMessage = "An error occurred";
+        const state = authSlice.reducer(authenticatedUserState, logout(errorMessage));
+
+        expect(state).toEqual({
+            displayName: null,
+            email: null,
+            uid: null,
+            status: authStatusTypes.notAuthenticated,
+            errorMessage: errorMessage
+        });
+    });
 });
