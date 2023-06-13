@@ -27,13 +27,11 @@ describe('Tests for uiSlice', () => {
         expect(state.isShowingQrCode).toBeFalsy();
     });
 
-    test('onToggleQrCodeModal should set the isQrCodeModalOpen on true', () => {
-        const state = uiSlice.reducer(initialState, onToggleQrCodeModal());
-        expect(state.isQrCodeModalOpen).toBeTruthy();
-    });
+    test('onToggleQrCodeModal should toggle the isQrCodeModalOpen', () => {
+        const openedQrCodeModal = uiSlice.reducer(initialState, onToggleQrCodeModal());
+        const closedQrCodeModal = uiSlice.reducer(openedQrCodeModal, onToggleQrCodeModal());
 
-    test('onToggleQrCodeModal should set the isQrCodeModalOpen on false', () => {
-        const state = uiSlice.reducer(qrCodeModalOpenedState, onToggleQrCodeModal());
-        expect(state.isQrCodeModalOpen).toBeFalsy();
+        expect(openedQrCodeModal.isQrCodeModalOpen).toBeTruthy();
+        expect(closedQrCodeModal.isQrCodeModalOpen).toBeFalsy();
     });
 });
