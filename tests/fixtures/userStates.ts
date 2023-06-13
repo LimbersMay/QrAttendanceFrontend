@@ -14,3 +14,7 @@ export const notAuthenticatedState: AuthState = {
     displayName: null,
     errorMessage: null
 }
+
+export const authenticatedUserState = {
+    ...userCredentials
+}
