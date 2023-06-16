@@ -38,12 +38,27 @@ describe('Tests for useGroupStore', () => {
         });
     });
 
-    test('startUpdateGroup should update the group', () => {
-        const mockStore = getMockStore({...initialState});
+    test('startUpdateGroup should update the group', async () => {
+        const mockStore = getMockStore({...withGroupsState});
 
         const { result } = renderHook(() => useGroupStore(), {
             wrapper: ({ children }) => <Provider store={mockStore}>{children}</Provider>
         });
+
+        const spy = jest.spyOn(qrAttendanceApi, 'put').mockResolvedValue({});
+
+        const updatedGroup = {
+            ...groups[0],
+            name: 'Updating the name of this group'
+        }
+
+        await act(async () => {
+           await result.current.startUpdateGroup(updatedGroup)
+        });
+
+        expect(result.current.groups).toContainEqual(updatedGroup);
+
+        spy.mockRestore();
     });
 
     test('setActiveGroup should set activeGroup', async () => {
