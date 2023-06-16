@@ -1,10 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {groupSlice, GroupState} from "../../src/store/qrAttendance";
 import clearAllMocks = jest.clearAllMocks;
-import {groups, initialState} from "../fixtures/groupStates";
+import {groups, initialState, withGroupsState} from "../fixtures/groupStates";
 import {act, renderHook} from "@testing-library/react";
 import {useGroupStore} from "../../src/hooks/useGroupStore";
 import {Provider} from "react-redux";
+import {qrAttendanceApi} from "../../src/api/qrAttendanceApi";
 
 const getMockStore = (initialState: GroupState) => {
     return configureStore({
@@ -45,7 +46,7 @@ describe('Tests for useGroupStore', () => {
         });
     });
 
-    test('setActiveGroup should call onSetActiveGroup', async () => {
+    test('setActiveGroup should set activeGroup', async () => {
         const mockStore = getMockStore({...initialState});
 
         const { result } = renderHook(() => useGroupStore(), {
@@ -57,5 +58,37 @@ describe('Tests for useGroupStore', () => {
         });
 
         expect(result.current.active).toEqual(groups[0]);
+    });
+
+    test('startNewGroup should add an empty group', async () => {
+
+        const newGroup = {
+            id: '1234-as-css',
+            createdAt: '22-05-2023',
+            name: 'Default group'
+        }
+
+        const mockStore = getMockStore({...withGroupsState});
+        const { result } = renderHook(() => useGroupStore(), {
+            wrapper: ({ children }) => <Provider store={mockStore}>{children}</Provider>
+        });
+
+        const spy = jest.spyOn(qrAttendanceApi, 'post').mockResolvedValue({
+            data: {
+                body: {...newGroup}
+            }
+        });
+
+        await act(async () => {
+            await result.current.startNewGroup();
+        })
+
+        expect(result.current.groups).toContainEqual({
+            id: newGroup.id,
+            date: newGroup.createdAt,
+            name: newGroup.name
+        });
+
+        spy.mockRestore();
     });
 });
