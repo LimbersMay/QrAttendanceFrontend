@@ -2,7 +2,7 @@ import {useAppDispatch, useAppSelector} from "../store";
 import {
     selectRegistry,
     onSetActiveRegistry,
-    updateRegistry, deleteRegistry
+    updateRegistry, deleteRegistry, setRegistries
 } from "../store/qrAttendance";
 import {Registry} from "../qrAttendance/interfaces";
 import {qrAttendanceApi} from "../api/qrAttendanceApi";
@@ -43,6 +43,29 @@ export const useRegistryStore = () => {
         dispatch(deleteRegistry(activeRegistryId));
     }
 
+    const startLoadingRegistries = async () => {
+
+        // async code here
+        const response = await qrAttendanceApi.get('/registry/all');
+        const { body: registries } = response.data;
+
+        const registriesMapped: Registry[] = registries.map((registry: any) => {
+            return {
+                id: registry.id,
+                qrCodeId: registry.qrCodeId,
+                checkInTime: registry.checkinTime,
+                name: registry.name,
+                group: registry.group,
+                career: registry.career,
+                firstSurname: registry.firstSurname,
+                secondSurname: registry.secondSurname
+            }
+        })
+
+        // sync code here
+        dispatch(setRegistries(registriesMapped));
+    }
+
     return {
         // properties
         registries,
@@ -51,6 +74,7 @@ export const useRegistryStore = () => {
         // methods
         startUpdateRegistry,
         setActiveRegistry,
-        startDeleteRegistry
+        startDeleteRegistry,
+        startLoadingRegistries
     }
 }

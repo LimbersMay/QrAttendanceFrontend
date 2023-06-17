@@ -2,7 +2,7 @@ import {useAppDispatch, useAppSelector} from "../store";
 import {
     selectQrCode,
     onSetActiveQrCode,
-    updateQrCode, addEmptyQrCode, selectGroup
+    updateQrCode, addEmptyQrCode, selectGroup, setQrCodes
 } from "../store/qrAttendance";
 import {QrCode} from "../qrAttendance/interfaces";
 import {SnackbarUtilities} from "../utilities/snackbar-manager";
@@ -67,6 +67,27 @@ export const useQrCodeStore = () => {
         dispatch(addEmptyQrCode(newQrCode));
     }
 
+    const startLoadingQrCodes = async () => {
+        // async code here
+        const response = await qrAttendanceApi.get('/qrCode/all');
+        const {body} = response.data;
+
+        const qrCodes: QrCode[] = body.map((qrCode: any) => {
+            return {
+                id: qrCode.id,
+                url: qrCode.url,
+                formId: qrCode.formId,
+                groupId: qrCode.groupId,
+                name: qrCode.name,
+                date: qrCode.manualRegistrationDate,
+                enabled: qrCode.enabled
+            }
+        });
+
+        // sync code here
+        dispatch(setQrCodes(qrCodes));
+    }
+
     return {
         // properties
         activeQrCode,
@@ -75,6 +96,7 @@ export const useQrCodeStore = () => {
         // methods
         setActiveQrCode,
         startUpdateQrCode,
-        startNewQrCode
+        startNewQrCode,
+        startLoadingQrCodes
     }
 }

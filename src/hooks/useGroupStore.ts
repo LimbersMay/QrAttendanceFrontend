@@ -1,5 +1,11 @@
 import {useAppDispatch, useAppSelector} from "../store";
-import {selectGroup, onSetActiveGroup, updateGroup, addEmptyGroup} from "../store/qrAttendance";
+import {
+    selectGroup,
+    onSetActiveGroup,
+    updateGroup,
+    addEmptyGroup,
+    setGroups
+} from "../store/qrAttendance";
 import {Group} from "../qrAttendance/interfaces";
 import {qrAttendanceApi} from "../api/qrAttendanceApi";
 
@@ -43,6 +49,21 @@ export const useGroupStore = () => {
         dispatch(onSetActiveGroup(newGroup));
     }
 
+    const startLoadingGroups = async () => {
+        // async code here
+        const response = await qrAttendanceApi.get(`/group/all`);
+        const {body: groups} = response.data;
+
+        // sync code here
+        const mappedGroups: Group[] = groups.map((group: any) => ({
+            id: group.id,
+            name: group.name,
+            date: group.createdAt
+        }));
+
+        dispatch(setGroups(mappedGroups));
+    }
+
     const setActiveGroup = (group: Group) => {
         dispatch(onSetActiveGroup(group));
     }
@@ -55,6 +76,7 @@ export const useGroupStore = () => {
         // methods
         startUpdateGroup,
         setActiveGroup,
-        startNewGroup
+        startNewGroup,
+        startLoadingGroups
     }
 }
