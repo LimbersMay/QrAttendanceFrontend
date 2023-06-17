@@ -1,11 +1,12 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {groupSlice, GroupState} from "../../src/store/qrAttendance";
-import clearAllMocks = jest.clearAllMocks;
+
 import {groups, initialState, withGroupsState} from "../fixtures/groupStates";
-import {act, renderHook} from "@testing-library/react";
+import {act, renderHook, waitFor} from "@testing-library/react";
 import {useGroupStore} from "../../src/hooks/useGroupStore";
 import {Provider} from "react-redux";
 import {qrAttendanceApi} from "../../src/api/qrAttendanceApi";
+
 
 const getMockStore = (initialState: GroupState) => {
     return configureStore({
@@ -19,7 +20,7 @@ const getMockStore = (initialState: GroupState) => {
 }
 
 describe('Tests for useGroupStore', () => {
-    beforeEach(() => clearAllMocks());
+    beforeEach(() => jest.clearAllMocks());
 
     test('should return the default values', () => {
 
@@ -39,26 +40,28 @@ describe('Tests for useGroupStore', () => {
     });
 
     test('startUpdateGroup should update the group', async () => {
-        const mockStore = getMockStore({...withGroupsState});
-
-        const { result } = renderHook(() => useGroupStore(), {
-            wrapper: ({ children }) => <Provider store={mockStore}>{children}</Provider>
-        });
-
-        const spy = jest.spyOn(qrAttendanceApi, 'put').mockResolvedValue({});
 
         const updatedGroup = {
             ...groups[0],
             name: 'Updating the name of this group'
         }
 
+        const mockStore = getMockStore({...withGroupsState});
+        const { result } = renderHook(() => useGroupStore(), {
+            wrapper: ({ children }) => <Provider store={mockStore}>{children}</Provider>
+        });
+
+        const spy = jest.spyOn(qrAttendanceApi, "put").mockResolvedValue({});
+
         await act(async () => {
            await result.current.startUpdateGroup(updatedGroup)
         });
 
-        expect(result.current.groups).toContainEqual(updatedGroup);
+        await waitFor(() => {
+            expect(result.current.groups).toContainEqual(updatedGroup);
+        });
 
-        spy.mockRestore();
+        spy.mockRestore()
     });
 
     test('setActiveGroup should set activeGroup', async () => {
@@ -96,13 +99,15 @@ describe('Tests for useGroupStore', () => {
 
         await act(async () => {
             await result.current.startNewGroup();
-        })
-
-        expect(result.current.groups).toContainEqual({
-            id: newGroup.id,
-            date: newGroup.createdAt,
-            name: newGroup.name
         });
+
+        await waitFor(() => {
+            expect(result.current.groups).toContainEqual({
+                id: newGroup.id,
+                date: newGroup.createdAt,
+                name: newGroup.name
+            });
+        })
 
         spy.mockRestore();
     });
