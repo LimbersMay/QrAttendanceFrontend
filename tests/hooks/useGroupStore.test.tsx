@@ -35,7 +35,8 @@ describe('Tests for useGroupStore', () => {
             active: null,
             startUpdateGroup: expect.any(Function),
             setActiveGroup: expect.any(Function),
-            startNewGroup: expect.any(Function)
+            startNewGroup: expect.any(Function),
+            startLoadingGroups: expect.any(Function)
         });
     });
 
@@ -47,14 +48,14 @@ describe('Tests for useGroupStore', () => {
         }
 
         const mockStore = getMockStore({...withGroupsState});
-        const { result } = renderHook(() => useGroupStore(), {
-            wrapper: ({ children }) => <Provider store={mockStore}>{children}</Provider>
+        const {result} = renderHook(() => useGroupStore(), {
+            wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
         });
 
         const spy = jest.spyOn(qrAttendanceApi, "put").mockResolvedValue({});
 
         await act(async () => {
-           await result.current.startUpdateGroup(updatedGroup)
+            await result.current.startUpdateGroup(updatedGroup)
         });
 
         await waitFor(() => {
@@ -67,8 +68,8 @@ describe('Tests for useGroupStore', () => {
     test('setActiveGroup should set activeGroup', async () => {
         const mockStore = getMockStore({...initialState});
 
-        const { result } = renderHook(() => useGroupStore(), {
-            wrapper: ({ children }) => <Provider store={mockStore}>{children}</Provider>
+        const {result} = renderHook(() => useGroupStore(), {
+            wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
         });
 
         await act(async () => {
@@ -87,8 +88,8 @@ describe('Tests for useGroupStore', () => {
         }
 
         const mockStore = getMockStore({...withGroupsState});
-        const { result } = renderHook(() => useGroupStore(), {
-            wrapper: ({ children }) => <Provider store={mockStore}>{children}</Provider>
+        const {result} = renderHook(() => useGroupStore(), {
+            wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
         });
 
         const spy = jest.spyOn(qrAttendanceApi, 'post').mockResolvedValue({
@@ -108,6 +109,34 @@ describe('Tests for useGroupStore', () => {
                 name: newGroup.name
             });
         })
+
+        spy.mockRestore();
+    });
+
+    test('startLoadingGroups should load the groups', async () => {
+        const mockStore = getMockStore({...initialState});
+
+        const {result} = renderHook(() => useGroupStore(), {
+            wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
+        });
+
+        const groupsFromApi = groups.map(group => ({
+            id: group.id,
+            name: group.name,
+            createdAt: group.date
+        }));
+
+        const spy = jest.spyOn(qrAttendanceApi, "get").mockResolvedValue({
+            data: {
+                body: groupsFromApi
+            }
+        });
+
+        await act(async () => {
+            await result.current.startLoadingGroups();
+        });
+
+        expect(result.current.groups).toEqual(groups);
 
         spy.mockRestore();
     });
