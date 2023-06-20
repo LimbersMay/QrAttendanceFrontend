@@ -16,7 +16,7 @@ const socketMiddleware: Middleware = (store) => {
     });
 
     socket.on("register-attendance-success", () => {
-        SnackbarUtilities.sucess('Attendance registered successfully');
+        SnackbarUtilities.success('Attendance registered successfully');
     });
 
     socket.on("already-registered-attendance", (message: string) => {

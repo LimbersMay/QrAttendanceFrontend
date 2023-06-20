@@ -31,7 +31,7 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
 
     const handleDeleteRow = async () => {
         await startDeleteGroupWithDependencies(group.id, qrCodes);
-        SnackbarUtilities.sucess(`Group deleted successfully`);
+        SnackbarUtilities.success(`Group deleted successfully`);
     }
 
     const handleAddEmptyRow = () => {
