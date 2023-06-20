@@ -164,7 +164,9 @@ describe('Tests for useQrCode', () => {
             await result.current.startLoadingQrCodes();
         });
 
-        expect(result.current.qrCodes).toEqual(qrCodes);
+        await waitFor(() => {
+            expect(result.current.qrCodes).toEqual(qrCodes);
+        })
 
         spy.mockRestore();
     });
