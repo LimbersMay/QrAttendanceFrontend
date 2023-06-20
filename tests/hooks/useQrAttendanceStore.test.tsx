@@ -11,7 +11,7 @@ import clearAllMocks = jest.clearAllMocks;
 import {initialState} from "../fixtures/qrCodeStates";
 import {initialState as registryInitialState} from "../fixtures/registryStates";
 import {initialState as groupInitialState, withGroupActiveState} from "../fixtures/groupStates";
-import {act, renderHook} from "@testing-library/react";
+import {act, renderHook, waitFor} from "@testing-library/react";
 import {Provider} from "react-redux";
 import {useQrAttendanceStore} from "../../src/hooks/useQrAttendanceStore";
 import {withActiveGroupState, withQrCodesState, withRegistriesState} from "../fixtures/qrAttendanceStates";
@@ -88,9 +88,11 @@ describe('Tests for useQrAttendanceStore', () => {
 
         const { group, qrCode, registry} = mockStore.getState();
 
-        expect(group.groups).not.toContainEqual(withGroupActiveState.active);
-        expect(qrCode.qrCodes).not.toContainEqual(qrCodesToDelete);
-        expect(registry.registries).not.toContainEqual(registries);
+        await waitFor(() => {
+            expect(group.groups).not.toContainEqual(withGroupActiveState.active);
+            expect(qrCode.qrCodes).not.toContainEqual(qrCodesToDelete);
+            expect(registry.registries).not.toContainEqual(registries);
+        });
 
         spy.mockRestore();
     });
@@ -113,8 +115,10 @@ describe('Tests for useQrAttendanceStore', () => {
 
         const { registry, qrCode } = mockStore.getState();
 
-        expect(qrCode.qrCodes).not.toContainEqual(qrCodeToDelete)
-        expect(registry.registries).not.toContainEqual(registriesToDelete);
+        await waitFor(() => {
+            expect(qrCode.qrCodes).not.toContainEqual(qrCodeToDelete)
+            expect(registry.registries).not.toContainEqual(registriesToDelete);
+        });
 
         spy.mockRestore();
     });
