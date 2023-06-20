@@ -108,7 +108,7 @@ describe('Tests for useRegistryStore', () => {
         spy.mockRestore();
     });
 
-    test('startDeleteRegistry', async () => {
+    test('startDeleteRegistry should delete the registry', async () => {
         const mockStore = getMockStore({...withActiveRegistryState});
         const {result} = renderHook(() => useRegistryStore(), {
             wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
