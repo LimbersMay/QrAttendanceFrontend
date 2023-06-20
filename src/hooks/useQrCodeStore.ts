@@ -36,7 +36,7 @@ export const useQrCodeStore = () => {
         // sync code here
         dispatch(updateQrCode(qrCode));
 
-        SnackbarUtilities.sucess(`QR Code ${qrCode.name} updated successfully`);
+        SnackbarUtilities.success(`QR Code ${qrCode.name} updated successfully`);
     }
 
     const startNewQrCode = async (name: string, manualRegistrationDate: string, enabled: boolean) => {

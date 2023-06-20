@@ -38,7 +38,7 @@ export const useQrAttendanceStore = () => {
         dispatch(deleteRegistriesByQrCodeId(idQrCode));
 
         dispatch(onSetActiveQrCode(null));
-        SnackbarUtilities.sucess(`QR Code ${activeQrCode?.name} deleted successfully`);
+        SnackbarUtilities.success(`QR Code ${activeQrCode?.name} deleted successfully`);
     }
 
     return {
