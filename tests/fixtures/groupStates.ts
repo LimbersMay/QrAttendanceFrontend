@@ -24,7 +24,12 @@ export const initialState: GroupState = {
     groups: []
 }
 
-export const withGroupsState = {
+export const withGroupsState: GroupState = {
     active: null,
+    groups: [...groups]
+}
+
+export const withGroupActiveState: GroupState = {
+    active: groups[0],
     groups: [...groups]
 }
