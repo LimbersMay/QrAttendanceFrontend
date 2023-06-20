@@ -26,7 +26,7 @@ const getMockStore = (initialState: QrCodeState, groupState: GroupState = groupI
         },
         preloadedState: {
             qrCode: {...initialState},
-            group: groupState
+            group: {...groupState}
         }
     })
 }
@@ -79,7 +79,7 @@ describe('Tests for useQrCode', () => {
     });
 
     test('setActiveQrCode should set active qrCode', async () => {
-        const mockStore = getMockStore({...initialState});
+        const mockStore = getMockStore({...withQrCodesState});
 
         const {result} = renderHook(() => useQrCodeStore(), {
             wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
