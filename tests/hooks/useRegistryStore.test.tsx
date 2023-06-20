@@ -1,6 +1,6 @@
 import clearAllMocks = jest.clearAllMocks;
 import {registrySlice, RegistryState} from "../../src/store/qrAttendance";
-import {configureStore, current} from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import {initialState, registries, withActiveRegistryState, withRegistriesState} from "../fixtures/registryStates";
 import {act, renderHook, waitFor} from "@testing-library/react";
 import {useRegistryStore} from "../../src/hooks/useRegistryStore";
