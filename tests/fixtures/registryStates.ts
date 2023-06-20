@@ -33,3 +33,8 @@ export const withRegistriesState: RegistryState = {
     active: null,
     registries: [...registries]
 }
+
+export const withActiveRegistryState: RegistryState = {
+    active: registries[0],
+    registries: [...registries]
+}
