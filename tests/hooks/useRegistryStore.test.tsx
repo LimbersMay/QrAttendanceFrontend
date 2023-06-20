@@ -120,7 +120,9 @@ describe('Tests for useRegistryStore', () => {
             await result.current.startDeleteRegistry();
         });
 
-        expect(result.current.registries).not.toContainEqual(withActiveRegistryState.active);
+        await waitFor(() => {
+            expect(result.current.registries).not.toContainEqual(withActiveRegistryState.active);
+        })
         spy.mockRestore();
     });
 
