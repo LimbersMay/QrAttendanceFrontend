@@ -14,7 +14,7 @@ import {initialState as groupInitialState, withGroupActiveState} from "../fixtur
 import {act, renderHook, waitFor} from "@testing-library/react";
 import {Provider} from "react-redux";
 import {useQrAttendanceStore} from "../../src/hooks/useQrAttendanceStore";
-import {withActiveGroupState, withQrCodesState, withRegistriesState} from "../fixtures/qrAttendanceStates";
+import {withActiveGroupState, withQrCodesState, withActiveRegistryAndRegistriesState} from "../fixtures/qrAttendanceStates";
 import {Registry} from "../../src/qrAttendance/interfaces";
 import {qrAttendanceApi} from "../../src/api/qrAttendanceApi";
 
@@ -60,7 +60,7 @@ describe('Tests for useQrAttendanceStore', () => {
     });
 
     test('startDeleteGroupWithDependencies should delete a group with his associated qrCodes and registries', async () => {
-        const mockStore = getMockStore({...withActiveGroupState},{...withQrCodesState}, {...withRegistriesState});
+        const mockStore = getMockStore({...withActiveGroupState},{...withQrCodesState}, {...withActiveRegistryAndRegistriesState});
 
         const {result} = renderHook(() => useQrAttendanceStore(), {
             wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
@@ -75,7 +75,7 @@ describe('Tests for useQrAttendanceStore', () => {
 
             if (qrCode.groupId === groupId) {
 
-                const qrCodeRegistries = withRegistriesState.registries.filter(registry => registry.qrCodeId === qrCode.id);
+                const qrCodeRegistries = withActiveRegistryAndRegistriesState.registries.filter(registry => registry.qrCodeId === qrCode.id);
                 registries.push(...qrCodeRegistries);
 
                 return qrCode;
@@ -98,7 +98,7 @@ describe('Tests for useQrAttendanceStore', () => {
     });
 
     test('startDeleteQrCodeWithDependencies should delete que qrCode with his dependencies', async () => {
-        const mockStore = getMockStore({...withActiveGroupState},{...withQrCodesState}, {...withRegistriesState});
+        const mockStore = getMockStore({...withActiveGroupState},{...withQrCodesState}, {...withActiveRegistryAndRegistriesState});
 
         const {result} = renderHook(() => useQrAttendanceStore(), {
             wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
@@ -107,7 +107,7 @@ describe('Tests for useQrAttendanceStore', () => {
         const spy = jest.spyOn(qrAttendanceApi, 'delete').mockResolvedValue({});
 
         const qrCodeToDelete = withQrCodesState.activeQrCode;
-        const registriesToDelete = withRegistriesState.registries.filter(registry => registry.qrCodeId === qrCodeToDelete?.id)
+        const registriesToDelete = withActiveRegistryAndRegistriesState.registries.filter(registry => registry.qrCodeId === qrCodeToDelete?.id)
 
         await act(async () => {
             await result.current.startDeleteQrCodeWithDependencies();

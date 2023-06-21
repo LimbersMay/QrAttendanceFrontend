@@ -58,8 +58,8 @@ export const withActiveGroupState: GroupState = {
     groups: [...groups]
 }
 
-export const withRegistriesState: RegistryState = {
-    active: null,
+export const withActiveRegistryAndRegistriesState: RegistryState = {
+    active: registries[0],
     registries: [...registries]
 }
 
