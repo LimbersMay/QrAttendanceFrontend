@@ -1,14 +1,15 @@
 import clearAllMocks = jest.clearAllMocks;
 import {authSlice, login, logout} from "../../../src/store/auth";
-import {authenticatedUserState, notAuthenticatedState, userCredentials} from "../../fixtures/userStates";
+import {userCredentials} from "../../fixtures/userStates";
 import {authStatusTypes} from "../../../src/auth/types";
+import {authenticatedState, initialState, notAuthenticatedState} from "../../fixtures/authStates";
 
 describe('Tests for authSlice', () => {
     beforeEach(() => clearAllMocks());
 
     test('should return the default values', () => {
         const state = authSlice.getInitialState();
-        expect(state).toEqual(notAuthenticatedState);
+        expect(state).toEqual(initialState);
     });
 
     test('should login the user', () => {
@@ -23,7 +24,7 @@ describe('Tests for authSlice', () => {
     });
 
     test('should logout the user without error message', () => {
-        const state = authSlice.reducer(authenticatedUserState, logout(null));
+        const state = authSlice.reducer(authenticatedState, logout(null));
         expect(state).toEqual({
             displayName: null,
             email: null,
@@ -36,7 +37,7 @@ describe('Tests for authSlice', () => {
     test('should logout the user with error message', () => {
 
         const errorMessage = "An error occurred";
-        const state = authSlice.reducer(authenticatedUserState, logout(errorMessage));
+        const state = authSlice.reducer(authenticatedState, logout(errorMessage));
 
         expect(state).toEqual({
             displayName: null,
