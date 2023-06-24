@@ -28,7 +28,7 @@ export const LoginPage = () => {
 
     return (
         <AuthLayout title='Login'>
-            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster">
+            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster" aria-label="submit-form">
                 <Grid container>
 
                     <Grid item xs={12} sx={{mt: 2}}>
@@ -47,6 +47,9 @@ export const LoginPage = () => {
                         <TextField
                             label="Password"
                             type="password"
+                            inputProps={{
+                                'data-testid': 'password'
+                            }}
                             placeholder="password"
                             fullWidth
                             name="password"
