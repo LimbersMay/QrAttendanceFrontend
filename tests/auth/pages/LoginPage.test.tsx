@@ -3,7 +3,7 @@ import {MemoryRouter} from "react-router-dom";
 import {LoginPage} from "../../../src/auth/pages";
 import {useAuthStore } from "../../../src/hooks/useAuthStore";
 
-jest.mock("../../src/hooks/useAuthStore.ts")
+jest.mock("../../../src/hooks/useAuthStore.ts")
 
 describe('Tests for <LoginPage />', () => {
     beforeEach(() => jest.clearAllMocks());
