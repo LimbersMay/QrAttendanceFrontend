@@ -43,7 +43,7 @@ export const SignupPage = () => {
 
     return (
         <AuthLayout title='Register'>
-            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster">
+            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster" aria-label="submit-form">
                 <Grid container >
 
                     <Grid item xs={12} sx={{mt: 2}}>
@@ -93,6 +93,9 @@ export const SignupPage = () => {
                             fullWidth
                             name="password"
                             onChange={onInputChange}
+                            inputProps={{
+                                'data-testid': 'password'
+                            }}
                             error={!!passwordValid && formSubmitted}
                             helperText={passwordValid}
                         />
@@ -106,6 +109,9 @@ export const SignupPage = () => {
                             fullWidth
                             name="password2"
                             onChange={onInputChange}
+                            inputProps={{
+                                'data-testid': 'password2'
+                            }}
                             error={!!passwordValid && formSubmitted}
                             helperText={passwordValid}
                         />
