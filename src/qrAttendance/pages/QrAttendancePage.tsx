@@ -1,9 +1,6 @@
-import {useSelector} from "react-redux";
-import {QrAttendanceLayout} from "../layout/QrAttendanceLayout";
-
-import {GroupViewTable, NothingSelectedView} from "../views";
-import {selectGroup} from "../../store/qrAttendance";
 import {useEffect} from "react";
+import {QrAttendanceLayout} from "../layout/QrAttendanceLayout";
+import {GroupViewTable, NothingSelectedView} from "../views";
 import {useAppDispatch} from "../../store";
 import {startConnectWebSocket} from "../../store/websockets/thunks";
 import socket from "../../utilities/socketIo";
@@ -15,7 +12,7 @@ export const QrAttendancePage = () => {
 
     const dispatch = useAppDispatch();
 
-    const { active } =  useSelector(selectGroup);
+    const { active } =  useGroupStore();
     const { startLoadingQrCodes } = useQrCodeStore();
     const { startLoadingGroups } = useGroupStore();
     const { startLoadingRegistries } = useRegistryStore();
