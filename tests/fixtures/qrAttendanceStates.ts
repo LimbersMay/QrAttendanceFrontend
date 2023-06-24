@@ -53,7 +53,7 @@ const registries: Registry[] = [
     }
 ]
 
-export const withActiveGroupState: GroupState = {
+export const withActiveGroupAndGroupsState: GroupState = {
     active: groups[0],
     groups: [...groups]
 }

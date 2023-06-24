@@ -8,7 +8,7 @@ import {authStatusTypes} from "../../src/auth/types";
 import {testUserCredentials} from "../fixtures/testUser";
 import {qrAttendanceApi} from "../../src/api/qrAttendanceApi";
 import {groupSlice, qrCodeSlice, registrySlice} from "../../src/store/qrAttendance";
-import {withActiveGroupState, withQrCodesState, withActiveRegistryAndRegistriesState} from "../fixtures/qrAttendanceStates";
+import {withActiveGroupAndGroupsState, withQrCodesState, withActiveRegistryAndRegistriesState} from "../fixtures/qrAttendanceStates";
 
 const getMockStore = (initialState: AuthState) => {
     return configureStore({
@@ -20,7 +20,7 @@ const getMockStore = (initialState: AuthState) => {
         },
         preloadedState: {
             auth: {...initialState},
-            group: {...withActiveGroupState},
+            group: {...withActiveGroupAndGroupsState},
             qrCode: {...withQrCodesState},
             registry: {...withActiveRegistryAndRegistriesState}
         }

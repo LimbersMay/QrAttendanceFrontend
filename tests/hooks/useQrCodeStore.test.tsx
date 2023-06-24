@@ -5,7 +5,7 @@ import {act, renderHook, waitFor} from "@testing-library/react";
 import {Provider} from "react-redux";
 import {qrAttendanceApi} from "../../src/api/qrAttendanceApi";
 import {initialState, qrCodes, withQrCodesState} from "../fixtures/qrCodeStates";
-import {initialState as groupInitialState, withGroupActiveState} from "../fixtures/groupStates";
+import {initialState as groupInitialState, withActiveGroupAndGroupsState} from "../fixtures/groupStates";
 import {useQrCodeStore} from "../../src/hooks/useQrCodeStore";
 
 jest.mock('../../src/utilities/snackbar-manager.tsx', () => ({
@@ -103,7 +103,7 @@ describe('Tests for useQrCode', () => {
             enabled: false
         }
 
-        const mockStore = getMockStore({...withQrCodesState}, {...withGroupActiveState});
+        const mockStore = getMockStore({...withQrCodesState}, {...withActiveGroupAndGroupsState});
         const {result} = renderHook(() => useQrCodeStore(), {
             wrapper: ({children}) => <Provider store={mockStore}>{children}</Provider>
         });
@@ -130,7 +130,7 @@ describe('Tests for useQrCode', () => {
                 date: newQrCode.manualRegistrationDate,
                 name: newQrCode.name,
                 enabled: newQrCode.enabled,
-                groupId: withGroupActiveState.active?.id
+                groupId: withActiveGroupAndGroupsState.active?.id
             });
         })
 

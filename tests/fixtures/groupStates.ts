@@ -29,7 +29,7 @@ export const withGroupsState: GroupState = {
     groups: [...groups]
 }
 
-export const withGroupActiveState: GroupState = {
+export const withActiveGroupAndGroupsState: GroupState = {
     active: groups[0],
     groups: [...groups]
 }
