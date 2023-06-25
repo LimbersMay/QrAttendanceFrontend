@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {memo, useMemo, useState} from "react";
 import {IconButton, TableCell, tableCellClasses, TableRow, TextField, Tooltip} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, DeleteOutlined} from "@mui/icons-material";
 import {useForm} from "../../../hooks/useForm";
@@ -11,7 +11,7 @@ import {useUiStore} from "../../../hooks/useUiStore";
 import {TitleModal} from "./TitleModal";
 import {QrCodeModal} from "../qrCodeRow/QrCodeModal";
 
-export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[] }) => {
+export const TitleRow = memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[] }) => {
 
     const initialStateForm = useMemo(() => ({
         groupTitle: group.name,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {AppBar, Avatar, Box, Grid, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography} from "@mui/material";
 import {MenuOutlined} from "@mui/icons-material";
 import {useAuthStore} from "../../hooks/useAuthStore";
@@ -7,7 +7,7 @@ export const NavBar = ({ handleDrawerToggle, drawerWidth = 240 }: {handleDrawerT
 
     const { startLogout, displayName } = useAuthStore();
 
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);

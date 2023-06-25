@@ -1,8 +1,7 @@
+import dayjs from "dayjs";
 import {Grid, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material";
 import {TurnedInNot} from "@mui/icons-material";
-
 import {Group} from "../interfaces";
-import dayjs from "dayjs";
 import {useGroupStore} from "../../hooks/useGroupStore";
 
 export const SideBarItem = ({ group }: {group: Group}) => {
