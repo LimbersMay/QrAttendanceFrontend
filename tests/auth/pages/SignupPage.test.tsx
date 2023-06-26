@@ -1,6 +1,5 @@
 import {MemoryRouter} from "react-router-dom";
 import {fireEvent, render, screen, waitFor} from "@testing-library/react";
-import clearAllMocks = jest.clearAllMocks;
 import {SignupPage} from "../../../src/auth/pages";
 import {useAuthStore} from "../../../src/hooks/useAuthStore";
 import {testUserCredentials} from "../../fixtures/testUser";
@@ -8,7 +7,7 @@ import {testUserCredentials} from "../../fixtures/testUser";
 jest.mock("../../../src/hooks/useAuthStore.ts")
 
 describe('Tests for <SignupPage />', () => {
-    beforeEach(() => clearAllMocks());
+    beforeEach(() => jest.clearAllMocks());
 
     const mockStartCreatingUser = jest.fn();
 
