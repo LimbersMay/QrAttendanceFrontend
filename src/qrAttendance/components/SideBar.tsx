@@ -1,4 +1,3 @@
-import {useSelector} from "react-redux";
 import {
     Box, Button,
     Divider,
@@ -8,13 +7,13 @@ import {
     Typography, useMediaQuery
 } from "@mui/material";
 import {SideBarItem} from "./SideBarItem";
-import {selectAuth} from "../../store/auth";
 import {useGroupStore} from "../../hooks/useGroupStore";
+import {useAuthStore} from "../../hooks/useAuthStore";
 
 export const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle}: {drawerWidth: number, mobileOpen: boolean, handleDrawerToggle: any}) => {
 
     const { groups, startNewGroup } = useGroupStore();
-    const { displayName } = useSelector(selectAuth);
+    const { displayName } = useAuthStore();
 
     const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
 
