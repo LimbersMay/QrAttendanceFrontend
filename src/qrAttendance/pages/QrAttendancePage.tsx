@@ -12,9 +12,8 @@ export const QrAttendancePage = () => {
 
     const dispatch = useAppDispatch();
 
-    const { active } =  useGroupStore();
+    const { active, startLoadingGroups } =  useGroupStore();
     const { startLoadingQrCodes } = useQrCodeStore();
-    const { startLoadingGroups } = useGroupStore();
     const { startLoadingRegistries } = useRegistryStore();
 
     // If the user logs in, we load his information
