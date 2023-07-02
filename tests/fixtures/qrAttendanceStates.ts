@@ -1,11 +1,16 @@
 import {Group, QrCode, Registry} from "../../src/qrAttendance/interfaces";
 import {GroupState, QrCodeState, RegistryState} from "../../src/store/qrAttendance";
 
-const groups: Group[] = [
+export const groups: Group[] = [
     {
         id: 'Group-1',
         name: 'System engineering',
         date: '21-02-23'
+    },
+    {
+        id: 'Group-3',
+        name: "English A group",
+        date: '22-01-23'
     }
 ]
 
