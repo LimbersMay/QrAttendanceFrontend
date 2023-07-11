@@ -67,6 +67,9 @@ describe('Tests for <SideBar />', () => {
             </Provider>
         );
 
+        const groups = screen.getAllByTestId('group-item');
+        expect(groups.length).toBe(withActiveGroupAndGroupsState.groups.length);
+
         screen.debug();
     });
 });
