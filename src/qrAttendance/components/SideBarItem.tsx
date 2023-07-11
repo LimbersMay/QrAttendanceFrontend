@@ -13,7 +13,7 @@ export const SideBarItem = ({ group }: {group: Group}) => {
     }
 
     return (
-        <ListItem disablePadding onClick={onClickGroup}>
+        <ListItem disablePadding onClick={onClickGroup} data-testid="group-item">
             <ListItemButton>
                 <ListItemIcon>
                     <TurnedInNot />
