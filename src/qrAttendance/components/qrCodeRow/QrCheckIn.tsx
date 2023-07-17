@@ -15,10 +15,10 @@ export const QrCheckIn = () => {
                 display="flex"
                 justifyContent="center"
             >
-                <DialogTitle>{ activeQrCode?.name } QR Code</DialogTitle>
+                <DialogTitle data-testid="qrCode-title">{ activeQrCode?.name } QR Code</DialogTitle>
             </Box>
             <Box position="absolute" top={0} right={0}>
-                <IconButton onClick={hideQrCode}>
+                <IconButton data-testid="close-button" onClick={hideQrCode}>
                     <Close />
                 </IconButton>
             </Box>
