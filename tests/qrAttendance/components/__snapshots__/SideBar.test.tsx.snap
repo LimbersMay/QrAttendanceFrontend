@@ -42,6 +42,7 @@ exports[`Tests for <SideBar /> should render the component successfully 1`] = `
           </div>
           <li
             class="MuiListItem-root MuiListItem-gutters css-vymmwx-MuiListItem-root"
+            data-testid="group-item"
           >
             <div
               class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-1y3heoy-MuiButtonBase-root-MuiListItemButton-root"
@@ -92,6 +93,7 @@ exports[`Tests for <SideBar /> should render the component successfully 1`] = `
           </li>
           <li
             class="MuiListItem-root MuiListItem-gutters css-vymmwx-MuiListItem-root"
+            data-testid="group-item"
           >
             <div
               class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-gutters css-1y3heoy-MuiButtonBase-root-MuiListItemButton-root"
