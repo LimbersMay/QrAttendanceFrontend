@@ -11,7 +11,11 @@ describe('Tests for <SideBarItem />', () => {
 
     test('should render the component successfully', async () => {
 
-        const {container} = await render(
+        (useGroupStore as jest.Mock).mockReturnValue({
+            setActiveGroup: mockSetActiveGroup
+        });
+
+        const {container} = render(
             <SideBarItem group={groups[0]}/>
         );
 
