@@ -3,12 +3,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Divider, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import {QrCodeDatePicker} from "./QrCodeDatePicker";
-import {useUiStore} from "../../../hooks/useUiStore";
-import {useQrCodeStore} from "../../../hooks/useQrCodeStore";
-import {useForm} from "../../../hooks/useForm";
 import {QrCode} from "../../interfaces";
 import {ModalLayout} from "../ModalLayout";
-import {useGroupStore} from "../../../hooks/useGroupStore";
+import {useForm, useGroupStore, useQrCodeStore, useUiStore} from "../../../hooks";
 
 const initialState: QrCode = {
     id: "",
@@ -56,11 +53,11 @@ export const QrCodeModal = () => {
 
     return (
         <ModalLayout condition={isQrCodeModalOpen} handleClose={toggleQrCodeModal}>
-            <form onSubmit={onSubmit}>
+            <form data-testid="qrCode-modal-form" onSubmit={onSubmit}>
                 <Grid container>
 
                     <Grid item xs={12} sx={{textAlign: "center"}}>
-                        <Typography variant="h6">Editing {activeQrCode?.name}</Typography>
+                        <Typography variant="h6" data-testid="qrCode-title">Editing {activeQrCode?.name}</Typography>
                         <Divider/>
                     </Grid>
 
