@@ -1,15 +1,13 @@
 import React, {memo, useMemo, useState} from "react";
 import {IconButton, TableCell, tableCellClasses, TableRow, TextField, Tooltip} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, DeleteOutlined} from "@mui/icons-material";
-import {useForm} from "../../../hooks/useForm";
 
 import {Group, QrCode} from "../../interfaces";
 import ConfirmDialog from "./ConfirmDialog";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
-import {useQrAttendanceStore} from "../../../hooks/useQrAttendanceStore";
-import {useUiStore} from "../../../hooks/useUiStore";
 import {TitleModal} from "./TitleModal";
 import {QrCodeModal} from "../qrCodeRow/QrCodeModal";
+import {useForm, useQrAttendanceStore, useUiStore} from "../../../hooks";
 
 export const TitleRow = memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[] }) => {
 
@@ -32,10 +30,6 @@ export const TitleRow = memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[
     const handleDeleteRow = async () => {
         await startDeleteGroupWithDependencies(group.id, qrCodes);
         SnackbarUtilities.success(`Group deleted successfully`);
-    }
-
-    const handleAddEmptyRow = () => {
-        toggleQrCodeModal();
     }
 
     return (
@@ -78,16 +72,16 @@ export const TitleRow = memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[
                             )
                         }}
                     />
-                    <Tooltip title={'Add new qr code'}>
-                        <IconButton onClick={handleAddEmptyRow}>
+                    <Tooltip aria-label="addQrCodeButton" title={'Add new qr code'}>
+                        <IconButton onClick={toggleQrCodeModal}>
                             <AddOutlined/>
                         </IconButton>
                     </Tooltip>
 
-                    <Tooltip title={'Edit title'}><IconButton onClick={toggleTitleModal}> <EditOutlined/>
+                    <Tooltip aria-label="editGroupButton" title={'Edit title'}><IconButton onClick={toggleTitleModal}> <EditOutlined/>
                     </IconButton></Tooltip>
 
-                    <Tooltip title={'Delete group'}>
+                    <Tooltip aria-label="deleteGroupButton" title={'Delete group'}>
                         <IconButton onClick={handleToggleDeleteDialog}>
                             <DeleteOutlined/>
                         </IconButton>
