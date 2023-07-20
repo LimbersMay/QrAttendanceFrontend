@@ -69,7 +69,5 @@ describe('Tests for <SideBar />', () => {
 
         const groups = screen.getAllByTestId('group-item');
         expect(groups.length).toBe(withActiveGroupAndGroupsState.groups.length);
-
-        screen.debug();
     });
 });
