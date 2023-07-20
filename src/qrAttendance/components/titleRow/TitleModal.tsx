@@ -1,11 +1,9 @@
 import {ModalLayout} from "../ModalLayout";
-import {useUiStore} from "../../../hooks/useUiStore";
 import {Divider, Grid, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {FormEvent} from "react";
-import {useGroupStore} from "../../../hooks/useGroupStore";
-import {useForm} from "../../../hooks/useForm";
 import Button from "@mui/material/Button";
+import {useForm, useGroupStore, useUiStore} from "../../../hooks";
 
 const initialState = {
     id: "",
@@ -37,10 +35,10 @@ export const TitleModal = () => {
 
     return (
         <ModalLayout condition={isTitleModalOpen} handleClose={toggleTitleModal}>
-            <form onSubmit={onSubmit}>
+            <form aria-label="titleModalForm" onSubmit={onSubmit}>
                 <Grid container>
                     <Grid item xs={12} sx={{textAlign: "center"}}>
-                        <Typography variant="h6">Editing {active?.name}</Typography>
+                        <Typography aria-label="groupTitle" variant="h6">Editing {active?.name}</Typography>
                         <Divider />
                     </Grid>
 
