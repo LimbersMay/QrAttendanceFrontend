@@ -1,10 +1,8 @@
 import React from 'react';
 import {Divider, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import {Delete, Download, Edit, MoreVert, Visibility} from "@mui/icons-material";
-import {useQrCodeStore} from "../../../hooks/useQrCodeStore";
 import {QrCode} from "../../interfaces";
-import {useUiStore} from "../../../hooks/useUiStore";
-import {useQrAttendanceStore} from "../../../hooks/useQrAttendanceStore";
+import {useQrAttendanceStore, useQrCodeStore, useUiStore} from "../../../hooks";
 
 const ITEM_HEIGHT = 48;
 
@@ -34,6 +32,7 @@ export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: a
                 aria-controls="long-menu"
                 aria-haspopup="true"
                 onClick={handleClick}
+                data-testid={'qr-code-menu-button'}
             >
                 <MoreVert />
             </IconButton>
@@ -50,24 +49,24 @@ export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: a
                     },
                 }}
             >
-                <MenuItem onClick={showQrCode}>
+                <MenuItem aria-label="showQrCodeButton" onClick={showQrCode}>
                     <Visibility />
                     <Typography sx={{ml: '7px'}}>Show</Typography>
                 </MenuItem>
 
-                <MenuItem onClick={toggleQrCodeModal}>
+                <MenuItem aria-label="editQrCodeButton" onClick={toggleQrCodeModal}>
                     <Edit />
                     <Typography sx={{ml: '7px'}}>Edit</Typography>
                 </MenuItem>
 
-                <MenuItem onClick={handleDownload}>
+                <MenuItem aria-label="downloadQrCodeButton" onClick={handleDownload}>
                     <Download />
                     <Typography sx={{ml: '7px'}}>Download</Typography>
                 </MenuItem>
 
                 <Divider />
 
-                <MenuItem onClick={startDeleteQrCodeWithDependencies}>
+                <MenuItem aria-label="deleteQrCodeButton" onClick={startDeleteQrCodeWithDependencies}>
                     <Delete />
                     <Typography sx={{ml: '7px'}}>Delete</Typography>
                 </MenuItem>
