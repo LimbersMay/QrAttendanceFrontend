@@ -61,6 +61,7 @@ exports[`Tests for <QrCodeRow /> Should match the snapshot 1`] = `
             aria-haspopup="true"
             aria-label="more"
             class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="qr-code-menu-button"
             tabindex="0"
             type="button"
           >
