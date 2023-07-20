@@ -20,7 +20,7 @@ const store = configureStore({
         qrCode: {...withQrCodesState},
         group: {...withActiveGroupAndGroupsState}
     }
-})
+});
 
 describe('Tests for <QrCodeRow />', () => {
     test('Should match the snapshot', () => {
