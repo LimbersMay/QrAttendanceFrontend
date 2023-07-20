@@ -25,11 +25,12 @@ const store = configureStore({
 describe('Tests for <QrCodeRow />', () => {
     test('Should match the snapshot', () => {
 
-        const { container } = render(
+        const {container} = render(
             <Provider store={store}>
                 <table>
                     <tbody>
-                        <QrCodeRow qrCodeRow={qrCodes[0]} handleOpenSubTable={() => {}} open={false} registries={registries} />
+                    <QrCodeRow qrCodeRow={qrCodes[0]} handleOpenSubTable={() => {
+                    }} open={false} registries={registries}/>
                     </tbody>
                 </table>
             </Provider>
@@ -39,9 +40,14 @@ describe('Tests for <QrCodeRow />', () => {
     });
 
     test('should show the name of the qrCode', () => {
-         render(
+        render(
             <Provider store={store}>
-                <QrCodeRow qrCodeRow={qrCodes[0]} handleOpenSubTable={() => {}} open={false} registries={registries} />
+                <table>
+                    <tbody>
+                    <QrCodeRow qrCodeRow={qrCodes[0]} handleOpenSubTable={() => {
+                    }} open={false} registries={registries}/>
+                    </tbody>
+                </table>
             </Provider>
         );
 
