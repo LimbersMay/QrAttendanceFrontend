@@ -1,13 +1,11 @@
 import React, { FormEvent} from "react";
+import {Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import {Divider, Grid, MenuItem, Select, TextField} from "@mui/material";
-import {useUiStore} from "../../../hooks/useUiStore";
-import {useRegistryStore} from "../../../hooks/useRegistryStore";
 import {RegistryDatePicker} from "./RegistryDatePicker";
-import {useForm} from "../../../hooks/useForm";
 import {Registry} from "../../interfaces";
 import {ModalLayout} from "../ModalLayout";
+import {useForm, useRegistryStore, useUiStore} from "../../../hooks";
 
 const initialState: Registry = {
     id: "",
@@ -43,11 +41,11 @@ export const RegistryModal = () => {
 
     return (
         <ModalLayout condition={isRegistryModalOpen} handleClose={toggleRegistryModal}>
-                    <form onSubmit={onSubmit}>
+                    <form aria-label="registry-modal-form" onSubmit={onSubmit}>
                         <Grid container>
 
                             <Grid item xs={12} sx={{textAlign: "center"}}>
-                                <Typography variant="h6">Editing</Typography>
+                                <Typography variant="h6" aria-label="registry-title" >Editing ${activeRegistry?.name}</Typography>
                                 <Divider />
                             </Grid>
 
