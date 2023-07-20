@@ -3,12 +3,11 @@ import {uiSlice} from "../../../../src/store/ui/uiSlice";
 import {registrySlice} from "../../../../src/store/qrAttendance";
 import {withRegistryModalOpenTrue} from "../../../fixtures/uiStates";
 import {withActiveRegistryAndRegistriesState} from "../../../fixtures/qrAttendanceStates";
-import {fireEvent, render, screen} from "@testing-library/react";
+import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import {Provider} from "react-redux";
 import {RegistryModal} from "../../../../src/qrAttendance/components/RegistryRow/RegistryModal";
 import * as useRegistryStore from "../../../../src/hooks/useRegistryStore";
 import * as useUiStore from "../../../../src/hooks/useUiStore";
-import {registries} from "../../../fixtures/registryStates";
 
 const store = configureStore({
     reducer: {
@@ -22,6 +21,9 @@ const store = configureStore({
 });
 
 describe('tests for <RegistryModal />', () => {
+
+    beforeEach(() => jest.clearAllMocks());
+
     test('should match the snapshot', () => {
         const {container} = render(
             <Provider store={store}>
@@ -44,7 +46,7 @@ describe('tests for <RegistryModal />', () => {
         expect(registryName.textContent).toContain(`${withActiveRegistryAndRegistriesState.active?.name}`);
     });
 
-    test('should call the startUpdateRegistry and toggleRegistryModal when submit the form', () => {
+    test('should call the startUpdateRegistry and toggleRegistryModal when submit the form', async () => {
 
         const mockStartUpdateRegistry = jest.fn();
         const mockToggleRegistryModal = jest.fn();
@@ -54,7 +56,7 @@ describe('tests for <RegistryModal />', () => {
 
         (useRegistryStoreSpy as jest.Mock).mockReturnValue({
             startUpdateRegistry: mockStartUpdateRegistry,
-            active: registries[0]
+            active: withActiveRegistryAndRegistriesState.active
         });
 
         (useUiStoreSpy as jest.Mock).mockReturnValue({
@@ -71,7 +73,9 @@ describe('tests for <RegistryModal />', () => {
         const registryModalForm = screen.getByLabelText('registry-modal-form');
         fireEvent.submit(registryModalForm);
 
-        expect(mockStartUpdateRegistry).toHaveBeenCalled();
-        expect(mockToggleRegistryModal).toHaveBeenCalled();
+        await waitFor(() => {
+            expect(mockStartUpdateRegistry).toHaveBeenCalled();
+            expect(mockToggleRegistryModal).toHaveBeenCalled();
+        });
     });
 });
