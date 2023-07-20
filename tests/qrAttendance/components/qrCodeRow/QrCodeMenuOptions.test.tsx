@@ -1,6 +1,6 @@
 import {fireEvent, render, screen} from "@testing-library/react";
 import {QrCodeMenuOptions} from "../../../../src/qrAttendance/components/qrCodeRow/QrCodeMenuOptions";
-import {qrCodes, withActiveGroupAndGroupsState, withQrCodesState} from "../../../fixtures/qrAttendanceStates";
+import {qrCodes} from "../../../fixtures/qrAttendanceStates";
 import {useGroupStore, useQrAttendanceStore, useQrCodeStore, useUiStore} from "../../../../src/hooks";
 
 
