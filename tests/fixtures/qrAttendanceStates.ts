@@ -39,7 +39,7 @@ const registries: Registry[] = [
     {
         id: '1',
         name: 'Limbers',
-        career: 'System engineering',
+        career: 'Computer Systems Engineering',
         group: 'group 1',
         checkInTime: '22-02-2023',
         firstSurname: 'Limbert',
@@ -49,7 +49,7 @@ const registries: Registry[] = [
     {
         id: '1-alastor',
         name: 'Albert',
-        career: 'Civil engineering',
+        career: 'Civil Engineering',
         group: 'group 2',
         checkInTime: '22-02-2023',
         firstSurname: 'Hernandez',
