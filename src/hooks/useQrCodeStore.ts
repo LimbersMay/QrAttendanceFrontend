@@ -7,6 +7,9 @@ import {
 import {QrCode} from "../qrAttendance/interfaces";
 import {SnackbarUtilities} from "../utilities/snackbar-manager";
 import {qrAttendanceApi} from "../api/qrAttendanceApi";
+import {getEnvironments} from "../helpers/getEnvironments";
+
+const { VITE_APIURL } = getEnvironments();
 
 export const useQrCodeStore = () => {
 
@@ -48,7 +51,7 @@ export const useQrCodeStore = () => {
             name,
             enabled,
             manualRegistrationDate,
-            url: 'https://qrattendancebackend.up.railway.app/checkIn'
+            url: `${VITE_APIURL}/checkIn`
         });
 
         const {body} = response.data;
