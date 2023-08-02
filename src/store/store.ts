@@ -3,9 +3,11 @@ import {authSlice} from "./auth";
 import {groupSlice, qrCodeSlice, registrySlice} from "./qrAttendance";
 import SocketMiddleware from "./middlewares/socketMiddleware";
 import {preferencesSlice} from "./qrAttendance/preferences/preferencesSlice";
+import {uiSlice} from "./ui/uiSlice";
 
 export const store = configureStore({
     reducer: {
+        ui: uiSlice.reducer,
         auth: authSlice.reducer,
         group: groupSlice.reducer,
         qrCode: qrCodeSlice.reducer,

@@ -6,7 +6,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-export const QrCodeDatePicker = ({ date, onChangeDate }: { date: string, onChangeDate: any }) => {
+export const QrCodeDatePicker = ({ date, onChangeDate }: { date: string | undefined, onChangeDate: any }) => {
     const [value, setValue] = React.useState<Dayjs | null>(
         dayjs(date),
     );
@@ -21,7 +21,7 @@ export const QrCodeDatePicker = ({ date, onChangeDate }: { date: string, onChang
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack spacing={1}>
                 <DesktopDatePicker
-                    label="Date desktop"
+                    label="Date"
                     inputFormat="DD/MM/YYYY"
                     value={value}
                     onChange={handleChange}

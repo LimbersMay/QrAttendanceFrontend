@@ -1,18 +1,24 @@
 import {Box, Dialog, DialogContent, DialogTitle, IconButton} from "@mui/material";
 import {Close} from "@mui/icons-material";
 import QRCode from 'react-qr-code';
+import {useUiSlice} from "../../../hooks/useUiSlice";
+import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
 
-export const QrCheckIn = ({ url, title, isQrShowing, handleToggleShowQr }: { url: string, title: string, isQrShowing: boolean, handleToggleShowQr: any}) => {
+export const QrCheckIn = () => {
+
+    const { isShowingQrCode, hideQrCode } = useUiSlice();
+    const { activeQrCode } = useQrCodeSlice();
+
     return (
-        <Dialog open={isQrShowing} maxWidth="sm" fullWidth>
+        <Dialog open={isShowingQrCode} maxWidth="sm" fullWidth>
             <Box
                 display="flex"
                 justifyContent="center"
             >
-                <DialogTitle>{ title } QR Code</DialogTitle>
+                <DialogTitle>{ activeQrCode?.name } QR Code</DialogTitle>
             </Box>
             <Box position="absolute" top={0} right={0}>
-                <IconButton onClick={handleToggleShowQr}>
+                <IconButton onClick={hideQrCode}>
                     <Close />
                 </IconButton>
             </Box>
@@ -25,7 +31,7 @@ export const QrCheckIn = ({ url, title, isQrShowing, handleToggleShowQr }: { url
                     <QRCode
                         size={100}
                         style={{ height: "auto", maxWidth: "50%", width: "80%" }}
-                        value={url}
+                        value={`${activeQrCode?.url}/${activeQrCode?.formId}`}
                         viewBox={`0 0 256 256`}
                     />
                 </Box>

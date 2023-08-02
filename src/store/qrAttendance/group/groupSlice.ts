@@ -16,7 +16,7 @@ export const groupSlice = createSlice({
     name: 'group',
     initialState,
     reducers: {
-        setActiveGroup: (state, action: PayloadAction<Group>) => {
+        setActiveGroup: (state, action: PayloadAction<Group | null>) => {
             state.active = action.payload;
         },
         setGroups(state, action: PayloadAction<Group[]>) {

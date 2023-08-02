@@ -4,16 +4,21 @@ import {RootState} from "../../store";
 
 interface RegistryState {
     registries: Registry[];
+    active: Registry | null
 }
 
 const initialState: RegistryState = {
-    registries: []
+    registries: [],
+    active: null
 }
 
 export const registrySlice = createSlice({
     name: 'registry',
     initialState,
     reducers: {
+        setActiveRegistry: (state, action: PayloadAction<Registry | null>) => {
+            state.active = action.payload;
+        },
         addNewRegistry: (state, action: PayloadAction<Registry>) => {
             state.registries.push(action.payload);
         },
@@ -36,5 +41,5 @@ export const registrySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addNewRegistry, deleteRegistry, deleteRegistriesByQrCodeId, updateRegistry, setRegistries } = registrySlice.actions;
+export const { setActiveRegistry, addNewRegistry, deleteRegistry, deleteRegistriesByQrCodeId, updateRegistry, setRegistries } = registrySlice.actions;
 export const selectRegistry = (state: RootState) => state.registry;

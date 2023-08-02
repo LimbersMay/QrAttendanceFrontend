@@ -4,21 +4,26 @@ import {RootState} from "../../store";
 
 interface QrCodeState {
     qrCodes: QrCode[];
+    activeQrCode: QrCode | null;
 }
 
 const initialState: QrCodeState = {
-    qrCodes: []
+    qrCodes: [],
+    activeQrCode: null
 }
 
 export const qrCodeSlice = createSlice({
     name: 'qrCode',
     initialState,
     reducers: {
-        addEmptyQrCode: (state, action: PayloadAction<QrCode>) => {
-            state.qrCodes.push(action.payload)
+        setActiveQrCode: (state, { payload }: PayloadAction<QrCode | null>) => {
+            state.activeQrCode = payload;
         },
-        setQrCodes: (state, action: PayloadAction<QrCode[]>) => {
-            state.qrCodes = action.payload;
+        addEmptyQrCode: (state, { payload }: PayloadAction<QrCode>) => {
+            state.qrCodes.push(payload)
+        },
+        setQrCodes: (state, { payload }: PayloadAction<QrCode[]>) => {
+            state.qrCodes = payload;
         },
         deleteQrCode: (state, { payload }: PayloadAction<string>) => {
             state.qrCodes = state.qrCodes.filter(qrCode => qrCode.id !== payload);
@@ -36,5 +41,5 @@ export const qrCodeSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addEmptyQrCode, deleteQrCode, updateQrCode, deleteQrCodesByGroupId, setQrCodes } = qrCodeSlice.actions;
+export const { setActiveQrCode, addEmptyQrCode, deleteQrCode, updateQrCode, deleteQrCodesByGroupId, setQrCodes } = qrCodeSlice.actions;
 export const selectQrCode = (state: RootState) => state.qrCode;

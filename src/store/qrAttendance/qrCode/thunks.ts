@@ -2,6 +2,9 @@ import {AppThunk} from "../../store";
 import {QrCode} from "../../../qrAttendance/interfaces";
 import {addEmptyQrCode, setQrCodes, updateQrCode} from "./qrCodeSlice";
 import {qrAttendanceApi} from "../../../api/qrAttendanceApi";
+import {getEnvironments} from "../../../helpers/getEnvironments";
+
+const { VITE_APIURL } = getEnvironments();
 
 export const startLoadingQrCodes = (): AppThunk => {
     return async (dispatch) => {
@@ -26,25 +29,29 @@ export const startLoadingQrCodes = (): AppThunk => {
     }
 }
 
-export const startNewQrCode = (groupId: string): AppThunk => {
-    return async (dispatch) => {
+export const startNewQrCode = (name: string, manualRegistrationDate: string, enabled: boolean): AppThunk => {
+    return async (dispatch, getState) => {
+
+        const { active } = getState().group;
+        const id = active?.id || '';
 
         const response = await qrAttendanceApi.post('/qrCode/create', {
-            groupId: groupId,
-            name: 'Default',
-            enabled: false,
-            url: 'https://easyqrattendance.up.railway.app/checkIn'
+            groupId: id,
+            name,
+            enabled,
+            manualRegistrationDate,
+            url: 'https://qrattendancebackend.up.railway.app/checkIn'
         });
 
         const {body} = response.data;
 
         const newQrCode: QrCode = {
-            groupId: groupId,
+            groupId: id,
             id: body.id,
             url: body.url,
             formId: body.formId,
             name: body.name,
-            date: body.createdAt,
+            date: body.manualRegistrationDate,
             enabled: false
         }
 
