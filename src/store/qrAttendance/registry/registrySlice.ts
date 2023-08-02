@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Registry} from "../../../qrAttendance/interfaces";
 import {RootState} from "../../store";
 
-interface RegistryState {
+export interface RegistryState {
     registries: Registry[];
     active: Registry | null
 }
@@ -16,10 +16,10 @@ export const registrySlice = createSlice({
     name: 'registry',
     initialState,
     reducers: {
-        setActiveRegistry: (state, action: PayloadAction<Registry | null>) => {
+        onSetActiveRegistry: (state, action: PayloadAction<Registry | null>) => {
             state.active = action.payload;
         },
-        addNewRegistry: (state, action: PayloadAction<Registry>) => {
+        addEmptyRegistry: (state, action: PayloadAction<Registry>) => {
             state.registries.push(action.payload);
         },
         deleteRegistry: (state, action: PayloadAction<string>) => {
@@ -41,5 +41,5 @@ export const registrySlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setActiveRegistry, addNewRegistry, deleteRegistry, deleteRegistriesByQrCodeId, updateRegistry, setRegistries } = registrySlice.actions;
+export const { onSetActiveRegistry, addEmptyRegistry, deleteRegistry, deleteRegistriesByQrCodeId, updateRegistry, setRegistries } = registrySlice.actions;
 export const selectRegistry = (state: RootState) => state.registry;

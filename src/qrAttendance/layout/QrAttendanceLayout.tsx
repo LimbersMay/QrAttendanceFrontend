@@ -1,7 +1,7 @@
 import {Toolbar, useMediaQuery, Theme} from "@mui/material";
 import { Box } from '@mui/system'
 import {NavBar, SideBar} from "../components";
-import React from "react";
+import React, {useState} from "react";
 
 let drawerWidth = 280;
 
@@ -12,7 +12,7 @@ export const QrAttendanceLayout = ({ children }: {children: React.ReactNode}) =>
     if (isSmallScreen) drawerWidth = 220;
 
     // responsive for mobile
-    const [mobileOpen, setMobileOpen] = React.useState(false);
+    const [mobileOpen, setMobileOpen] = useState(false);
     const handleDrawerToggle = () => {
         setMobileOpen(!mobileOpen);
     };

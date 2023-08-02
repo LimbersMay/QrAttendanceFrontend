@@ -1,11 +1,9 @@
 import {ModalLayout} from "../ModalLayout";
-import {useUiSlice} from "../../../hooks/useUiSlice";
 import {Divider, Grid, TextField} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {FormEvent} from "react";
-import {useGroupSlice} from "../../../hooks/useGroupSlice";
-import {useForm} from "../../../hooks/useForm";
 import Button from "@mui/material/Button";
+import {useForm, useGroupStore, useUiStore} from "../../../hooks";
 
 const initialState = {
     id: "",
@@ -15,32 +13,32 @@ const initialState = {
 
 export const TitleModal = () => {
 
-    const { isTitleModalOpen, toggleTitleModal } = useUiSlice();
-    const { active, updateGroup, handleSetActiveGroup } = useGroupSlice();
+    const { isTitleModalOpen, toggleTitleModal } = useUiStore();
+    const { active, startUpdateGroup, setActiveGroup } = useGroupStore();
 
     const { formState, onInputChange } = useForm(active || initialState);
     const { name } = formState;
 
-    const onSubmit = (event: FormEvent) => {
+    const onSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
         if (!active) return;
 
-        updateGroup({
+        await startUpdateGroup({
             ...active,
             name
         });
 
-        handleSetActiveGroup(formState);
+        setActiveGroup(formState);
         toggleTitleModal();
     }
 
     return (
         <ModalLayout condition={isTitleModalOpen} handleClose={toggleTitleModal}>
-            <form onSubmit={onSubmit}>
+            <form aria-label="titleModalForm" onSubmit={onSubmit}>
                 <Grid container>
                     <Grid item xs={12} sx={{textAlign: "center"}}>
-                        <Typography variant="h6">Editing {active?.name}</Typography>
+                        <Typography aria-label="groupTitle" variant="h6">Editing {active?.name}</Typography>
                         <Divider />
                     </Grid>
 

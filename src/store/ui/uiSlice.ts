@@ -1,14 +1,14 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {RootState} from "../store";
 
-interface uiInitialState {
+export interface uiState {
     isQrCodeModalOpen: boolean;
     isRegistryModalOpen: boolean;
     isShowingQrCode: boolean;
     isTitleModalOpen: boolean;
 }
 
-const initialState: uiInitialState = {
+const initialState: uiState = {
     isQrCodeModalOpen: false,
     isRegistryModalOpen: false,
     isShowingQrCode: false,

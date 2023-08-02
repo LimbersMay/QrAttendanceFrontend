@@ -19,7 +19,9 @@ import {QrCodeRow} from "../components/qrCodeRow/QrCodeRow";
 import {QrCode} from "../interfaces";
 import {TitleRow} from "../components/titleRow/TitleRow";
 import {useSelector} from "react-redux";
-import {selectGroup, selectQrCode, selectRegistry} from "../../store/qrAttendance";
+import {selectRegistry} from "../../store/qrAttendance";
+import {useGroupStore} from "../../hooks/useGroupStore";
+import {useQrCodeStore} from "../../hooks/useQrCodeStore";
 
 const Row = (props: { row: QrCode }) => {
 
@@ -79,8 +81,8 @@ const Row = (props: { row: QrCode }) => {
 
 export const GroupViewTable = () => {
 
-    const { active: group } = useSelector(selectGroup);
-    const { qrCodes } = useSelector(selectQrCode);
+    const { active: group } = useGroupStore();
+    const { qrCodes } = useQrCodeStore();
 
     if (!group) return null;
 

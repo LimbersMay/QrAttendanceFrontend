@@ -1,25 +1,22 @@
-import React, {useMemo, useState} from "react";
-
+import React, {memo, useMemo, useState} from "react";
 import {IconButton, TableCell, tableCellClasses, TableRow, TextField, Tooltip} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, DeleteOutlined} from "@mui/icons-material";
-import {useForm} from "../../../hooks/useForm";
 
 import {Group, QrCode} from "../../interfaces";
 import ConfirmDialog from "./ConfirmDialog";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
-import {useQrAttendanceSlice} from "../../../hooks/useQrAttendanceSlice";
-import {useUiSlice} from "../../../hooks/useUiSlice";
 import {TitleModal} from "./TitleModal";
 import {QrCodeModal} from "../qrCodeRow/QrCodeModal";
+import {useForm, useQrAttendanceStore, useUiStore} from "../../../hooks";
 
-export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[] }) => {
+export const TitleRow = memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[] }) => {
 
     const initialStateForm = useMemo(() => ({
         groupTitle: group.name,
     }), [group]);
 
-    const { toggleTitleModal, toggleQrCodeModal } = useUiSlice();
-    const {deleteGroupWithDependencies} = useQrAttendanceSlice();
+    const { toggleTitleModal, toggleQrCodeModal } = useUiStore();
+    const {startDeleteGroupWithDependencies} = useQrAttendanceStore();
 
     const {formState} = useForm(initialStateForm);
     const [isTryingToDelete, setIsTryingToDelete] = useState<boolean>(false);
@@ -30,13 +27,9 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
         setIsTryingToDelete(!isTryingToDelete);
     }
 
-    const handleDeleteRow = () => {
-        deleteGroupWithDependencies(group.id, qrCodes);
-        SnackbarUtilities.sucess(`Group deleted successfully`);
-    }
-
-    const handleAddEmptyRow = () => {
-        toggleQrCodeModal();
+    const handleDeleteRow = async () => {
+        await startDeleteGroupWithDependencies(group.id, qrCodes);
+        SnackbarUtilities.success(`Group deleted successfully`);
     }
 
     return (
@@ -79,16 +72,16 @@ export const TitleRow = React.memo(({group, qrCodes}: { group: Group, qrCodes: Q
                             )
                         }}
                     />
-                    <Tooltip title={'Add new qr code'}>
-                        <IconButton onClick={handleAddEmptyRow}>
+                    <Tooltip aria-label="addQrCodeButton" title={'Add new qr code'}>
+                        <IconButton onClick={toggleQrCodeModal}>
                             <AddOutlined/>
                         </IconButton>
                     </Tooltip>
 
-                    <Tooltip title={'Edit title'}><IconButton onClick={toggleTitleModal}> <EditOutlined/>
+                    <Tooltip aria-label="editGroupButton" title={'Edit title'}><IconButton onClick={toggleTitleModal}> <EditOutlined/>
                     </IconButton></Tooltip>
 
-                    <Tooltip title={'Delete group'}>
+                    <Tooltip aria-label="deleteGroupButton" title={'Delete group'}>
                         <IconButton onClick={handleToggleDeleteDialog}>
                             <DeleteOutlined/>
                         </IconButton>
