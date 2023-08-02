@@ -1,4 +1,3 @@
-import {useSelector} from "react-redux";
 import {
     Box, Button,
     Divider,
@@ -8,23 +7,15 @@ import {
     Typography, useMediaQuery
 } from "@mui/material";
 import {SideBarItem} from "./SideBarItem";
-import {selectGroup, startNewGroup} from "../../store/qrAttendance";
-import {useAppDispatch} from "../../store";
-import {selectAuth} from "../../store/auth";
-import React from "react";
+import {useGroupStore} from "../../hooks/useGroupStore";
+import {useAuthStore} from "../../hooks/useAuthStore";
 
 export const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle}: {drawerWidth: number, mobileOpen: boolean, handleDrawerToggle: any}) => {
 
-    const { groups } = useSelector(selectGroup);
-    const { displayName } = useSelector(selectAuth);
+    const { groups, startNewGroup } = useGroupStore();
+    const { displayName } = useAuthStore();
 
     const isSmallScreen = useMediaQuery<Theme>((theme) => theme.breakpoints.down('sm'));
-
-    const dispatch = useAppDispatch();
-
-    const handleNewGroup = () => {
-        dispatch(startNewGroup());
-    }
 
     return (
         <Box
@@ -55,7 +46,7 @@ export const SideBar = ({ drawerWidth, mobileOpen, handleDrawerToggle}: {drawerW
 
                 <List>
                     <Grid container direction='column' display='flex' alignItems='center' alignContent='center'>
-                        <Button onClick={handleNewGroup} fullWidth>New Group</Button>
+                        <Button onClick={startNewGroup} fullWidth>New Group</Button>
                     </Grid>
                     {
                         groups.map(group => (

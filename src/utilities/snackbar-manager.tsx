@@ -11,7 +11,7 @@ export const SnackbarUtilities = {
     toast(msg: string, variant: VariantType = "default") {
         useSnackbarRef.enqueueSnackbar(msg, {variant});
     },
-    sucess(msg: string) {
+    success(msg: string) {
         this.toast(msg, "success");
     },
     error(msg: string) {

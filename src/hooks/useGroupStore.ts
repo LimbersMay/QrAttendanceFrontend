@@ -1,11 +1,20 @@
-import {AppThunk} from "../../store";
-import {addEmptyGroup, deleteGroup, setActiveGroup, setGroups, updateGroup} from "./groupSlice";
-import {Group} from "../../../qrAttendance/interfaces";
-import {qrAttendanceApi} from "../../../api/qrAttendanceApi";
+import {useAppDispatch, useAppSelector} from "../store";
+import {
+    selectGroup,
+    onSetActiveGroup,
+    updateGroup,
+    addEmptyGroup,
+    setGroups
+} from "../store/qrAttendance";
+import {Group} from "../qrAttendance/interfaces";
+import {qrAttendanceApi} from "../api/qrAttendanceApi";
 
-export const startUpdateGroup = (group: Group): AppThunk => {
-    return async (dispatch) => {
+export const useGroupStore = () => {
 
+    const dispatch = useAppDispatch();
+    const {groups, active} = useAppSelector(selectGroup);
+
+    const startUpdateGroup = async (group: Group) => {
         // async code here
         const {id, name} = group;
 
@@ -19,20 +28,8 @@ export const startUpdateGroup = (group: Group): AppThunk => {
         // sync code here
         dispatch(updateGroup(group));
     }
-}
 
-export const startDeleteGroup = (groupId: string): AppThunk => {
-    return async (dispatch) => {
-
-        // async code here
-
-        // sync code here
-        dispatch(deleteGroup(groupId));
-    }
-}
-
-export const startNewGroup = (): AppThunk => {
-    return async (dispatch) => {
+    const startNewGroup = async () => {
 
         // async code here
         const response = await qrAttendanceApi.post('/group/create', {
@@ -49,13 +46,10 @@ export const startNewGroup = (): AppThunk => {
 
         // sync code here
         dispatch(addEmptyGroup(newGroup));
-        dispatch(setActiveGroup(newGroup));
+        dispatch(onSetActiveGroup(newGroup));
     }
-}
 
-export const startLoadingGroups = (): AppThunk => {
-    return async (dispatch) => {
-
+    const startLoadingGroups = async () => {
         // async code here
         const response = await qrAttendanceApi.get(`/group/all`);
         const {body: groups} = response.data;
@@ -68,5 +62,21 @@ export const startLoadingGroups = (): AppThunk => {
         }));
 
         dispatch(setGroups(mappedGroups));
+    }
+
+    const setActiveGroup = (group: Group) => {
+        dispatch(onSetActiveGroup(group));
+    }
+
+    return {
+        // properties
+        groups,
+        active,
+
+        // methods
+        startUpdateGroup,
+        setActiveGroup,
+        startNewGroup,
+        startLoadingGroups
     }
 }

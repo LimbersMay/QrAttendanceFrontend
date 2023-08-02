@@ -1,13 +1,10 @@
-import {AuthLayout} from "../layout/AuthLayout";
-import {Alert, Button, Grid, Link, TextField, Typography} from "@mui/material";
-import {Link as RouterLink} from "react-router-dom";
 import React, {useMemo, useState} from "react";
-
+import {Link as RouterLink} from "react-router-dom";
+import {Alert, Button, Grid, Link, TextField, Typography} from "@mui/material";
+import {AuthLayout} from "../layout/AuthLayout";
 import {FormValidations, useForm} from "../../hooks/useForm";
-import {useAppDispatch, useAppSelector} from "../../store";
-import {startCreatingUser} from "../../store/auth/thunks";
-import {selectAuth} from "../../store/auth";
 import {authStatusTypes} from "../types";
+import {useAuthStore} from "../../hooks/useAuthStore";
 
 const initialForm = {
     name: '',
@@ -26,8 +23,7 @@ const formValidations: FormValidations = {
 
 export const SignupPage = () => {
 
-    const { errorMessage, status } = useAppSelector(selectAuth);
-    const dispatch = useAppDispatch();
+    const { startCreatingUser, errorMessage, status } = useAuthStore();
 
     const { onInputChange, isFormValid, formValidation, name, email, password, lastname } = useForm(initialForm, formValidations);
     const { nameValid, lastnameValid, emailValid, passwordValid } = formValidation;
@@ -36,18 +32,18 @@ export const SignupPage = () => {
 
     const isAuthenticating = useMemo(() => status === authStatusTypes.checking, [status]);
 
-    const onSubmit = (event: React.FormEvent) => {
+    const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
         setFormSubmitted(true);
         if (!isFormValid) return;
 
-        dispatch(startCreatingUser({name, email, lastname, password}));
+        await startCreatingUser({name, email, lastname, password});
     }
 
     return (
         <AuthLayout title='Register'>
-            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster">
+            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster" aria-label="submit-form">
                 <Grid container >
 
                     <Grid item xs={12} sx={{mt: 2}}>
@@ -97,6 +93,9 @@ export const SignupPage = () => {
                             fullWidth
                             name="password"
                             onChange={onInputChange}
+                            inputProps={{
+                                'data-testid': 'password'
+                            }}
                             error={!!passwordValid && formSubmitted}
                             helperText={passwordValid}
                         />
@@ -110,6 +109,9 @@ export const SignupPage = () => {
                             fullWidth
                             name="password2"
                             onChange={onInputChange}
+                            inputProps={{
+                                'data-testid': 'password2'
+                            }}
                             error={!!passwordValid && formSubmitted}
                             helperText={passwordValid}
                         />

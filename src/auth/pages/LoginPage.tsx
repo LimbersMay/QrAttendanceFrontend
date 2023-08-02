@@ -1,15 +1,11 @@
+import React, {useMemo} from "react";
 import {Link as RouterLink} from 'react-router-dom';
 import {Alert, Button, Grid, Link, TextField, Typography} from "@mui/material";
 import {Google} from "@mui/icons-material";
-
 import {AuthLayout} from "../layout/AuthLayout";
 import {useForm} from "../../hooks/useForm";
-import React, {useMemo} from "react";
-import {useAppDispatch} from "../../store";
-import {startLogin} from "../../store/auth/thunks";
-import {useSelector} from "react-redux";
-import {selectAuth} from "../../store/auth";
 import {authStatusTypes} from "../types";
+import {useAuthStore} from "../../hooks/useAuthStore";
 
 const initialForm = {
     email: '',
@@ -18,22 +14,21 @@ const initialForm = {
 
 export const LoginPage = () => {
 
-    const dispatch = useAppDispatch();
-    const { errorMessage, status } = useSelector(selectAuth);
+    const { startLogin, errorMessage, status } = useAuthStore();
 
     const isAuthenticating = useMemo(() => status === authStatusTypes.checking, [status]);
 
     const { onInputChange, email, password } = useForm(initialForm);
 
-    const onSubmit = (event: React.FormEvent) => {
+    const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
 
-       dispatch(startLogin(email, password));
+       await startLogin(email, password);
     }
 
     return (
         <AuthLayout title='Login'>
-            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster">
+            <form onSubmit={onSubmit} className="animate__animated animate__fadeIn animate__faster" aria-label="submit-form">
                 <Grid container>
 
                     <Grid item xs={12} sx={{mt: 2}}>
@@ -52,6 +47,9 @@ export const LoginPage = () => {
                         <TextField
                             label="Password"
                             type="password"
+                            inputProps={{
+                                'data-testid': 'password'
+                            }}
                             placeholder="password"
                             fullWidth
                             name="password"

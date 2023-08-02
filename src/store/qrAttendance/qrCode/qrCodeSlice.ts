@@ -2,7 +2,7 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {QrCode} from "../../../qrAttendance/interfaces";
 import {RootState} from "../../store";
 
-interface QrCodeState {
+export interface QrCodeState {
     qrCodes: QrCode[];
     activeQrCode: QrCode | null;
 }
@@ -16,7 +16,7 @@ export const qrCodeSlice = createSlice({
     name: 'qrCode',
     initialState,
     reducers: {
-        setActiveQrCode: (state, { payload }: PayloadAction<QrCode | null>) => {
+        onSetActiveQrCode: (state, { payload }: PayloadAction<QrCode | null>) => {
             state.activeQrCode = payload;
         },
         addEmptyQrCode: (state, { payload }: PayloadAction<QrCode>) => {
@@ -41,5 +41,5 @@ export const qrCodeSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setActiveQrCode, addEmptyQrCode, deleteQrCode, updateQrCode, deleteQrCodesByGroupId, setQrCodes } = qrCodeSlice.actions;
+export const { onSetActiveQrCode, addEmptyQrCode, deleteQrCode, updateQrCode, deleteQrCodesByGroupId, setQrCodes } = qrCodeSlice.actions;
 export const selectQrCode = (state: RootState) => state.qrCode;

@@ -1,10 +1,21 @@
-import {AppThunk} from "../store";
-import {checkingCredentials, login, logout} from "./authSlice";
-import {qrAttendanceApi} from "../../api/qrAttendanceApi";
-import {setActiveGroup, setGroups, setQrCodes, setRegistries} from "../qrAttendance";
+import {useAppDispatch, useAppSelector} from "../store";
+import {checkingCredentials, login, logout, selectAuth} from "../store/auth";
+import {qrAttendanceApi} from "../api/qrAttendanceApi";
+import {onSetActiveGroup, setGroups, setQrCodes, setRegistries} from "../store/qrAttendance";
 
-export const startCreatingUser = ({name, email, lastname, password}: {name: string, email: string, lastname: string, password: string}): AppThunk => {
-    return async (dispatch) => {
+interface CreatingUserProps {
+    name: string;
+    email: string;
+    lastname: string;
+    password: string;
+}
+
+export const useAuthStore = () => {
+
+    const dispatch = useAppDispatch();
+    const { displayName, errorMessage, status } = useAppSelector(selectAuth);
+
+    const startCreatingUser = async ({name, email, lastname, password}: CreatingUserProps) => {
         // async code here
         dispatch(checkingCredentials());
 
@@ -33,10 +44,8 @@ export const startCreatingUser = ({name, email, lastname, password}: {name: stri
             dispatch(logout(null));
         }
     }
-}
 
-export const startLogin = (email: string, password: string): AppThunk => {
-    return async(dispatch) => {
+    const startLogin = async (email: string, password: string) => {
         dispatch(checkingCredentials());
 
         try {
@@ -51,7 +60,7 @@ export const startLogin = (email: string, password: string): AppThunk => {
             });
 
             const { body: user } = response.data;
-            
+
 
             dispatch(login({
                 uid: user.id,
@@ -63,10 +72,8 @@ export const startLogin = (email: string, password: string): AppThunk => {
             dispatch(logout(null));
         }
     }
-}
 
-export const startLogout = (): AppThunk => {
-    return async(dispatch) => {
+    const startLogout = async () => {
         await qrAttendanceApi.post('/auth/logout', {}, {
             withCredentials: true,
             headers: {
@@ -75,9 +82,21 @@ export const startLogout = (): AppThunk => {
         });
 
         dispatch(logout(null));
-        dispatch(setActiveGroup(null));
+        dispatch(onSetActiveGroup(null));
         dispatch(setGroups([]));
         dispatch(setQrCodes([]));
         dispatch(setRegistries([]));
+    }
+
+    return {
+        // properties
+        displayName,
+        errorMessage,
+        status,
+
+        // methods
+        startCreatingUser,
+        startLogin,
+        startLogout
     }
 }

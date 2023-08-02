@@ -1,28 +1,28 @@
 import React from 'react';
 import {Divider, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import {Delete, Download, Edit, MoreVert, Visibility} from "@mui/icons-material";
-import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
 import {QrCode} from "../../interfaces";
-import {useUiSlice} from "../../../hooks/useUiSlice";
+import {useQrAttendanceStore, useQrCodeStore, useUiStore} from "../../../hooks";
 
 const ITEM_HEIGHT = 48;
 
 export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: any, qrCode: QrCode }) => {
 
-    const { showQrCode, toggleQrCodeModal } = useUiSlice();
-    const { handleSetActiveQrCode, handleDeleteQrCode } = useQrCodeSlice();
+    const { showQrCode, toggleQrCodeModal } = useUiStore();
+    const { setActiveQrCode } = useQrCodeStore();
+    const { startDeleteQrCodeWithDependencies } = useQrAttendanceStore();
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
-        handleSetActiveQrCode(qrCode);
+        setActiveQrCode(qrCode);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
-        handleSetActiveQrCode(null);
+        setActiveQrCode(null);
     };
 
     return (
@@ -32,6 +32,7 @@ export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: a
                 aria-controls="long-menu"
                 aria-haspopup="true"
                 onClick={handleClick}
+                data-testid={'qr-code-menu-button'}
             >
                 <MoreVert />
             </IconButton>
@@ -48,24 +49,24 @@ export const QrCodeMenuOptions = ({handleDownload, qrCode }: { handleDownload: a
                     },
                 }}
             >
-                <MenuItem onClick={showQrCode}>
+                <MenuItem aria-label="showQrCodeButton" onClick={showQrCode}>
                     <Visibility />
                     <Typography sx={{ml: '7px'}}>Show</Typography>
                 </MenuItem>
 
-                <MenuItem onClick={toggleQrCodeModal}>
+                <MenuItem aria-label="editQrCodeButton" onClick={toggleQrCodeModal}>
                     <Edit />
                     <Typography sx={{ml: '7px'}}>Edit</Typography>
                 </MenuItem>
 
-                <MenuItem onClick={handleDownload}>
+                <MenuItem aria-label="downloadQrCodeButton" onClick={handleDownload}>
                     <Download />
                     <Typography sx={{ml: '7px'}}>Download</Typography>
                 </MenuItem>
 
                 <Divider />
 
-                <MenuItem onClick={handleDeleteQrCode}>
+                <MenuItem aria-label="deleteQrCodeButton" onClick={startDeleteQrCodeWithDependencies}>
                     <Delete />
                     <Typography sx={{ml: '7px'}}>Delete</Typography>
                 </MenuItem>

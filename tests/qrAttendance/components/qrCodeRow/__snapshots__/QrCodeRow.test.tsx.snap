@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Tests for <QrCodeRow /> Should match the snapshot 1`] = `
+<div>
+  <table>
+    <tbody>
+      <tr
+        class="MuiTableRow-root css-2blr9s-MuiTableRow-root"
+      >
+        <td
+          class="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
+        >
+          <button
+            aria-label="expand row"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1pe4mpk-MuiButtonBase-root-MuiIconButton-root"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="KeyboardArrowDownIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </td>
+        <th
+          class="MuiTableCell-root MuiTableCell-sizeMedium css-bsph2u-MuiTableCell-root"
+          scope="row"
+        >
+          Group A
+        </th>
+        <td
+          class="MuiTableCell-root MuiTableCell-alignCenter MuiTableCell-sizeMedium css-1ce3qcx-MuiTableCell-root"
+        >
+          2
+        </td>
+        <td
+          class="MuiTableCell-root MuiTableCell-alignCenter MuiTableCell-sizeMedium css-1lu91p5-MuiTableCell-root"
+        >
+          01/01/2001
+        </td>
+        <td
+          class="MuiTableCell-root MuiTableCell-alignCenter MuiTableCell-sizeMedium css-1ce3qcx-MuiTableCell-root"
+        >
+          NO
+        </td>
+        <td
+          class="MuiTableCell-root MuiTableCell-alignCenter MuiTableCell-sizeMedium css-1ce3qcx-MuiTableCell-root"
+        >
+          <button
+            aria-controls="long-menu"
+            aria-haspopup="true"
+            aria-label="more"
+            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-78trlr-MuiButtonBase-root-MuiIconButton-root"
+            data-testid="qr-code-menu-button"
+            tabindex="0"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+              data-testid="MoreVertIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+              />
+            </svg>
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
