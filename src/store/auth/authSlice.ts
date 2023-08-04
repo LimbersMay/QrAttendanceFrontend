@@ -3,7 +3,7 @@ import {authStatusTypes} from "../../auth/types";
 import {RootState} from "../store";
 
 // Define a type for the slice state
-interface AuthState {
+export interface AuthState {
     status?: string;
     uid: string | null;
     email: string | null;

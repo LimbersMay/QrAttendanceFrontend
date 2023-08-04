@@ -1,28 +1,27 @@
 import { MouseEvent, useState } from 'react';
 import {Divider, IconButton, Menu, MenuItem, Typography} from "@mui/material";
 import {Delete, Edit, MoreVert} from "@mui/icons-material";
-import {useUiSlice} from "../../../hooks/useUiSlice";
-import {useRegistrySlice} from "../../../hooks/useRegistrySlice";
 import {Registry} from "../../interfaces";
+import {useRegistryStore, useUiStore} from "../../../hooks";
 
 const ITEM_HEIGHT = 48;
 
 export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => {
 
-    const { toggleRegistryModal } = useUiSlice();
-    const { handleSetActiveRegistry, handleDeleteRegistry } = useRegistrySlice();
+    const { toggleRegistryModal } = useUiStore();
+    const { setActiveRegistry, startDeleteRegistry } = useRegistryStore();
 
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
     const handleClick = (event: MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
-        handleSetActiveRegistry(registry);
+        setActiveRegistry(registry);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
-        handleSetActiveRegistry(null);
+        setActiveRegistry(null);
     };
 
     return (
@@ -32,6 +31,7 @@ export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => 
                 aria-controls="long-menu"
                 aria-haspopup="true"
                 onClick={handleClick}
+                data-testid={'registry-menu-button'}
             >
                 <MoreVert />
             </IconButton>
@@ -48,14 +48,14 @@ export const RegistryRowMenuOptions = ({ registry }: { registry: Registry }) => 
                     },
                 }}
             >
-                <MenuItem onClick={toggleRegistryModal}>
+                <MenuItem aria-label="editRegistryButton" onClick={toggleRegistryModal}>
                     <Edit />
                     <Typography sx={{ml: '7px'}}>Edit</Typography>
                 </MenuItem>
 
                 <Divider />
 
-                <MenuItem onClick={handleDeleteRegistry}>
+                <MenuItem aria-label="deleteRegistryButton" onClick={startDeleteRegistry}>
                     <Delete />
                     <Typography sx={{ml: '7px'}}>Delete</Typography>
                 </MenuItem>

@@ -3,12 +3,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {Divider, Grid, MenuItem, Select, SelectChangeEvent, TextField} from "@mui/material";
 import {QrCodeDatePicker} from "./QrCodeDatePicker";
-import {useUiSlice} from "../../../hooks/useUiSlice";
-import {useQrCodeSlice} from "../../../hooks/useQrCodeSlice";
-import {useForm} from "../../../hooks/useForm";
 import {QrCode} from "../../interfaces";
 import {ModalLayout} from "../ModalLayout";
-import {useGroupSlice} from "../../../hooks/useGroupSlice";
+import {useForm, useGroupStore, useQrCodeStore, useUiStore} from "../../../hooks";
 
 const initialState: QrCode = {
     id: "",
@@ -22,25 +19,25 @@ const initialState: QrCode = {
 
 export const QrCodeModal = () => {
 
-    const {activeQrCode, handleUpdateQrCode, handleStartNewQrCode} = useQrCodeSlice();
-    const { active: activeGroup } = useGroupSlice();
-    const {toggleQrCodeModal, isQrCodeModalOpen} = useUiSlice();
+    const {activeQrCode, startUpdateQrCode, startNewQrCode} = useQrCodeStore();
+    const { active: activeGroup } = useGroupStore();
+    const {toggleQrCodeModal, isQrCodeModalOpen} = useUiStore();
 
     const {formState, onInputChange, onDateChange} = useForm(activeQrCode || initialState);
     const {name, date, enabled} = formState;
 
-    const onSubmit = (event: FormEvent) => {
+    const onSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
         if (!activeGroup) return;
 
         if (!activeQrCode) {
-            handleStartNewQrCode(name, date, enabled);
+            await startNewQrCode(name, date, enabled);
             toggleQrCodeModal();
             return;
         }
 
-        handleUpdateQrCode({
+        await startUpdateQrCode({
             ...activeQrCode,
             name,
             date,
@@ -56,11 +53,11 @@ export const QrCodeModal = () => {
 
     return (
         <ModalLayout condition={isQrCodeModalOpen} handleClose={toggleQrCodeModal}>
-            <form onSubmit={onSubmit}>
+            <form data-testid="qrCode-modal-form" onSubmit={onSubmit}>
                 <Grid container>
 
                     <Grid item xs={12} sx={{textAlign: "center"}}>
-                        <Typography variant="h6">Editing {activeQrCode?.name}</Typography>
+                        <Typography variant="h6" data-testid="qrCode-title">Editing {activeQrCode?.name}</Typography>
                         <Divider/>
                     </Grid>
 

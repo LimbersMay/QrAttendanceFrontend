@@ -2,6 +2,6 @@
 export const getEnvironments = () => {
 
     return {
-        VITE_APIURL: 'https://qrattendancebackend.up.railway.app'
+        VITE_APIURL: import.meta.env.VITE_APIURL
     }
 }

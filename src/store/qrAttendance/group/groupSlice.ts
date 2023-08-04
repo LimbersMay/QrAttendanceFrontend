@@ -2,12 +2,12 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {Group} from "../../../qrAttendance/interfaces";
 import {RootState} from "../../store";
 
-interface groupState {
+export interface GroupState {
     active: Group | null;
     groups: Group[];
 }
 
-const initialState: groupState = {
+const initialState: GroupState = {
     active: null,
     groups: []
 }
@@ -16,7 +16,7 @@ export const groupSlice = createSlice({
     name: 'group',
     initialState,
     reducers: {
-        setActiveGroup: (state, action: PayloadAction<Group | null>) => {
+        onSetActiveGroup: (state, action: PayloadAction<Group | null>) => {
             state.active = action.payload;
         },
         setGroups(state, action: PayloadAction<Group[]>) {
@@ -24,7 +24,7 @@ export const groupSlice = createSlice({
         },
         updateGroup: (state, { payload }: PayloadAction<Group>) => {
             state.groups = state.groups.map(group => {
-                if (state.active && (payload.id === group.id)) return payload;
+                if (payload.id === group.id) return payload;
 
                 return group;
             })
@@ -41,5 +41,5 @@ export const groupSlice = createSlice({
 
 
 // Action creators are generated for each case reducer function
-export const { setActiveGroup, updateGroup, deleteGroup, addEmptyGroup, setGroups } = groupSlice.actions;
+export const { onSetActiveGroup, updateGroup, deleteGroup, addEmptyGroup, setGroups } = groupSlice.actions;
 export const selectGroup = (state: RootState) => state.group;
