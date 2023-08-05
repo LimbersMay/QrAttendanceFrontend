@@ -9,3 +9,5 @@ export const QrAttendanceRoutes = () => {
         </Routes>
     )
 }
+
+export default QrAttendanceRoutes;
