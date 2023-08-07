@@ -11,11 +11,8 @@ export const useCheckAuth = () => {
 
     useEffect(() => {
 
-        qrAttendanceApi.get("/auth/authenticated", {
-            withCredentials: true
-        }).then((response) => {
+        qrAttendanceApi.get("/auth/authenticated").then((response) => {
             const { body: user } = response.data;
-            
 
             if (!user) {
                 return dispatch(logout(null));
