@@ -109,7 +109,7 @@ describe('Tests for useQrCode', () => {
 
         const spy = jest.spyOn(qrAttendanceApi, 'post').mockResolvedValue({
             data: {
-                body: {...newQrCode}
+                ...newQrCode
             }
         });
 
