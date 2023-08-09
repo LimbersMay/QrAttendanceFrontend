@@ -6,15 +6,19 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-export const QrCodeDatePicker = ({ date, onChangeDate }: { date: string | undefined, onChangeDate: any }) => {
+interface QrCodeDatePickerProps {
+    date: string | undefined;
+    onChangeDate: (value: string) => void;
+}
+
+export const QrCodeDatePicker = ({ date, onChangeDate }: QrCodeDatePickerProps) => {
     const [value, setValue] = React.useState<Dayjs | null>(
         dayjs(date),
     );
 
     const handleChange = (newValue: Dayjs | null) => {
-        console.log('date: ', value?.toISOString())
         setValue(newValue);
-        onChangeDate(newValue?.toISOString());
+        onChangeDate(newValue?.toISOString()!);
     };
 
     return (

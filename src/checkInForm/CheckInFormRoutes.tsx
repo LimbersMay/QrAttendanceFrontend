@@ -1,7 +1,7 @@
 import {Route, Routes} from "react-router-dom";
 import {CheckInFormPage} from "./pages/CheckInFormPage";
 
-export const CheckInFormRouter = () => {
+export const CheckInFormRoutes = () => {
     return (
         <Routes>
 
@@ -10,3 +10,5 @@ export const CheckInFormRouter = () => {
         </Routes>
     )
 }
+
+export default CheckInFormRoutes;

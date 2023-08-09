@@ -3,7 +3,7 @@ import {checkingCredentials, login, logout, selectAuth} from "../store/auth";
 import {qrAttendanceApi} from "../api/qrAttendanceApi";
 import {onSetActiveGroup, setGroups, setQrCodes, setRegistries} from "../store/qrAttendance";
 
-interface CreatingUserProps {
+export interface CreatingUserProps {
     name: string;
     email: string;
     lastname: string;

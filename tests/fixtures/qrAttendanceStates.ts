@@ -18,7 +18,7 @@ export const qrCodes: QrCode[] = [
     {
         id: '1',
         name: 'Group A',
-        date: 'Date 1',
+        date: '2023-02-18T02:19:01.000Z',
         formId: 'form-id-one',
         enabled: false,
         groupId: 'Group-1',

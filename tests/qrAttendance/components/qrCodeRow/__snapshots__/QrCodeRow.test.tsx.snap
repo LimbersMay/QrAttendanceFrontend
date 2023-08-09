@@ -46,7 +46,7 @@ exports[`Tests for <QrCodeRow /> Should match the snapshot 1`] = `
         <td
           class="MuiTableCell-root MuiTableCell-alignCenter MuiTableCell-sizeMedium css-1lu91p5-MuiTableCell-root"
         >
-          01/01/2001
+          17/02/2023
         </td>
         <td
           class="MuiTableCell-root MuiTableCell-alignCenter MuiTableCell-sizeMedium css-1ce3qcx-MuiTableCell-root"

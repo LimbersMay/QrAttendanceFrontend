@@ -20,7 +20,7 @@ export const RegistryDatePicker = ({ date, onChangeDate }: { date: string | unde
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Stack spacing={3}>
                 <DateTimePicker
-                    label="Date&Time picker"
+                    label="CheckIn time"
                     value={value}
                     onChange={handleChange}
                     renderInput={(params) => <TextField {...params} />}

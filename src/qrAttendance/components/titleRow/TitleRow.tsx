@@ -1,4 +1,4 @@
-import React, {memo, useMemo, useState} from "react";
+import React, {memo, useState} from "react";
 import {IconButton, TableCell, tableCellClasses, TableRow, TextField, Tooltip} from "@mui/material";
 import {AddOutlined, SearchOutlined, EditOutlined, DeleteOutlined} from "@mui/icons-material";
 
@@ -7,21 +7,14 @@ import ConfirmDialog from "./ConfirmDialog";
 import {SnackbarUtilities} from "../../../utilities/snackbar-manager";
 import {TitleModal} from "./TitleModal";
 import {QrCodeModal} from "../qrCodeRow/QrCodeModal";
-import {useForm, useQrAttendanceStore, useUiStore} from "../../../hooks";
+import {useQrAttendanceStore, useUiStore} from "../../../hooks";
 
 export const TitleRow = memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[] }) => {
-
-    const initialStateForm = useMemo(() => ({
-        groupTitle: group.name,
-    }), [group]);
 
     const { toggleTitleModal, toggleQrCodeModal } = useUiStore();
     const {startDeleteGroupWithDependencies} = useQrAttendanceStore();
 
-    const {formState} = useForm(initialStateForm);
-    const [isTryingToDelete, setIsTryingToDelete] = useState<boolean>(false);
-
-    const {groupTitle} = formState;
+    const [isTryingToDelete, setIsTryingToDelete] = useState(false);
 
     const handleToggleDeleteDialog = () => {
         setIsTryingToDelete(!isTryingToDelete);
@@ -48,7 +41,7 @@ export const TitleRow = memo(({group, qrCodes}: { group: Group, qrCodes: QrCode[
                     }}
                     colSpan={2}
                 >
-                    { groupTitle }
+                    { group.name }
                 </TableCell>
 
                 <TableCell
