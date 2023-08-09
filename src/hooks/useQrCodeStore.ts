@@ -51,15 +51,15 @@ export const useQrCodeStore = () => {
             url: `${VITE_APIURL}/checkIn`
         });
 
-        const {body} = response.data;
+        const qrCode = response.data;
 
         const newQrCode: QrCode = {
             groupId: id,
-            id: body.id,
-            url: body.url,
-            formId: body.formId,
-            name: body.name,
-            date: body.manualRegistrationDate,
+            id: qrCode.id,
+            url: qrCode.url,
+            formId: qrCode.formId,
+            name: qrCode.name,
+            date: qrCode.manualRegistrationDate,
             enabled: false
         }
 
