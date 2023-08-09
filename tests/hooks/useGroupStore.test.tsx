@@ -94,7 +94,7 @@ describe('Tests for useGroupStore', () => {
 
         const spy = jest.spyOn(qrAttendanceApi, 'post').mockResolvedValue({
             data: {
-                body: {...newGroup}
+                ...newGroup
             }
         });
 
@@ -127,9 +127,9 @@ describe('Tests for useGroupStore', () => {
         }));
 
         const spy = jest.spyOn(qrAttendanceApi, "get").mockResolvedValue({
-            data: {
-                body: groupsFromApi
-            }
+            data: [
+                ...groupsFromApi
+            ]
         });
 
         await act(async () => {
