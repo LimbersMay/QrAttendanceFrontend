@@ -14,8 +14,8 @@ export const useCheckAuth = () => {
         qrAttendanceApi.get("/auth/authenticated", {
             withCredentials: true
         }).then((response) => {
-            const { body: user } = response.data;
-            
+
+            const { user } = response.data;
 
             if (!user) {
                 return dispatch(logout(null));
