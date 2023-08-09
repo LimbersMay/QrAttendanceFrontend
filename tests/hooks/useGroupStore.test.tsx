@@ -3,7 +3,7 @@ import {groupSlice, GroupState} from "../../src/store/qrAttendance";
 
 import {groups, initialState, withGroupsState} from "../fixtures/groupStates";
 import {act, renderHook, waitFor} from "@testing-library/react";
-import {useGroupStore} from "../../src/hooks/useGroupStore";
+import {useGroupStore} from "../../src/hooks";
 import {Provider} from "react-redux";
 import {qrAttendanceApi} from "../../src/api/qrAttendanceApi";
 
@@ -73,7 +73,7 @@ describe('Tests for useGroupStore', () => {
         });
 
         await act(async () => {
-            await result.current.setActiveGroup(groups[0]);
+            result.current.setActiveGroup(groups[0]);
         });
 
         expect(result.current.active).toEqual(groups[0]);
