@@ -1,7 +1,7 @@
 import {fireEvent, render, screen, waitFor} from "@testing-library/react";
 import {MemoryRouter} from "react-router-dom";
 import {LoginPage} from "../../../src/auth/pages";
-import {useAuthStore } from "../../../src/hooks/useAuthStore";
+import {useAuthStore } from "../../../src/hooks";
 
 jest.mock("../../../src/hooks/useAuthStore.ts")
 
