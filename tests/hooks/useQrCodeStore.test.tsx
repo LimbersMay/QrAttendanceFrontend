@@ -1,12 +1,11 @@
 import {configureStore} from "@reduxjs/toolkit";
 import {groupSlice, GroupState, qrCodeSlice, QrCodeState} from "../../src/store/qrAttendance";
-
 import {act, renderHook, waitFor} from "@testing-library/react";
 import {Provider} from "react-redux";
 import {qrAttendanceApi} from "../../src/api/qrAttendanceApi";
 import {initialState, qrCodes, withQrCodesState} from "../fixtures/qrCodeStates";
 import {initialState as groupInitialState, withActiveGroupAndGroupsState} from "../fixtures/groupStates";
-import {useQrCodeStore} from "../../src/hooks/useQrCodeStore";
+import {useQrCodeStore} from "../../src/hooks";
 
 jest.mock('../../src/utilities/snackbar-manager.tsx', () => ({
     SnackbarUtilities: {
@@ -86,7 +85,7 @@ describe('Tests for useQrCode', () => {
         });
 
         await act(async () => {
-            await result.current.setActiveQrCode(qrCodes[0]);
+            result.current.setActiveQrCode(qrCodes[0]);
         });
 
         expect(result.current.activeQrCode).toEqual(qrCodes[0]);
@@ -155,9 +154,9 @@ describe('Tests for useQrCode', () => {
         }));
 
         const spy = jest.spyOn(qrAttendanceApi, "get").mockResolvedValue({
-            data: {
-                body: qrCodesFromApi
-            }
+            data: [
+                ...qrCodesFromApi
+            ]
         });
 
         await act(async () => {
