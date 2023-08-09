@@ -11,3 +11,5 @@ export const AuthRoutes = () => {
         </Routes>
     )
 }
+
+export default AuthRoutes;
