@@ -33,12 +33,12 @@ export const useGroupStore = () => {
             name: 'Default'
         });
 
-        const { id, cratedAt, name } = response.data;
+        const { id, createdAt, name } = response.data;
 
         const newGroup = {
             id,
             name,
-            date: cratedAt
+            date: createdAt
         }
 
         // sync code here
