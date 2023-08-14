@@ -9,14 +9,14 @@ import {SnackbarUtilities} from "../utilities/snackbar-manager";
 import {qrAttendanceApi} from "../api/qrAttendanceApi";
 import {getEnvironments} from "../helpers/getEnvironments";
 
-const { VITE_APIURL } = getEnvironments();
+const {VITE_APIURL} = getEnvironments();
 
 export const useQrCodeStore = () => {
 
     const dispatch = useAppDispatch();
 
-    const { activeQrCode, qrCodes } = useAppSelector(selectQrCode);
-    const { active } = useAppSelector(selectGroup);
+    const {activeQrCode, qrCodes} = useAppSelector(selectQrCode);
+    const {active} = useAppSelector(selectGroup);
 
     const setActiveQrCode = (qrCode: QrCode | null) => {
         dispatch(onSetActiveQrCode(qrCode));
@@ -27,13 +27,10 @@ export const useQrCodeStore = () => {
         // async code here
         const {id, name, enabled, date} = qrCode;
 
-        await qrAttendanceApi.put('/qrCode/update', {
-            id: id,
-            updatedFields: {
-                name,
-                enabled,
-                manualRegistrationDate: date
-            }
+        await qrAttendanceApi.put(`/qrCode/${id}`, {
+            name,
+            enabled,
+            manualRegistrationDate: date
         });
 
         // sync code here
@@ -46,7 +43,7 @@ export const useQrCodeStore = () => {
 
         const id = active?.id || '';
 
-        const response = await qrAttendanceApi.post('/qrCode/create', {
+        const response = await qrAttendanceApi.post('/qrCode', {
             groupId: id,
             name,
             enabled,
@@ -54,15 +51,15 @@ export const useQrCodeStore = () => {
             url: `${VITE_APIURL}/checkIn`
         });
 
-        const {body} = response.data;
+        const qrCode = response.data;
 
         const newQrCode: QrCode = {
             groupId: id,
-            id: body.id,
-            url: body.url,
-            formId: body.formId,
-            name: body.name,
-            date: body.manualRegistrationDate,
+            id: qrCode.id,
+            url: qrCode.url,
+            formId: qrCode.formId,
+            name: qrCode.name,
+            date: qrCode.manualRegistrationDate,
             enabled: false
         }
 
@@ -72,10 +69,10 @@ export const useQrCodeStore = () => {
 
     const startLoadingQrCodes = async () => {
         // async code here
-        const response = await qrAttendanceApi.get('/qrCode/all');
-        const {body} = response.data;
+        const response = await qrAttendanceApi.get('/qrCode');
+        const qrCodes = response.data;
 
-        const qrCodes: QrCode[] = body.map((qrCode: any) => {
+        const mappedQrCodes: QrCode[] = qrCodes.map((qrCode: any) => {
             return {
                 id: qrCode.id,
                 url: qrCode.url,
@@ -88,7 +85,7 @@ export const useQrCodeStore = () => {
         });
 
         // sync code here
-        dispatch(setQrCodes(qrCodes));
+        dispatch(setQrCodes(mappedQrCodes));
     }
 
     return {

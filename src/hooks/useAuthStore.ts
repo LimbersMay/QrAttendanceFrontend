@@ -20,6 +20,8 @@ export const useAuthStore = () => {
         dispatch(checkingCredentials());
 
         try {
+
+            // 1. First, create the user
             await qrAttendanceApi.post('/auth/register', {
                 name,
                 email,
@@ -27,12 +29,13 @@ export const useAuthStore = () => {
                 password
             });
 
+            // 2. Then, login the user
             const response = await qrAttendanceApi.post('/auth/login', {
                 email,
                 password
             });
 
-            const { body: user } = response.data;
+            const { user } = response.data;
 
             // sync code here
             dispatch(login({
@@ -59,8 +62,7 @@ export const useAuthStore = () => {
                 }
             });
 
-            const { body: user } = response.data;
-
+            const { user } = response.data;
 
             dispatch(login({
                 uid: user.id,

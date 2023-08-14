@@ -16,7 +16,7 @@ export const useQrAttendanceStore = () => {
     const startDeleteGroupWithDependencies = async (groupId: string, qrCodes: QrCode[]) => {
 
         // async code here
-        await qrAttendanceApi.delete(`/group/delete/${groupId}`);
+        await qrAttendanceApi.delete(`/group/${groupId}`);
 
         // sync code here
         dispatch(deleteGroup(groupId));
@@ -31,7 +31,7 @@ export const useQrAttendanceStore = () => {
         const idQrCode = `${activeQrCode?.id}`;
 
         // async code here
-        await qrAttendanceApi.delete(`/qrCode/delete/${idQrCode}`);
+        await qrAttendanceApi.delete(`/qrCode/${idQrCode}`);
 
         // sync code here
         dispatch(deleteQrCode(idQrCode));
