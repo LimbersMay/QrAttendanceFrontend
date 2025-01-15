@@ -40,7 +40,7 @@ export const getValidationError = (errorCode: string) => {
         YOU_HAS_ALREADY_REGISTERED_ATTENDANCE: 'YOU HAS ALREADY REGISTERED YOUR ATTENDANCE',
 
         // FORM
-        FORM_DESATIVATED_BY_THE_TEACHER: 'FORM DESATIVATED BY THE TEACHER'
+        FORM_DEACTIVATED_BY_THE_TEACHER: 'FORM DEACTIVATED BY THE TEACHER'
     }
 
     return codeMatcher[errorCode] || "Something went wrong";
