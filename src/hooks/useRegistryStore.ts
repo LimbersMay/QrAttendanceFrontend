@@ -12,32 +12,30 @@ export const useRegistryStore = () => {
     const dispatch = useAppDispatch();
     const {registries, active} = useAppSelector(selectRegistry);
 
+    const setActiveRegistry = (registry: Registry | null) => {
+        dispatch(onSetActiveRegistry(registry));
+    }
+
     const startUpdateRegistry = async (registry: Registry) => {
-        await qrAttendanceApi.put(`/registry/update`, {
-            id: registry.id,
-            updatedFields: {
+
+        await qrAttendanceApi.put(`/registry/${registry.id}`, {
                 name: registry.name,
                 group: registry.group,
                 career: registry.career,
                 firstSurname: registry.firstSurname,
                 secondSurname: registry.secondSurname,
                 checkinTime: registry.checkInTime
-            }
         });
 
         // sync code here
         dispatch(updateRegistry(registry));
     }
 
-    const setActiveRegistry = (registry: Registry | null) => {
-        dispatch(onSetActiveRegistry(registry));
-    }
-
     const startDeleteRegistry = async () => {
         const activeRegistryId = `${active?.id}`;
 
         //  async code here
-        await qrAttendanceApi.delete(`/registry/delete/${activeRegistryId}`);
+        await qrAttendanceApi.delete(`/registry/${activeRegistryId}`);
 
         // sync code here
         dispatch(deleteRegistry(activeRegistryId));
@@ -46,10 +44,10 @@ export const useRegistryStore = () => {
     const startLoadingRegistries = async () => {
 
         // async code here
-        const response = await qrAttendanceApi.get('/registry/all');
-        const { body: registries } = response.data;
+        const response = await qrAttendanceApi.get('/registry');
+        const registries = response.data;
 
-        const registriesMapped: Registry[] = registries.map((registry: any) => {
+        const mappedRegistries: Registry[] = registries.map((registry: any) => {
             return {
                 id: registry.id,
                 qrCodeId: registry.qrCodeId,
@@ -63,7 +61,7 @@ export const useRegistryStore = () => {
         })
 
         // sync code here
-        dispatch(setRegistries(registriesMapped));
+        dispatch(setRegistries(mappedRegistries));
     }
 
     return {

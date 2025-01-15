@@ -3,7 +3,7 @@ import {registrySlice, RegistryState} from "../../src/store/qrAttendance";
 import {configureStore} from "@reduxjs/toolkit";
 import {initialState, registries, withActiveRegistryState, withRegistriesState} from "../fixtures/registryStates";
 import {act, renderHook, waitFor} from "@testing-library/react";
-import {useRegistryStore} from "../../src/hooks/useRegistryStore";
+import {useRegistryStore} from "../../src/hooks";
 import {Provider} from "react-redux";
 import {qrAttendanceApi} from "../../src/api/qrAttendanceApi";
 
@@ -71,7 +71,7 @@ describe('Tests for useRegistryStore', () => {
         });
 
         await act(async () => {
-            await result.current.setActiveRegistry(registries[0]);
+            result.current.setActiveRegistry(registries[0]);
         });
 
         expect(result.current.active).toEqual(registries[0]);
@@ -95,9 +95,9 @@ describe('Tests for useRegistryStore', () => {
         }))
 
         const spy = jest.spyOn(qrAttendanceApi, 'get').mockResolvedValue({
-            data: {
-                body: registriesFromApi
-            }
+            data: [
+                ...registriesFromApi
+            ]
         });
 
         await act(async () => {

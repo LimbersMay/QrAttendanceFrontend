@@ -2,7 +2,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import {authSlice, AuthState} from "../../src/store/auth";
 import {authenticatedState, initialState, notAuthenticatedState} from "../fixtures/authStates";
 import {act, renderHook, waitFor} from "@testing-library/react";
-import {useAuthStore} from "../../src/hooks/useAuthStore";
+import {useAuthStore} from "../../src/hooks";
 import {Provider} from "react-redux";
 import {authStatusTypes} from "../../src/auth/types";
 import {testUserCredentials} from "../fixtures/testUser";
@@ -56,7 +56,7 @@ describe('Tests for useAuthStore', () => {
         const spy = jest.spyOn(qrAttendanceApi, 'post');
         spy.mockResolvedValue({
             data: {
-                body: {...testUserCredentials}
+                user: { ...testUserCredentials }
             }
         });
 
@@ -174,7 +174,7 @@ describe('Tests for useAuthStore', () => {
         const spy = jest.spyOn(qrAttendanceApi, 'post');
         spy.mockResolvedValue({
             data: {
-                body: {...testUserCredentials}
+                user: {...testUserCredentials}
             }
         });
 

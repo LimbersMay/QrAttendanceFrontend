@@ -30,7 +30,13 @@ export const qrCodeSlice = createSlice({
         },
         updateQrCode: (state, { payload }: PayloadAction<QrCode>) => {
             state.qrCodes = state.qrCodes.map(qrCode => {
-                if (qrCode.id === payload.id) return payload;
+                if (qrCode.id === payload.id) {
+
+                    // When we update the active qrCode, we also update the activeQrCode state
+                    // If we don't do this, the activeQrCode state will be out of sync with the qrCodes state
+                    state.activeQrCode = payload;
+                    return payload
+                }
                 return qrCode;
             });
         },

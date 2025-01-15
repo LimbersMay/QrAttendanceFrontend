@@ -18,11 +18,8 @@ export const useGroupStore = () => {
         // async code here
         const {id, name} = group;
 
-        await qrAttendanceApi.put('/group/update', {
-            id: id,
-            updatedFields: {
-                name
-            }
+        await qrAttendanceApi.put(`/group/${id}`, {
+            name
         });
 
         // sync code here
@@ -32,16 +29,16 @@ export const useGroupStore = () => {
     const startNewGroup = async () => {
 
         // async code here
-        const response = await qrAttendanceApi.post('/group/create', {
+        const response = await qrAttendanceApi.post('/group', {
             name: 'Default'
         });
 
-        const {body: group} = response.data;
+        const { id, createdAt, name } = response.data;
 
         const newGroup = {
-            id: group.id,
-            date: group.createdAt,
-            name: group.name
+            id,
+            name,
+            date: createdAt
         }
 
         // sync code here
@@ -51,8 +48,8 @@ export const useGroupStore = () => {
 
     const startLoadingGroups = async () => {
         // async code here
-        const response = await qrAttendanceApi.get(`/group/all`);
-        const {body: groups} = response.data;
+        const response = await qrAttendanceApi.get(`/group`);
+        const groups = response.data;
 
         // sync code here
         const mappedGroups: Group[] = groups.map((group: any) => ({
